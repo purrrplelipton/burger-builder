@@ -1,0 +1,35 @@
+:root {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color-scheme: light dark;
+  font-synthesis: none;
+}
+
+$default-bg-color: #242424;
+$default-txt-color: rgba(255, 255, 255, 0.87);
+$default-font-family: 'Josefin Sans', sans-serif;
+$font-weights: (
+  'thin': 200,
+  'regular': 400,
+  'bold': 700,
+);
+
+@function weight($weight-name) {
+  @return map-get($map: $font-weights, $key: $weight-name);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  outline: 1px solid limegreen;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: $default-bg-color;
+  color: $default-txt-color;
+  font-family: $default-font-family;
+}
