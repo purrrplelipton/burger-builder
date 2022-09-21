@@ -10,9 +10,26 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-  z-index: 9;
+  z-index: 90;
 }
 
 .toolbar nav {
   height: 100%;
+}
+
+.logo {
+  height: 90%;
+}
+
+@media only screen and (max-width: 499px) {
+  .desktop-only {
+    display: none;
+  }
+
+  .toolbar {
+    background-color: #f57328;
+  }
+  .logo > * {
+    background-color: var(--header-color);
+  }
 }

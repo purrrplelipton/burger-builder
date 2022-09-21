@@ -13,7 +13,7 @@
   transition: all 0.3s ease-out;
 }
 
-@media (min-width: 600px) {
+@media only screen and (min-width: 600px) {
   .modal {
     width: 500px;
     left: calc(50% - 250px);

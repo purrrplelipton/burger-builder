@@ -23,7 +23,7 @@ const Modal = (props) => (
 
 Modal.propTypes = {
   children: propTypes.object.isRequired,
-  showModal: propTypes.bool.isRequired,
+  showModal: propTypes.bool,
   exitModal: propTypes.func.isRequired,
 }
 

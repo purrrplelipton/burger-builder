@@ -1,8 +1,8 @@
 .bread-bottom {
   height: 13%;
   width: 80%;
-  background: linear-gradient(#f08e4a, #e27b36);
-  border-radius: 0 0 30px 30px;
+  background-image: linear-gradient(#bc581e, #e27b36);
+  border-radius: 0 0 48px 48px;
   box-shadow: inset -15px 0 #c15711;
   margin: 0.8% auto;
 }
@@ -10,23 +10,35 @@
 .bread-top {
   height: 20%;
   width: 80%;
-  background: linear-gradient(#bc581e, #e27b36);
+  background-color: transparent;
   border-radius: 100% 100% 0 0;
-  box-shadow: inset -15px 0 #c15711;
   margin: 0.8% auto;
   position: relative;
+  overflow: hidden;
+}
+
+.bread-top::before {
+  content: '';
+  position: absolute;
+  height: 200%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  border-radius: 100%;
+  background-image: linear-gradient(#bc581e, #e27b36);
+  box-shadow: inset -15px 0 #c15711;
 }
 
 .seeds1 {
   width: 8%;
   height: 12%;
   position: absolute;
-  background-color: white;
-  left: 22.5%;
-  top: 50%;
+  background-color: #e0ba80;
+  left: 15%;
+  top: 40%;
   border-radius: 40%;
   transform: rotate(-20deg);
-  box-shadow: inset -2px -3px #c9c9c9;
+  box-shadow: inset -2px -3px #cabc83;
 }
 
 .seeds1::before {
@@ -34,12 +46,12 @@
   width: 100%;
   height: 100%;
   position: absolute;
-  background-color: white;
-  left: -170%;
-  top: -260%;
+  background-color: #e0ba80;
+  left: -125%;
+  top: -50%;
   border-radius: 40%;
   transform: rotate(60deg);
-  box-shadow: inset -1px 2px #c9c9c9;
+  box-shadow: inset -1px 2px #cabc83;
 }
 
 .seeds1::after {
@@ -47,24 +59,24 @@
   width: 100%;
   height: 100%;
   position: absolute;
-  background-color: white;
-  left: 180%;
-  top: -50%;
+  background-color: #e0ba80;
+  left: 125%;
+  top: 0%;
   border-radius: 40%;
   transform: rotate(60deg);
-  box-shadow: inset -1px -3px #c9c9c9;
+  box-shadow: inset -1px -3px #cabc83;
 }
 
 .seeds2 {
   width: 8%;
   height: 12%;
   position: absolute;
-  background-color: white;
-  left: 45%;
-  top: 50%;
+  background-color: #e0ba80;
+  left: 35%;
+  top: 45%;
   border-radius: 40%;
-  transform: rotate(10deg);
-  box-shadow: inset -3px 0 #c9c9c9;
+  transform: rotate(-25deg);
+  box-shadow: inset -3px 0 #cabc83;
 }
 
 .seeds2::before {
@@ -72,12 +84,12 @@
   width: 100%;
   height: 100%;
   position: absolute;
-  background-color: white;
-  left: 150%;
-  top: -130%;
+  background-color: #e0ba80;
+  left: 45%;
+  top: -180%;
   border-radius: 40%;
-  transform: rotate(90deg);
-  box-shadow: inset 1px 3px #c9c9c9;
+  transform: rotate(215deg);
+  box-shadow: inset 1px 3px #cabc83;
 }
 
 .seeds2::after {
@@ -85,24 +97,24 @@
   width: 100%;
   height: 100%;
   position: absolute;
-  background-color: white;
+  background-color: #e0ba80;
   left: 150%;
-  top: -130%;
+  top: 200%;
   border-radius: 40%;
-  transform: rotate(90deg);
-  box-shadow: inset 1px 3px #c9c9c9;
+  transform: rotate(240deg);
+  box-shadow: inset 1px 3px #cabc83;
 }
 
 .seeds3 {
   width: 8%;
   height: 12%;
   position: absolute;
-  background-color: white;
-  left: 67.5%;
-  top: 50%;
+  background-color: #e0ba80;
+  left: 60%;
+  top: 15%;
   border-radius: 40%;
   transform: rotate(-20deg);
-  box-shadow: inset -2px -3px #c9c9c9;
+  box-shadow: inset -2px -3px #cabc83;
 }
 
 .seeds3::before {
@@ -110,12 +122,12 @@
   width: 100%;
   height: 100%;
   position: absolute;
-  background-color: white;
-  left: -170%;
-  top: -260%;
+  background-color: #e0ba80;
+  left: -100%;
+  top: -125%;
   border-radius: 40%;
-  transform: rotate(60deg);
-  box-shadow: inset -1px 2px #c9c9c9;
+  transform: rotate(75deg);
+  box-shadow: inset -1px 2px #cabc83;
 }
 
 .seeds3::after {
@@ -123,24 +135,24 @@
   width: 100%;
   height: 100%;
   position: absolute;
-  background-color: white;
-  left: 180%;
-  top: -50%;
+  background-color: #e0ba80;
+  left: 50%;
+  top: 300%;
   border-radius: 40%;
-  transform: rotate(60deg);
-  box-shadow: inset -1px -3px #c9c9c9;
+  transform: rotate(-15deg);
+  box-shadow: inset -1px -3px #cabc83;
 }
 
 .seeds4 {
   width: 8%;
   height: 12%;
   position: absolute;
-  background-color: white;
-  left: 90%;
-  top: 50%;
+  background-color: #e0ba80;
+  left: 75%;
+  top: 20%;
   border-radius: 40%;
-  transform: rotate(10deg);
-  box-shadow: inset -3px 0 #c9c9c9;
+  transform: rotate(-140deg);
+  box-shadow: inset -3px 0 #cabc83;
 }
 
 .seeds4::before {
@@ -148,12 +160,12 @@
   width: 100%;
   height: 100%;
   position: absolute;
-  background-color: white;
-  left: 150%;
-  top: -130%;
+  background-color: #e0ba80;
+  left: -115%;
+  top: 0;
   border-radius: 40%;
-  transform: rotate(90deg);
-  box-shadow: inset 1px 3px #c9c9c9;
+  transform: rotate(120deg);
+  box-shadow: inset 1px 3px #cabc83;
 }
 
 .seeds4::after {
@@ -161,12 +173,12 @@
   width: 100%;
   height: 100%;
   position: absolute;
-  background-color: white;
-  left: 150%;
-  top: -130%;
+  background-color: #e0ba80;
+  left: -200%;
+  top: 60%;
   border-radius: 40%;
   transform: rotate(90deg);
-  box-shadow: inset 1px 3px #c9c9c9;
+  box-shadow: inset 1px 3px #cabc83;
 }
 
 .patty {
@@ -176,6 +188,7 @@
   margin: 0.8% auto;
   border-radius: 15px;
 }
+
 .tomato {
   width: 75%;
   height: 4%;
@@ -196,7 +209,8 @@
   width: 35%;
   height: 3%;
   margin: 0.8% auto;
-  background: linear-gradient(to right, #303622, #4f5939, #6e7c4f);
+  background-image: linear-gradient(to top right, #556e3c, #284400);
+  box-shadow: inset 2px 1px #303622;
   border-radius: 3px;
   position: relative;
   transform: rotate(-2.5deg);
@@ -210,7 +224,8 @@
   left: -70%;
   top: 0;
   transform: rotate(3.5deg) translateY(-4px);
-  background: linear-gradient(to right, #303622, #4f5939, #6e7c4f);
+  background-image: linear-gradient(to top right, #556e3c, #284400);
+  box-shadow: inset 2px 1px #303622;
   border-radius: 2px;
 }
 
@@ -222,7 +237,8 @@
   left: 70%;
   top: 0;
   transform: rotate(3.5deg) translateY(4px);
-  background: linear-gradient(to bottom left, #303622, #4f5939, #6e7c4f);
+  background-image: linear-gradient(to top right, #556e3c, #284400);
+  box-shadow: inset 2px 1px #303622;
   border-radius: 2px;
 }
 

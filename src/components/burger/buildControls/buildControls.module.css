@@ -1,17 +1,17 @@
 .build-controls {
   width: 100%;
-  background-color: #cf8f2e;
+  background-image: linear-gradient(to right, #bc581e 7.5%, #e27b36);
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  box-shadow: 0 2px 1px #ccc;
+  box-shadow: 2px 2px 2px #cf8f2e;
   margin-inline: auto;
-  padding: 10px 0;
+  padding: 14px;
 }
 
 .current-price {
   background-color: var(--header-color);
   padding: 16px 12px;
-  width: fit-content;
+  width: max-content;
   color: var(--default-bg-color);
 }
 
@@ -25,7 +25,6 @@
   font-family: inherit;
   font-size: 1.2em;
   padding: 15px 30px;
-  box-shadow: 2px 2px 2px #966909;
   margin: 1.8rem 0;
   margin-left: auto;
 }
@@ -42,10 +41,12 @@
   cursor: not-allowed;
   border: 1px solid #ccc;
   color: #888888;
+  box-shadow: 2px 2px 2px #ccc;
 }
 
 .order-button:not(:disabled) {
   animation: enable 0.3s linear;
+  box-shadow: 2px 2px 2px #bc581e;
 }
 
 @keyframes enable {
@@ -57,5 +58,11 @@
   }
   100% {
     transform: scale(1);
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .build-controls {
+    grid-template-columns: repeat(1, 1fr);
   }
 }

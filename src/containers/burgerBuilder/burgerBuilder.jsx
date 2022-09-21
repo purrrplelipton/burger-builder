@@ -18,15 +18,15 @@ const CONTENT_PRICES = {
 
 const BurgerBuilder = () => {
   const [ingredients, setIngredients] = useState({
-    lettuce: 0,
-    bacon: 0,
+    pickles: 0,
     cheese: 0,
     onionRings: 0,
-    pickles: 0,
     patty: 0,
+    lettuce: 0,
+    bacon: 0,
     tomato: 0,
   })
-  const [price, setPrice] = useState(0.5)
+  const [price, setPrice] = useState(3.35)
   const [purchasable, setPurchasable] = useState(false)
   const [purchasing, setPurchasing] = useState(false)
 

@@ -9,7 +9,7 @@ const Backdrop = (props) =>
   ) : null
 
 Backdrop.propTypes = {
-  showModal: propTypes.bool.isRequired,
+  showModal: propTypes.bool,
   exitModal: propTypes.func.isRequired,
 }
 
