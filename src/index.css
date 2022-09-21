@@ -1,5 +1,32 @@
+:root {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color-scheme: light dark;
+  /* font-synthesis: none; */
+  --header-color: #eef1ff;
+  --default-bg-color: #242424;
+  --default-text-color: rgba(255, 255, 255, 0.87);
+  --default-font-family: 'Open Sans', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  /* outline: 1px solid red; */
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--default-bg-color);
+  color: var(--default-text-color);
+  font-family: var(--default-font-family);
+}
+
 #root {
   max-width: 1440px;
   margin-inline: auto;
-  padding: 2rem;
+  padding: 1rem;
 }

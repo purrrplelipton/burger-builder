@@ -1,0 +1,61 @@
+.build-controls {
+  width: 100%;
+  background-color: #cf8f2e;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  box-shadow: 0 2px 1px #ccc;
+  margin-inline: auto;
+  padding: 10px 0;
+}
+
+.current-price {
+  background-color: var(--header-color);
+  padding: 16px 12px;
+  width: fit-content;
+  color: var(--default-bg-color);
+}
+
+.order-button {
+  display: block;
+  background-color: #dad735;
+  outline: none;
+  cursor: pointer;
+  border: 1px solid #966909;
+  color: #966909;
+  font-family: inherit;
+  font-size: 1.2em;
+  padding: 15px 30px;
+  box-shadow: 2px 2px 2px #966909;
+  margin: 1.8rem 0;
+  margin-left: auto;
+}
+
+.order-button:hover,
+.order-button:active {
+  background-color: #a0db41;
+  border: 1px solid #966909;
+  color: #966909;
+}
+
+.order-button:disabled {
+  background-color: #c7c6c6;
+  cursor: not-allowed;
+  border: 1px solid #ccc;
+  color: #888888;
+}
+
+.order-button:not(:disabled) {
+  animation: enable 0.3s linear;
+}
+
+@keyframes enable {
+  0% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

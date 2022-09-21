@@ -1,10 +1,13 @@
+import React from 'react'
+
 import Layout from './components/layout/layout'
+import BurgerBuilder from './containers/burgerBuilder/burgerBuilder'
 
 function App() {
   return (
-    <div className='App'>
+    <div>
       <Layout>
-        <p>Test</p> 
+        <BurgerBuilder />
       </Layout>
     </div>
   )
