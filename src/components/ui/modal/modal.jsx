@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { memo } from 'react'
 import propTypes from 'prop-types'
 
-import Aux from '../../../hoc/aux'
+import Auxiliary from '../../../hoc/auxiliary/auxiliary'
 import Backdrop from '../backdrop/backdrop'
 
 import styles from './modal.module.css'
 
 const Modal = (props) => (
-  <Aux>
+  <Auxiliary>
     <Backdrop showModal={props.showModal} exitModal={props.exitModal} />
     <div
       style={{
@@ -18,7 +18,7 @@ const Modal = (props) => (
     >
       {props.children}
     </div>
-  </Aux>
+  </Auxiliary>
 )
 
 Modal.propTypes = {
@@ -27,4 +27,4 @@ Modal.propTypes = {
   exitModal: propTypes.func.isRequired,
 }
 
-export default Modal
+export default memo(Modal)

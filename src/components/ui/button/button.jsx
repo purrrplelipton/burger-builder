@@ -5,6 +5,7 @@ import styles from './button.module.css'
 
 const Button = (props) => (
   <button
+    type={'button'}
     className={[styles.button, styles[props.btnType]].join(' ')}
     onClick={props.onClick}
   >

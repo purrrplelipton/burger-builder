@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import Aux from '../../hoc/aux'
+import Auxiliary from '../../hoc/auxiliary/auxiliary'
 import Burger from '../../components/burger/burger'
 import BuildControls from '../../components/burger/buildControls/buildControls'
 import Modal from '../../components/ui/modal/modal'
@@ -70,7 +70,7 @@ const BurgerBuilder = () => {
   }
 
   return (
-    <Aux>
+    <Auxiliary>
       <Modal showModal={purchasing} exitModal={cancelPurchase}>
         <OrderSummary
           contents={ingredients}
@@ -88,7 +88,7 @@ const BurgerBuilder = () => {
         price={price}
         ordering={purchasingHandler}
       />
-    </Aux>
+    </Auxiliary>
   )
 }
 

@@ -7,7 +7,7 @@
   top: 0;
   z-index: 99;
   background-color: var(--header-color);
-  padding: 2rem 1rem;
+  padding: 1rem;
   transition: transform 0.3s ease-out;
 }
 
@@ -26,6 +26,6 @@
 }
 
 .logo {
-  height: 11%;
+  height: 10%;
   margin-bottom: 2rem;
 }

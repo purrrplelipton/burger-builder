@@ -1,16 +1,16 @@
 import React from 'react'
 
-import Layout from './components/layout/layout'
+import Layout from './hoc/layout/layout'
 import BurgerBuilder from './containers/burgerBuilder/burgerBuilder'
-import Aux from './hoc/aux'
+import Auxiliary from './hoc/auxiliary/auxiliary'
 
 function App() {
   return (
-    <Aux>
+    <Auxiliary>
       <Layout>
         <BurgerBuilder />
       </Layout>
-    </Aux>
+    </Auxiliary>
   )
 }
 

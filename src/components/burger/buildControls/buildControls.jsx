@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 
 import styles from './buildControls.module.css'
 import BuildControl from './buildControl/buildControl'
-import Aux from '../../../hoc/aux'
+import Auxiliary from '../../../hoc/auxiliary/auxiliary'
 
 const controls = [
   { label: 'Lettuce', type: 'lettuce' },
@@ -16,7 +16,7 @@ const controls = [
 ]
 
 const BuildControls = (props) => (
-  <Aux>
+  <Auxiliary>
     <p className={styles.currentPrice}>
       Current Price:
       <strong> $ {props.price.toFixed(2)}</strong>
@@ -40,7 +40,7 @@ const BuildControls = (props) => (
     >
       PLACE ORDER
     </button>
-  </Aux>
+  </Auxiliary>
 )
 
 BuildControls.propTypes = {

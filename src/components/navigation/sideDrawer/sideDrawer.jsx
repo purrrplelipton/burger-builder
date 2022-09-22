@@ -3,8 +3,9 @@ import propTypes from 'prop-types'
 
 import Logo from '../../logo/logo'
 import NavigationItems from '../navigationItems/navigationItems'
-import Aux from '../../../hoc/aux'
+import Aux from '../../../hoc/auxiliary/auxiliary'
 import Backdrop from '../../ui/backdrop/backdrop'
+import DrawerToggle from './drawerToggle/drawerToggle'
 
 import styles from './sideDrawer.module.css'
 
@@ -22,6 +23,11 @@ const SideDrawer = (props) => {
         <div className={styles.logo}>
           <Logo />
         </div>
+        <DrawerToggle
+          height={'48px'}
+          sideDrawerState={props.showSideDrawer}
+          onClick={props.exitSideDrawer}
+        />
         <nav>
           <NavigationItems />
         </nav>

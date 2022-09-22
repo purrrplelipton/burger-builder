@@ -10,7 +10,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-  z-index: 90;
+  z-index: 77;
 }
 
 .toolbar nav {
@@ -29,6 +29,7 @@
   .toolbar {
     background-color: #f57328;
   }
+
   .logo > * {
     background-color: var(--header-color);
   }

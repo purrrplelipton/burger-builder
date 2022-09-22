@@ -1,8 +1,8 @@
 .back-drop {
-  width: 100%;
+  width: calc(100% + 2px);
   height: 100%;
   position: fixed;
-  z-index: 99;
+  z-index: 88;
   top: 0;
   left: 0;
   background-color: hsla(0, 0%, 0%, 0.75);

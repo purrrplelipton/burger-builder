@@ -31,3 +31,33 @@
   left: 0;
   background-color: inherit;
 }
+
+.drawer-toggle-wrapper.open {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  transform: rotate(270deg);
+  transition: 0.5s ease;
+}
+
+.drawer-toggle.open {
+  transform: rotate(45deg);
+  background-color: #f57328;
+  transition: all 0.3s ease-in-out;
+}
+
+.drawer-toggle.open::before {
+  display: none;
+}
+
+.drawer-toggle.open::after {
+  top: 0;
+  transform: rotate(-90deg);
+  background-color: inherit;
+}
+
+@media only screen and (min-width: 600px) {
+  .drawer-toggle-wrapper {
+    display: none;
+  }
+}

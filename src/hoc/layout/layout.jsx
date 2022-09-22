@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import propTypes from 'prop-types'
 
-import Aux from '../../hoc/aux'
-import Toolbar from '../navigation/toolbar/toolbar'
-import SideDrawer from '../navigation/sideDrawer/sideDrawer'
+import Auxiliary from '../auxiliary/auxiliary'
+import Toolbar from '../../components/navigation/toolbar/toolbar'
+import SideDrawer from '../../components/navigation/sideDrawer/sideDrawer'
 
 import styles from './layout.module.css'
 
@@ -12,12 +12,14 @@ const Layout = (props) => {
 
   const exitSideDrawer = () => setSideDrawer(false)
 
+  const toggleSideDrawer = () => setSideDrawer((prevState) => !prevState)
+
   return (
-    <Aux>
-      <Toolbar />
+    <Auxiliary>
+      <Toolbar toggleSideDrawer={toggleSideDrawer} />
       <SideDrawer showSideDrawer={sideDrawer} exitSideDrawer={exitSideDrawer} />
       <main className={styles.content}>{props.children}</main>
-    </Aux>
+    </Auxiliary>
   )
 }
 Layout.propTypes = { children: propTypes.object.isRequired }

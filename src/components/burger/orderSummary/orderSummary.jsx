@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 
-import Aux from '../../../hoc/aux'
+import Auxiliary from '../../../hoc/auxiliary/auxiliary'
 import Button from '../../ui/button/button'
 
 const OrderSummary = (props) => {
@@ -15,7 +15,7 @@ const OrderSummary = (props) => {
   )
 
   return (
-    <Aux>
+    <Auxiliary>
       <h3>Your Order</h3>
       <p>A burger with the following contents:</p>
       <ul>{contentSummary}</ul>
@@ -29,7 +29,7 @@ const OrderSummary = (props) => {
       <Button btnType={'success'} onClick={props.checkout}>
         CONTINUE
       </Button>
-    </Aux>
+    </Auxiliary>
   )
 }
 

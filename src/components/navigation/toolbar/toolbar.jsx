@@ -9,7 +9,7 @@ import styles from './toolbar.module.css'
 
 const Toolbar = (props) => (
   <header className={styles.toolbar}>
-    <DrawerToggle onClick={props.toggleSideDrawer} />
+    <DrawerToggle onClick={props.toggleSideDrawer} height={'100%'} />
     <div className={styles.logo}>
       <Logo />
     </div>
@@ -19,6 +19,6 @@ const Toolbar = (props) => (
   </header>
 )
 
-Toolbar.propTypes = { toggleSideDrawer: propTypes.any }
+Toolbar.propTypes = { toggleSideDrawer: propTypes.func }
 
 export default Toolbar
