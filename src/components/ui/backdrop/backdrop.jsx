@@ -1,16 +1,16 @@
-import React from 'react'
-import propTypes from 'prop-types'
+import React from "react";
+import propTypes from "prop-types";
 
-import styles from './backdrop.module.css'
+import styles from "./backdrop.module.css";
 
 const Backdrop = (props) =>
   props.showModal ? (
     <div className={styles.backDrop} onClick={props.exitModal}></div>
-  ) : null
+  ) : null;
 
 Backdrop.propTypes = {
   showModal: propTypes.bool,
-  exitModal: propTypes.func.isRequired,
-}
+  exitModal: propTypes.func,
+};
 
-export default Backdrop
+export default Backdrop;
