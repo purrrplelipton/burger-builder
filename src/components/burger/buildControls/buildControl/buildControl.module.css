@@ -1,6 +1,6 @@
 .build-control {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   margin: 5px 0;
 }
@@ -34,7 +34,7 @@
 .label {
   padding: 10px;
   font-weight: bold;
-  width: 96px;
+  width: 112px;
 }
 
 .build-control .remove {

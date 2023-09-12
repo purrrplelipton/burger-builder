@@ -1,27 +1,24 @@
-import { Backdrop } from "@c/ui";
+import { Backdrop } from "@components/ui";
 import propTypes from "prop-types";
 import React, { memo } from "react";
-import { modal } from "./modal.module.css";
+import { modal as content } from "./modal.module.css";
 
 function Modal({ exitModal, showModal, children }) {
   return (
-    <>
-      <Backdrop showModal={showModal} exitModal={exitModal} />
+    <Backdrop show={showModal} onClick={exitModal}>
       <div
-        style={{
-          transform: showModal ? "translateY(0)" : "translateY(-100vh)",
-          opacity: showModal ? "1" : "0",
-        }}
-        className={modal}
+        role="presentation"
+        onClick={(e) => e.stopPropagation()}
+        className={content}
       >
         {children}
       </div>
-    </>
+    </Backdrop>
   );
 }
-
+Modal.defaultProps = { children: null };
 Modal.propTypes = {
-  children: propTypes.node.isRequired,
+  children: propTypes.oneOfType([propTypes.string, propTypes.node]),
   showModal: propTypes.bool.isRequired,
   exitModal: propTypes.func.isRequired,
 };

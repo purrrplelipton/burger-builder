@@ -6,7 +6,7 @@ import styles from "./buildControl.module.css";
 function BuildControl({ add, remove, label, disabled }) {
   return (
     <div className={styles.buildControl}>
-      <div className={styles.label}>{label}</div>
+      <p className={styles.label}>{label}</p>
       <button
         type="button"
         className={styles.remove}

@@ -1,11 +1,9 @@
 :root {
   --header-color: #eef1ff;
   line-height: 1.5;
-  color-scheme: light dark;
   font-family: "Open Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
-  color: #ffffffdf;
-  background-color: #242424;
+  color: #181818;
 }
 
 *,
@@ -14,14 +12,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
-
-body {
-  min-width: 320px;
-  max-width: 1280px;
-  margin-inline: auto;
-  height: 100vh;
-  min-height: 768px;
+  /* outline: 1px solid red; */
 }
 
 img,
@@ -51,6 +42,10 @@ h6 {
 }
 
 #root {
-  padding: 1rem;
   isolation: isolate;
+  min-width: 320px;
+  max-width: 1280px;
+  margin-inline: auto;
+  height: 100vh;
+  min-height: 768px;
 }

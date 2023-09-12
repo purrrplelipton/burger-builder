@@ -48,7 +48,7 @@ function BurgerIngredient({ type }) {
     case "lettuce":
       ingredient = <div className={lettuce} />;
       break;
-    case "onionRings":
+    case "onion-rings":
       ingredient = <div className={onionRings} />;
       break;
     case "cheese":

@@ -17,7 +17,7 @@
 }
 
 .bread-top::before {
-  content: '';
+  content: "";
   position: absolute;
   height: 200%;
   width: 100%;
@@ -41,7 +41,7 @@
 }
 
 .seeds1::before {
-  content: '';
+  content: "";
   width: 100%;
   height: 100%;
   position: absolute;
@@ -54,7 +54,7 @@
 }
 
 .seeds1::after {
-  content: '';
+  content: "";
   width: 100%;
   height: 100%;
   position: absolute;
@@ -79,7 +79,7 @@
 }
 
 .seeds2::before {
-  content: '';
+  content: "";
   width: 100%;
   height: 100%;
   position: absolute;
@@ -92,7 +92,7 @@
 }
 
 .seeds2::after {
-  content: '';
+  content: "";
   width: 100%;
   height: 100%;
   position: absolute;
@@ -117,7 +117,7 @@
 }
 
 .seeds3::before {
-  content: '';
+  content: "";
   width: 100%;
   height: 100%;
   position: absolute;
@@ -130,7 +130,7 @@
 }
 
 .seeds3::after {
-  content: '';
+  content: "";
   width: 100%;
   height: 100%;
   position: absolute;
@@ -155,7 +155,7 @@
 }
 
 .seeds4::before {
-  content: '';
+  content: "";
   width: 100%;
   height: 100%;
   position: absolute;
@@ -168,7 +168,7 @@
 }
 
 .seeds4::after {
-  content: '';
+  content: "";
   width: 100%;
   height: 100%;
   position: absolute;
@@ -216,7 +216,7 @@
 }
 
 .pickles::before {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 100%;
@@ -229,7 +229,7 @@
 }
 
 .pickles::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 100%;

@@ -1,36 +1,35 @@
-import React from "react";
+import { Button } from "@components/ui";
 import propTypes from "prop-types";
+import React from "react";
+import { v4 as uuidv4 } from "uuid";
 
-import Button from "../../ui/button/button";
-
-const OrderSummary = (props) => {
-  const contentSummary = Object.keys(props.contents).map(
-    (contentKey, contentIndex) => (
-      <li key={contentKey + contentIndex + "_" + props.contents[contentKey]}>
-        <span style={{ textTransform: "capitalize" }}>{contentKey}</span>:{" "}
-        {props.contents[contentKey]}
-      </li>
-    )
-  );
+function OrderSummary({ contents, cancelPurchase, totalPrice, checkout }) {
+  const contentSummary = Object.keys(contents).map((contentKey) => (
+    <li key={uuidv4()}>
+      <span style={{ textTransform: "capitalize" }}>{contentKey}</span>
+      :&nbsp;
+      {contents[contentKey]}
+    </li>
+  ));
 
   return (
     <>
       <h3>Your Order</h3>
       <p>A burger with the following contents:</p>
-      <ul>{contentSummary}</ul>
+      <ul style={{ paddingInlineStart: "1.25em" }}>{contentSummary}</ul>
       <p>
-        Total: <strong>{props.totalPrice.toFixed(2)}</strong>
+        Total: ₦<strong>{totalPrice.toFixed(2)}</strong>
       </p>
       <p>Checkout?</p>
-      <Button btnType={"danger"} onClick={props.cancelPurchase}>
+      <Button btnType="danger" onClick={cancelPurchase}>
         CANCEL
       </Button>
-      <Button btnType={"success"} onClick={props.checkout}>
+      <Button btnType="success" onClick={checkout}>
         CONTINUE
       </Button>
     </>
   );
-};
+}
 
 OrderSummary.propTypes = {
   contents: propTypes.object.isRequired,

@@ -1,23 +1,15 @@
 .modal {
-  position: fixed;
-  z-index: 110;
   background-color: var(--header-color);
   color: #181818;
-  width: 80%;
+  width: calc(100% - (1.25em * 2));
   border: 1px solid #eee;
-  box-shadow: 1px 1px 2px #181818;
-  padding: 1rem;
-  margin-inline: auto;
-  left: 0;
-  right: 0;
-  top: 17.5%;
-  box-sizing: border-box;
-  transition: all 0.3s ease-out;
+  border-radius: 10px;
+  box-shadow: 0 10px 2em #00000022;
+  padding: 1.875em 1.25em;
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 768px) {
   .modal {
-    width: 500px;
-    top: 20%;
+    max-width: 425px;
   }
 }

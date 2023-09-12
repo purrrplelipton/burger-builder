@@ -1,19 +1,22 @@
-import React from "react";
 import propTypes from "prop-types";
-
+import React from "react";
 import styles from "./navigationItem.module.css";
 
-const NavigationItem = ({ active, destination, children }) => (
-  <li className={styles.navigationItem}>
-    <a className={active ? styles.active : null} href={destination}>
-      {children}
-    </a>
-  </li>
-);
+function NavigationItem({ active, to, children }) {
+  return (
+    <li className={styles.navigationItem}>
+      <a className={active ? styles.active : ""} href={to}>
+        {children}
+      </a>
+    </li>
+  );
+}
+
+NavigationItem.defaultProps = { active: false };
 
 NavigationItem.propTypes = {
   active: propTypes.bool,
-  destination: propTypes.string.isRequired,
+  to: propTypes.string.isRequired,
   children: propTypes.string.isRequired,
 };
 

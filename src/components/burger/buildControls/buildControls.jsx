@@ -14,7 +14,7 @@ const controls = [
   { label: "Bacon", type: "bacon" },
   { label: "Pickles", type: "pickles" },
   { label: "Cheese", type: "cheese" },
-  { label: "Onion Rings", type: "onionRings" },
+  { label: "Onion Rings", type: "onion-rings" },
   { label: "Tomato", type: "tomato" },
 ];
 
@@ -29,7 +29,7 @@ function BuildControls({
   return (
     <>
       <p className={currentPrice}>
-        Current Price:
+        Current Price:&nbsp;
         <strong>₦{price.toFixed(2)}</strong>
       </p>
       <div className={buildControls}>

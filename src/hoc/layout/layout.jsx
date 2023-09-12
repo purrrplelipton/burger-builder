@@ -1,17 +1,20 @@
-import { SideDrawer, Toolbar } from "@c/navigation";
+import { SideDrawer, Toolbar } from "@components/navigation";
 import propTypes from "prop-types";
 import React, { useState } from "react";
 import { content } from "./layout.module.css";
 
 function Layout({ children }) {
-  const [sideDrawer, setSideDrawer] = useState(false);
+  const [showSideDrawer, setShowSideDrawer] = useState(false);
 
   return (
     <>
-      <Toolbar toggleSideDrawer={() => setSideDrawer(true)} />
+      <Toolbar
+        showSideDrawer={showSideDrawer}
+        toggleSideDrawer={() => setShowSideDrawer(true)}
+      />
       <SideDrawer
-        showSideDrawer={sideDrawer}
-        exitSideDrawer={() => setSideDrawer(false)}
+        showSideDrawer={showSideDrawer}
+        exitSideDrawer={() => setShowSideDrawer(false)}
       />
       <main className={content}>{children}</main>
     </>

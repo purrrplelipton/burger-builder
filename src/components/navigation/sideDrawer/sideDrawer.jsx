@@ -1,27 +1,27 @@
-import Logo from "@c/logo";
-import { NavigationItems } from "@c/navigation";
-import { Backdrop } from "@c/ui";
+import Logo from "@components/logo";
+import { NavigationItems } from "@components/navigation";
+import { Backdrop } from "@components/ui";
 import propTypes from "prop-types";
 import React from "react";
 import DrawerToggle from "./drawerToggle";
-import { closed, logo, sideDrawer } from "./sideDrawer.module.css";
+import { hidden, logo, sideDrawer, topSection } from "./sideDrawer.module.css";
 
 function SideDrawer({ showSideDrawer, exitSideDrawer }) {
-  const stylesAttached = [sideDrawer, closed];
-  if (showSideDrawer) stylesAttached.pop();
-
   return (
     <>
-      <Backdrop showModal={showSideDrawer} exitModal={exitSideDrawer} />
-      <div className={stylesAttached.join(" ")}>
-        <div className={logo}>
-          <Logo />
-        </div>
-        <DrawerToggle
-          height="48px"
-          sideDrawerState={showSideDrawer}
-          onClick={exitSideDrawer}
-        />
+      <Backdrop show={showSideDrawer} onClick={exitSideDrawer} />
+      <div
+        className={showSideDrawer ? sideDrawer : [sideDrawer, hidden].join(" ")}
+      >
+        <header className={topSection}>
+          <div className={logo}>
+            <Logo />
+          </div>
+          <DrawerToggle
+            showSideDrawer={showSideDrawer}
+            onClick={exitSideDrawer}
+          />
+        </header>
         <nav>
           <NavigationItems />
         </nav>

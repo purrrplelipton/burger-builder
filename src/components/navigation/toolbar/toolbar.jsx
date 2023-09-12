@@ -1,14 +1,17 @@
-import Logo from "@c/logo";
-import { NavigationItems } from "@c/navigation";
-import DrawerToggle from "@c/navigation/sideDrawer/drawerToggle";
+import Logo from "@components/logo";
+import { NavigationItems } from "@components/navigation";
+import DrawerToggle from "@components/navigation/sideDrawer/drawerToggle";
 import propTypes from "prop-types";
 import React from "react";
 import { desktopOnly, logo, toolbar } from "./toolbar.module.css";
 
-function Toolbar({ toggleSideDrawer }) {
+function Toolbar({ showSideDrawer, toggleSideDrawer }) {
   return (
     <header className={toolbar}>
-      <DrawerToggle onClick={toggleSideDrawer} height="100%" />
+      <DrawerToggle
+        showSideDrawer={showSideDrawer}
+        onClick={toggleSideDrawer}
+      />
       <div className={logo}>
         <Logo />
       </div>
@@ -19,6 +22,9 @@ function Toolbar({ toggleSideDrawer }) {
   );
 }
 
-Toolbar.propTypes = { toggleSideDrawer: propTypes.func.isRequired };
+Toolbar.propTypes = {
+  toggleSideDrawer: propTypes.func.isRequired,
+  showSideDrawer: propTypes.bool.isRequired,
+};
 
 export default Toolbar;

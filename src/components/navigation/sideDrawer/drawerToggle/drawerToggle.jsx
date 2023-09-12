@@ -1,26 +1,23 @@
-import React from "react";
 import propTypes from "prop-types";
+import React from "react";
+import { bar, drawerToggle, open } from "./drawerToggle.module.css";
 
-import styles from "./drawerToggle.module.css";
-
-const DrawerToggle = (props) => {
-  const stylesAttached = [styles.drawerToggleWrapper, styles.open];
-  props.sideDrawerState ? null : stylesAttached.pop();
-
-  const menuStyle = [styles.drawerToggle, styles.open];
-  props.sideDrawerState ? null : menuStyle.pop();
-
+function DrawerToggle({ showSideDrawer, onClick }) {
   return (
-    <div className={stylesAttached.join(" ")} style={{ height: props.height }}>
-      <span onClick={props.onClick} className={menuStyle.join(" ")}></span>
-    </div>
+    <button
+      type="button"
+      className={showSideDrawer ? [drawerToggle, open].join(" ") : drawerToggle}
+      onClick={onClick}
+      title={showSideDrawer ? "Close side drawer" : "Open side drawer"}
+    >
+      <span className={bar} />
+    </button>
   );
-};
+}
 
 DrawerToggle.propTypes = {
-  onClick: propTypes.func,
-  sideDrawerState: propTypes.bool,
-  height: propTypes.string,
+  onClick: propTypes.func.isRequired,
+  showSideDrawer: propTypes.bool.isRequired,
 };
 
 export default DrawerToggle;

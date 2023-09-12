@@ -1,13 +1,14 @@
-import { BuildControls, Burger, OrderSummary } from "@c/burger";
-import { Modal, Spinner } from "@c/ui";
-import React, { useReducer } from "react";
-import axios from "../../axios_orders";
+import { BuildControls, Burger, OrderSummary } from "@components/burger";
+import { Modal, Spinner } from "@components/ui";
+import axios from "@src/axios";
+import ErrorHandler from "@src/hoc/error-handler";
+import React, { useEffect, useReducer } from "react";
 
 const CONTENT_PRICES = {
   lettuce: 50,
   bacon: 200,
   cheese: 100,
-  onionRings: 100,
+  "onion-rings": 100,
   pickles: 50,
   patty: 300,
   tomato: 50,
@@ -15,32 +16,28 @@ const CONTENT_PRICES = {
 
 function BurgerBuilder() {
   const [state, dispatch] = useReducer((prev, next) => ({ ...prev, ...next }), {
-    ingredients: {
-      pickles: 0,
-      cheese: 0,
-      onionRings: 0,
-      patty: 0,
-      lettuce: 0,
-      bacon: 0,
-      tomato: 0,
-    },
+    ingredients: null,
     price: 100,
-    canPurchase: false,
+    "can-purchase": false,
     purchasing: false,
     loading: false,
   });
+
+  useEffect(() => {
+    axios
+      .get("/ingredients.json")
+      .then(({ data }) => dispatch({ ingredients: data }));
+  }, []);
 
   const updatePurchaseState = (contents) => {
     const totalContents = Object.values(contents).reduce(
       (sum, el) => sum + el,
       0
     );
-    dispatch({ canPurchase: totalContents > 0 });
+    dispatch({ "can-purchase": totalContents > 0 });
   };
 
   const checkout = () => {
-    // window.alert("proceed to checkout!");
-
     dispatch({ loading: true });
 
     const order = {
@@ -50,11 +47,11 @@ function BurgerBuilder() {
         name: "Maximus Elrond",
         address: {
           street: "TestStreet 1",
-          zipCode: "41351",
+          "zip-code": "41351",
           country: "Germany",
         },
-        eMail: "test@test.com",
-        deliveryMethod: "fastest",
+        email: "test@test.com",
+        "delivery-method": "fastest",
       },
     };
 
@@ -84,39 +81,54 @@ function BurgerBuilder() {
     updatePurchaseState(updatedContents);
   };
 
-  const disabledInfo = structuredClone(state.ingredients);
-  Object.keys(disabledInfo).forEach((val) => {
-    disabledInfo[val] = disabledInfo[val] <= 0;
-  });
+  let disabledInfo = null;
+
+  if (state.ingredients) {
+    disabledInfo = structuredClone(state.ingredients);
+    Object.keys(disabledInfo).forEach((val) => {
+      disabledInfo[val] = disabledInfo[val] <= 0;
+    });
+  }
+
+  let burger$controls = <Spinner />;
+  if (state.ingredients) {
+    burger$controls = (
+      <>
+        <Burger ingredients={state.ingredients} />
+        <BuildControls
+          removeContent={removeContent}
+          addContent={addContent}
+          disabled={disabledInfo}
+          purchasable={state["can-purchase"]}
+          price={state.price}
+          ordering={() => dispatch({ purchasing: true })}
+        />
+      </>
+    );
+  }
+
+  const exitSummary = () => dispatch({ purchasing: false });
+
+  let summary = null;
+  if (state.ingredients) {
+    summary = (
+      <OrderSummary
+        contents={state.ingredients}
+        cancelPurchase={exitSummary}
+        checkout={checkout}
+        totalPrice={state.price}
+      />
+    );
+  }
 
   return (
     <>
-      <Modal
-        showModal={state.purchasing}
-        exitModal={() => dispatch({ purchasing: false })}
-      >
-        {state.loading ? (
-          <Spinner />
-        ) : (
-          <OrderSummary
-            contents={state.ingredients}
-            cancelPurchase={() => dispatch({ purchasing: false })}
-            checkout={checkout}
-            totalPrice={state.price}
-          />
-        )}
+      <Modal showModal={state.purchasing} exitModal={exitSummary}>
+        {state.loading ? <Spinner /> : summary}
       </Modal>
-      <Burger ingredients={state.ingredients} />
-      <BuildControls
-        removeContent={removeContent}
-        addContent={addContent}
-        disabled={disabledInfo}
-        purchasable={state.canPurchase}
-        price={state.price}
-        ordering={() => dispatch({ purchasing: true })}
-      />
+      {burger$controls}
     </>
   );
 }
 
-export default BurgerBuilder;
+export default ErrorHandler(BurgerBuilder, axios);

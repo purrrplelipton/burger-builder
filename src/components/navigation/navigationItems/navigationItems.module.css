@@ -1,15 +1,12 @@
 .navigation-items {
-  height: 100%;
-  margin: 0;
-  padding: 0;
   list-style-type: none;
   display: flex;
-  flex-direction: column;
+  flex-flow: column nowrap;
   align-items: center;
 }
 
-@media only screen and (min-width: 500px) {
+@media only screen and (min-width: 625px) {
   .navigation-items {
-    flex-direction: row;
+    flex-flow: row nowrap;
   }
 }

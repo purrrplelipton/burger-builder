@@ -1,5 +1,5 @@
 .build-controls {
-  width: 100%;
+  /* width: 100%; */
   background-image: linear-gradient(to right, #bc581e 7.5%, #e27b36);
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -9,10 +9,10 @@
 }
 
 .current-price {
+  display: inline-block;
   color: #181818;
   background-color: var(--header-color);
-  padding: 16px 12px;
-  width: max-content;
+  padding: 12px 16px;
 }
 
 .order-button {
