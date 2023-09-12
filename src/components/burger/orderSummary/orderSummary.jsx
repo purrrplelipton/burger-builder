@@ -1,21 +1,20 @@
-import React from 'react'
-import propTypes from 'prop-types'
+import React from "react";
+import propTypes from "prop-types";
 
-import Auxiliary from '../../../hoc/auxiliary/auxiliary'
-import Button from '../../ui/button/button'
+import Button from "../../ui/button/button";
 
 const OrderSummary = (props) => {
   const contentSummary = Object.keys(props.contents).map(
     (contentKey, contentIndex) => (
-      <li key={contentKey + contentIndex + '_' + props.contents[contentKey]}>
-        <span style={{ textTransform: 'capitalize' }}>{contentKey}</span>:{' '}
+      <li key={contentKey + contentIndex + "_" + props.contents[contentKey]}>
+        <span style={{ textTransform: "capitalize" }}>{contentKey}</span>:{" "}
         {props.contents[contentKey]}
       </li>
     )
-  )
+  );
 
   return (
-    <Auxiliary>
+    <>
       <h3>Your Order</h3>
       <p>A burger with the following contents:</p>
       <ul>{contentSummary}</ul>
@@ -23,21 +22,21 @@ const OrderSummary = (props) => {
         Total: <strong>{props.totalPrice.toFixed(2)}</strong>
       </p>
       <p>Checkout?</p>
-      <Button btnType={'danger'} onClick={props.cancelPurchase}>
+      <Button btnType={"danger"} onClick={props.cancelPurchase}>
         CANCEL
       </Button>
-      <Button btnType={'success'} onClick={props.checkout}>
+      <Button btnType={"success"} onClick={props.checkout}>
         CONTINUE
       </Button>
-    </Auxiliary>
-  )
-}
+    </>
+  );
+};
 
 OrderSummary.propTypes = {
   contents: propTypes.object.isRequired,
   cancelPurchase: propTypes.func.isRequired,
   checkout: propTypes.func.isRequired,
   totalPrice: propTypes.number.isRequired,
-}
+};
 
-export default OrderSummary
+export default OrderSummary;

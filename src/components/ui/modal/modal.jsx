@@ -1,30 +1,29 @@
-import React, { memo } from "react";
+import { Backdrop } from "@c/ui";
 import propTypes from "prop-types";
+import React, { memo } from "react";
+import { modal } from "./modal.module.css";
 
-import Auxiliary from "../../../hoc/auxiliary/auxiliary";
-import Backdrop from "../backdrop/backdrop";
-
-import styles from "./modal.module.css";
-
-const Modal = (props) => (
-  <Auxiliary>
-    <Backdrop showModal={props.showModal} exitModal={props.exitModal} />
-    <div
-      style={{
-        transform: props.showModal ? "translateY(0)" : "translateY(-100vh)",
-        opacity: props.showModal ? "1" : "0",
-      }}
-      className={styles.modal}
-    >
-      {props.children}
-    </div>
-  </Auxiliary>
-);
+function Modal({ exitModal, showModal, children }) {
+  return (
+    <>
+      <Backdrop showModal={showModal} exitModal={exitModal} />
+      <div
+        style={{
+          transform: showModal ? "translateY(0)" : "translateY(-100vh)",
+          opacity: showModal ? "1" : "0",
+        }}
+        className={modal}
+      >
+        {children}
+      </div>
+    </>
+  );
+}
 
 Modal.propTypes = {
-  children: propTypes.any,
-  showModal: propTypes.bool,
-  exitModal: propTypes.func,
+  children: propTypes.node.isRequired,
+  showModal: propTypes.bool.isRequired,
+  exitModal: propTypes.func.isRequired,
 };
 
 export default memo(Modal);

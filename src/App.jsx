@@ -1,17 +1,13 @@
-import React from 'react'
-
-import Layout from './hoc/layout/layout'
-import BurgerBuilder from './containers/burgerBuilder/burgerBuilder'
-import Auxiliary from './hoc/auxiliary/auxiliary'
+import React from "react";
+import BurgerBuilder from "./containers/burgerBuilder";
+import Layout from "./hoc/layout";
 
 function App() {
   return (
-    <Auxiliary>
-      <Layout>
-        <BurgerBuilder />
-      </Layout>
-    </Auxiliary>
-  )
+    <Layout>
+      <BurgerBuilder />
+    </Layout>
+  );
 }
 
-export default App
+export default App;

@@ -1,22 +1,23 @@
-import React from 'react'
-import propTypes from 'prop-types'
+import propTypes from "prop-types";
+import React from "react";
+import { button } from "./button.module.css";
 
-import styles from './button.module.css'
-
-const Button = (props) => (
-  <button
-    type={'button'}
-    className={[styles.button, styles[props.btnType]].join(' ')}
-    onClick={props.onClick}
-  >
-    {props.children}
-  </button>
-)
-
-Button.propTypes = {
-  children: propTypes.string.isRequired,
-  onClick: propTypes.func.isRequired,
-  btnType: propTypes.string.isRequired,
+function Button({ btnType, onClick, children }) {
+  return (
+    <button
+      type="button"
+      className={[button, btnType].join(" ")}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  );
 }
 
-export default Button
+Button.propTypes = {
+  children: propTypes.oneOfType([propTypes.node, propTypes.string]).isRequired,
+  onClick: propTypes.func.isRequired,
+  btnType: propTypes.oneOf(["danger", "success"]).isRequired,
+};
+
+export default Button;

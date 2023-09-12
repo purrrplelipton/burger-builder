@@ -1,44 +1,38 @@
-import React from 'react'
-import propTypes from 'prop-types'
+import Logo from "@c/logo";
+import { NavigationItems } from "@c/navigation";
+import { Backdrop } from "@c/ui";
+import propTypes from "prop-types";
+import React from "react";
+import DrawerToggle from "./drawerToggle";
+import { closed, logo, sideDrawer } from "./sideDrawer.module.css";
 
-import Logo from '../../logo/logo'
-import NavigationItems from '../navigationItems/navigationItems'
-import Aux from '../../../hoc/auxiliary/auxiliary'
-import Backdrop from '../../ui/backdrop/backdrop'
-import DrawerToggle from './drawerToggle/drawerToggle'
-
-import styles from './sideDrawer.module.css'
-
-const SideDrawer = (props) => {
-  const stylesAttached = [styles.sideDrawer, styles.closed]
-  props.showSideDrawer ? stylesAttached.pop() : null
+function SideDrawer({ showSideDrawer, exitSideDrawer }) {
+  const stylesAttached = [sideDrawer, closed];
+  if (showSideDrawer) stylesAttached.pop();
 
   return (
-    <Aux>
-      <Backdrop
-        showModal={props.showSideDrawer}
-        exitModal={props.exitSideDrawer}
-      />
-      <div className={stylesAttached.join(' ')}>
-        <div className={styles.logo}>
+    <>
+      <Backdrop showModal={showSideDrawer} exitModal={exitSideDrawer} />
+      <div className={stylesAttached.join(" ")}>
+        <div className={logo}>
           <Logo />
         </div>
         <DrawerToggle
-          height={'48px'}
-          sideDrawerState={props.showSideDrawer}
-          onClick={props.exitSideDrawer}
+          height="48px"
+          sideDrawerState={showSideDrawer}
+          onClick={exitSideDrawer}
         />
         <nav>
           <NavigationItems />
         </nav>
       </div>
-    </Aux>
-  )
+    </>
+  );
 }
 
 SideDrawer.propTypes = {
-  showSideDrawer: propTypes.bool,
+  showSideDrawer: propTypes.bool.isRequired,
   exitSideDrawer: propTypes.func.isRequired,
-}
+};
 
-export default SideDrawer
+export default SideDrawer;

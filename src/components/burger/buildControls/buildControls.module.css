@@ -9,10 +9,10 @@
 }
 
 .current-price {
+  color: #181818;
   background-color: var(--header-color);
   padding: 16px 12px;
   width: max-content;
-  color: var(--default-bg-color);
 }
 
 .order-button {

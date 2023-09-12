@@ -1,56 +1,51 @@
-import React, { useState } from "react";
-
-import Auxiliary from "../../hoc/auxiliary/auxiliary";
-import Burger from "../../components/burger/burger";
-import BuildControls from "../../components/burger/buildControls/buildControls";
-import Modal from "../../components/ui/modal/modal";
-import OrderSummary from "../../components/burger/orderSummary/orderSummary";
+import { BuildControls, Burger, OrderSummary } from "@c/burger";
+import { Modal, Spinner } from "@c/ui";
+import React, { useReducer } from "react";
 import axios from "../../axios_orders";
-import Spinner from "../../components/ui/spinner/spinner";
-import withErrorHandler from "../../hoc/with_error_handler/with_error_handler";
 
 const CONTENT_PRICES = {
-  lettuce: 0.25,
-  bacon: 0.75,
-  cheese: 1,
-  onionRings: 0.35,
-  pickles: 0.2,
-  patty: 1,
-  tomato: 0.5,
+  lettuce: 50,
+  bacon: 200,
+  cheese: 100,
+  onionRings: 100,
+  pickles: 50,
+  patty: 300,
+  tomato: 50,
 };
 
-const BurgerBuilder = () => {
-  const [ingredients, setIngredients] = useState({
-    pickles: 0,
-    cheese: 0,
-    onionRings: 0,
-    patty: 0,
-    lettuce: 0,
-    bacon: 0,
-    tomato: 0,
+function BurgerBuilder() {
+  const [state, dispatch] = useReducer((prev, next) => ({ ...prev, ...next }), {
+    ingredients: {
+      pickles: 0,
+      cheese: 0,
+      onionRings: 0,
+      patty: 0,
+      lettuce: 0,
+      bacon: 0,
+      tomato: 0,
+    },
+    price: 100,
+    canPurchase: false,
+    purchasing: false,
+    loading: false,
   });
-  const [price, setPrice] = useState(3.35);
-  const [purchasable, setPurchasable] = useState(false);
-  const [purchasing, setPurchasing] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const updatePurchaseState = (contents) => {
-    const totalContents = Object.values(contents).reduce((sum, el) => sum + el);
-    setPurchasable(totalContents > 0);
+    const totalContents = Object.values(contents).reduce(
+      (sum, el) => sum + el,
+      0
+    );
+    dispatch({ canPurchase: totalContents > 0 });
   };
-
-  const purchasingHandler = () => setPurchasing(true);
-
-  const cancelPurchase = () => setPurchasing(false);
 
   const checkout = () => {
     // window.alert("proceed to checkout!");
 
-    setLoading(true);
+    dispatch({ loading: true });
 
     const order = {
-      contents: ingredients,
-      price: price.toFixed(2),
+      contents: state.ingredients,
+      price: state.price.toFixed(2),
       customer: {
         name: "Maximus Elrond",
         address: {
@@ -65,69 +60,63 @@ const BurgerBuilder = () => {
 
     axios
       .post("/orders.json", order)
-      .then(() => {
-        setLoading(false);
-        setPurchasing(false);
-      })
-      .catch(() => {
-        setLoading(false);
-        setPurchasing(false);
-      });
+      .finally(() => dispatch({ loading: false, purchasing: false }));
   };
 
-  const addContentHandler = (type) => {
-    const updatedContents = { ...ingredients };
-    updatedContents[type] = ingredients[type] + 1;
+  const addContent = (type) => {
+    const updatedContents = structuredClone(state.ingredients);
+    updatedContents[type] = state.ingredients[type] + 1;
 
-    const updatedPrice = price + CONTENT_PRICES[type];
-
-    setIngredients(updatedContents);
-    setPrice(updatedPrice);
+    const updatedPrice = state.price + CONTENT_PRICES[type];
+    dispatch({ ingredients: updatedContents, price: updatedPrice });
     updatePurchaseState(updatedContents);
   };
 
-  const removeContentHandler = (type) => {
-    const updatedContents = { ...ingredients };
+  const removeContent = (type) => {
+    const updatedContents = structuredClone(state.ingredients);
     updatedContents[type] =
-      ingredients[type] <= 0 ? ingredients[type] - 0 : ingredients[type] - 1;
+      state.ingredients[type] <= 0
+        ? state.ingredients[type] - 0
+        : state.ingredients[type] - 1;
 
-    const updatedPrice = price - CONTENT_PRICES[type];
-
-    setIngredients(updatedContents);
-    setPrice(updatedPrice);
+    const updatedPrice = state.price - CONTENT_PRICES[type];
+    dispatch({ ingredients: updatedContents, price: updatedPrice });
     updatePurchaseState(updatedContents);
   };
 
-  const disabledInfo = { ...ingredients };
-  for (const key in disabledInfo) {
-    disabledInfo[key] = disabledInfo[key] <= 0;
-  }
+  const disabledInfo = structuredClone(state.ingredients);
+  Object.keys(disabledInfo).forEach((val) => {
+    disabledInfo[val] = disabledInfo[val] <= 0;
+  });
 
   return (
-    <Auxiliary>
-      <Modal showModal={purchasing} exitModal={cancelPurchase}>
-        {loading ? (
+    <>
+      <Modal
+        showModal={state.purchasing}
+        exitModal={() => dispatch({ purchasing: false })}
+      >
+        {state.loading ? (
           <Spinner />
         ) : (
           <OrderSummary
-            contents={ingredients}
-            cancelPurchase={cancelPurchase}
+            contents={state.ingredients}
+            cancelPurchase={() => dispatch({ purchasing: false })}
             checkout={checkout}
-            totalPrice={price}
+            totalPrice={state.price}
           />
         )}
       </Modal>
-      <Burger ingredients={ingredients} />
+      <Burger ingredients={state.ingredients} />
       <BuildControls
-        removeContent={removeContentHandler}
-        addContent={addContentHandler}
+        removeContent={removeContent}
+        addContent={addContent}
         disabled={disabledInfo}
-        purchasable={purchasable}
-        price={price}
-        ordering={purchasingHandler}
+        purchasable={state.canPurchase}
+        price={state.price}
+        ordering={() => dispatch({ purchasing: true })}
       />
-    </Auxiliary>
+    </>
   );
-};
+}
 
-export default withErrorHandler(BurgerBuilder);
+export default BurgerBuilder;

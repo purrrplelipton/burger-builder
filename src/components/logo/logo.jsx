@@ -1,15 +1,15 @@
-import React from 'react'
-import propTypes from 'prop-types'
+import propTypes from "prop-types";
+import React from "react";
+import burger_logo from "../../assets/images/hamburger-512.png";
+import { logo } from "./logo.module.css";
 
-import burger_logo from '../../assets/images/hamburger-512.png'
-import styles from './logo.module.css'
+function Logo({ height }) {
+  return (
+    <div className={logo} style={{ height }}>
+      <img src={burger_logo} alt={"burger logo"} />
+    </div>
+  );
+}
+Logo.propTypes = { height: propTypes.string };
 
-const Logo = (props) => (
-  <div className={styles.logo} style={{ height: props.height }}>
-    <img src={burger_logo} alt={'burger logo'} />
-  </div>
-)
-
-Logo.propTypes = { height: propTypes.string }
-
-export default Logo
+export default Logo;

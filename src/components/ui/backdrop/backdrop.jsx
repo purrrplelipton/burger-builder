@@ -1,16 +1,16 @@
-import React from "react";
 import propTypes from "prop-types";
+import React from "react";
+import { backDrop } from "./backdrop.module.css";
 
-import styles from "./backdrop.module.css";
-
-const Backdrop = (props) =>
-  props.showModal ? (
-    <div className={styles.backDrop} onClick={props.exitModal}></div>
-  ) : null;
+function Backdrop({ showModal, exitModal }) {
+  if (showModal) {
+    return <div role="presentation" className={backDrop} onClick={exitModal} />;
+  }
+}
 
 Backdrop.propTypes = {
-  showModal: propTypes.bool,
-  exitModal: propTypes.func,
+  showModal: propTypes.bool.isRequired,
+  exitModal: propTypes.func.isRequired,
 };
 
 export default Backdrop;

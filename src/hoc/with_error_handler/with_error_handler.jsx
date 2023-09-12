@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import Modal from "../../components/ui/modal/modal";
-import Auxiliary from "../auxiliary/auxiliary";
 
 const withErrorHandler = (WrappedComponents, axios) => {
   useEffect(() => {
@@ -9,10 +8,10 @@ const withErrorHandler = (WrappedComponents, axios) => {
   });
 
   return (props) => (
-    <Auxiliary>
+    <>
       <Modal showModal>sum shit didn't work</Modal>
       <WrappedComponents {...props} />
-    </Auxiliary>
+    </>
   );
 };
 
