@@ -33,12 +33,12 @@
 }
 
 .drawer-toggle.open .bar {
-  transform: rotate(45deg);
+  transform: rotate(0.125turn);
   background-color: #f57328;
 }
 
 .drawer-toggle.open .bar::before {
-  transform: rotate(-90deg);
+  transform: rotate(-0.25turn);
   top: 0;
 }
 
@@ -46,7 +46,7 @@
   content: none;
 }
 
-@media only screen and (min-width: 625px) {
+@media only screen and (min-width: 768px) {
   .drawer-toggle {
     display: none;
   }

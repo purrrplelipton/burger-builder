@@ -3,23 +3,25 @@ import React, { useEffect, useState } from "react";
 import { backDrop, fadeIn } from "./backdrop.module.css";
 
 function Backdrop({ show, onClick, children }) {
-  // const [visible, setVisibility] = useState(show);
+  const [visible, setVisibility] = useState(false);
   const [classList, setClassList] = useState([backDrop]);
 
   useEffect(() => {
-    if (show) setClassList((prv) => prv.concat(fadeIn));
-    else {
-      const removal$delay = setTimeout(
-        () => setClassList((prv) => prv.filter((cn) => cn !== fadeIn)),
-        400
+    if (show) {
+      setVisibility(true);
+      const reveal$delay = setTimeout(
+        () => setClassList((prv) => [...prv, fadeIn]),
+        100
       );
-      return () => clearTimeout(removal$delay);
+      return () => clearTimeout(reveal$delay);
     }
-    return () => {};
+    setClassList((prv) => prv.filter((cn) => cn !== fadeIn));
+    const removal$delay = setTimeout(() => setVisibility(false), 400);
+    return () => clearTimeout(removal$delay);
   }, [show]);
 
   return (
-    show && (
+    visible && (
       <div
         role="presentation"
         className={classList.join(" ")}
@@ -30,7 +32,6 @@ function Backdrop({ show, onClick, children }) {
     )
   );
 }
-
 Backdrop.defaultProps = { children: null };
 
 Backdrop.propTypes = {

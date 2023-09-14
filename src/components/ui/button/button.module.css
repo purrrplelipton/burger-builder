@@ -1,12 +1,16 @@
 .button {
   background-color: unset;
-  border: none;
-  color: white;
-  outline: none;
+  border: 0;
+  outline: 1px solid transparent;
   cursor: pointer;
-  padding: 10px;
-  margin: 10px;
-  font-weight: bold;
+  padding: 8px 12px;
+  margin: 12px;
+  font-weight: 700;
+  transition: transform 0.125s ease-in-out;
+}
+
+.button:active {
+  transform: translateY(1px);
 }
 
 .success {

@@ -15,7 +15,7 @@
   max-width: 48px;
 }
 
-@media only screen and (max-width: 625px) {
+@media only screen and (max-width: 768px) {
   .desktop-only {
     display: none;
   }

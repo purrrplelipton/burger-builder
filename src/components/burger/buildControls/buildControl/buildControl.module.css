@@ -1,20 +1,16 @@
 .build-control {
   display: flex;
-  /* justify-content: space-between; */
   align-items: center;
   margin: 5px 0;
 }
 
 .build-control button {
-  display: block;
-  font: inherit;
   padding: 5px;
   margin: 0 5px;
   width: 96px;
   border: 1px solid #c15711;
-  outline: none;
-}
-.build-control button:hover {
+  outline: 1px solid transparent;
+  color: #fff;
   cursor: pointer;
 }
 
@@ -25,36 +21,38 @@
   cursor: default;
 }
 
-.build-control button:hover:disabled {
-  background-color: #ac9980;
-  color: #ccc;
+.build-control button:disabled:hover {
   cursor: not-allowed;
 }
 
 .label {
   padding: 10px;
-  font-weight: bold;
+  font-weight: 700;
   width: 112px;
 }
 
 .build-control .remove {
   background-color: #d39952;
-  color: white;
 }
 
 .build-control .add {
   background-color: #8f5e1e;
-  color: white;
 }
 
-.build-control .remove:hover,
-.build-control .remove:active {
+.build-control .remove:hover {
   background-color: #daa972;
-  color: white;
+}
+
+.build-control .add:hover {
+  background-color: #99703f;
+}
+
+.build-control .remove:active,
+.build-control .add:active {
+  transform: scale(0.9375);
 }
 
 .build-control .add:hover,
 .build-control .add:active {
-  background-color: #99703f;
-  color: white;
+  color: #fff;
 }

@@ -5,26 +5,31 @@ function ErrorHandler(Wrapper, instance) {
   return function (props) {
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-      instance.interceptors.request.use((request) => {
-        setError(null);
-        return request;
-      });
-      instance.interceptors.response.use(
-        (response) => response,
-        (err) => {
-          setError(err);
-        }
-      );
-    }, []);
+    const requestInterceptor = instance.interceptors.request.use((request) => {
+      setError(null);
+      return request;
+    });
 
-    const dismissError = () => setError(null);
+    const responseInterceptor = instance.interceptors.response.use(
+      (res) => res,
+      (err) => setError(err)
+    );
+
+    useEffect(
+      () => () => {
+        instance.interceptors.request.eject(requestInterceptor);
+        instance.interceptors.response.eject(responseInterceptor);
+      },
+      [requestInterceptor, responseInterceptor]
+    );
 
     return (
       <>
-        <Modal showModal={Boolean(error)} exitModal={dismissError}>
-          {error ? error.message : null}
-        </Modal>
+        {error && (
+          <Modal showModal={Boolean(error)} exitModal={() => setError(null)}>
+            {error.message}
+          </Modal>
+        )}
         <Wrapper {...props} />
       </>
     );

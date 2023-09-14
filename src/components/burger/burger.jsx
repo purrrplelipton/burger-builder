@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
+import { Router } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { burger } from "./burger.module.css";
 import BurgerIngredient from "./burgerIngredients/burgerIngredients";
@@ -26,6 +27,16 @@ function Burger({ ingredients }) {
   );
 }
 
-Burger.propTypes = { ingredients: PropTypes.object.isRequired };
+Burger.propTypes = {
+  ingredients: PropTypes.shape({
+    lettuce: PropTypes.number.isRequired,
+    bacon: PropTypes.number.isRequired,
+    cheese: PropTypes.number.isRequired,
+    tomato: PropTypes.number.isRequired,
+    "onion-rings": PropTypes.number.isRequired,
+    patty: PropTypes.number.isRequired,
+    pickles: PropTypes.number.isRequired,
+  }).isRequired,
+};
 
 export default Burger;

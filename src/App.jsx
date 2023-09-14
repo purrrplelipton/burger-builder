@@ -1,11 +1,15 @@
 import React from "react";
-import BurgerBuilder from "./containers/burgerBuilder";
+import { Route, Routes } from "react-router-dom";
+import { BurgerBuilder, Checkout } from "./containers";
 import Layout from "./hoc/layout";
 
 function App() {
   return (
     <Layout>
-      <BurgerBuilder />
+      <Routes>
+        <Route exact path="/" Component={BurgerBuilder} />
+        <Route path="/checkout" Component={Checkout} />
+      </Routes>
     </Layout>
   );
 }

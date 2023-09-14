@@ -1,5 +1,5 @@
 import { Button } from "@components/ui";
-import propTypes from "prop-types";
+import PropTypes from "prop-types";
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -32,10 +32,18 @@ function OrderSummary({ contents, cancelPurchase, totalPrice, checkout }) {
 }
 
 OrderSummary.propTypes = {
-  contents: propTypes.object.isRequired,
-  cancelPurchase: propTypes.func.isRequired,
-  checkout: propTypes.func.isRequired,
-  totalPrice: propTypes.number.isRequired,
+  contents: PropTypes.shape({
+    lettuce: PropTypes.number.isRequired,
+    bacon: PropTypes.number.isRequired,
+    cheese: PropTypes.number.isRequired,
+    tomato: PropTypes.number.isRequired,
+    "onion-rings": PropTypes.number.isRequired,
+    patty: PropTypes.number.isRequired,
+    pickles: PropTypes.number.isRequired,
+  }).isRequired,
+  cancelPurchase: PropTypes.func.isRequired,
+  checkout: PropTypes.func.isRequired,
+  totalPrice: PropTypes.number.isRequired,
 };
 
 export default OrderSummary;

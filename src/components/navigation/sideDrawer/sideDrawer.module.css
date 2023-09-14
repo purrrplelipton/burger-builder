@@ -5,14 +5,16 @@
   z-index: 99;
   background-color: var(--header-color);
   padding: 1rem;
+  opacity: 0;
+  transform: translateX(-100%);
   transition:
     transform 0.3s ease-in-out,
     opacity 0.3s ease;
 }
 
-.hidden {
-  opacity: 0;
-  transform: translateX(-100%);
+.slide-out {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .top-section {
@@ -27,7 +29,7 @@
   max-width: 48px;
 }
 
-@media only screen and (min-width: 625px) {
+@media only screen and (min-width: 768px) {
   .side-drawer {
     display: none;
   }

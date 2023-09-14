@@ -1,8 +1,9 @@
 import { BuildControls, Burger, OrderSummary } from "@components/burger";
 import { Modal, Spinner } from "@components/ui";
-import axios from "@src/axios";
+import axios$instance from "@src/axios-instance";
 import ErrorHandler from "@src/hoc/error-handler";
 import React, { useEffect, useReducer } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CONTENT_PRICES = {
   lettuce: 50,
@@ -15,18 +16,43 @@ const CONTENT_PRICES = {
 };
 
 function BurgerBuilder() {
+  const navigate = useNavigate();
   const [state, dispatch] = useReducer((prev, next) => ({ ...prev, ...next }), {
     ingredients: null,
     price: 100,
     "can-purchase": false,
     purchasing: false,
     loading: false,
+    error: null,
   });
 
   useEffect(() => {
-    axios
+    axios$instance
       .get("/ingredients.json")
-      .then(({ data }) => dispatch({ ingredients: data }));
+      .then(({ data }) => {
+        dispatch({ ingredients: data });
+        /* // */
+        let base$price = state.price;
+        const contents = { ...data };
+        Object.keys(contents).forEach((cn) => {
+          if (contents[cn] > 0) {
+            for (let i = 0; i < contents[cn]; i++) {
+              base$price += CONTENT_PRICES[cn];
+            }
+            /* // */
+            dispatch({ price: base$price });
+          }
+        });
+        const contentValues = Object.values(contents);
+        let current$items = 0;
+        for (let i = 0; i < contentValues.length; i++) {
+          current$items += contentValues[i];
+        }
+        /* // */
+        dispatch({ "can-purchase": current$items > 0 });
+      })
+      .catch((error) => dispatch({ error }));
+    return () => {};
   }, []);
 
   const updatePurchaseState = (contents) => {
@@ -38,30 +64,41 @@ function BurgerBuilder() {
   };
 
   const checkout = () => {
-    dispatch({ loading: true });
+    // dispatch({ loading: true });
 
-    const order = {
-      contents: state.ingredients,
-      price: state.price.toFixed(2),
-      customer: {
-        name: "Maximus Elrond",
-        address: {
-          street: "TestStreet 1",
-          "zip-code": "41351",
-          country: "Germany",
-        },
-        email: "test@test.com",
-        "delivery-method": "fastest",
-      },
-    };
+    // const order = {
+    //   contents: state.ingredients,
+    //   price: state.price.toFixed(2),
+    //   customer: {
+    //     name: "Maximus Elrond",
+    //     address: {
+    //       street: "TestStreet 1",
+    //       "zip-code": "41351",
+    //       country: "Germany",
+    //     },
+    //     email: "test@test.com",
+    //     "delivery-method": "fastest",
+    //   },
+    // };
 
-    axios
-      .post("/orders.json", order)
-      .finally(() => dispatch({ loading: false, purchasing: false }));
+    // axios$instance
+    //   .post("/orders.json", order)
+    //   .finally(() => dispatch({ loading: false, purchasing: false }));
+    const query = [];
+    const cn = Object.keys(state.ingredients);
+    for (let i = 0; i < cn.length; i++) {
+      const val = state.ingredients[cn[i]];
+      query.push(`${encodeURIComponent(cn[i])}=${encodeURIComponent(val)}`);
+    }
+    navigate({
+      replace: true,
+      pathname: "/checkout",
+      search: `?${query.join("&")}`,
+    });
   };
 
   const addContent = (type) => {
-    const updatedContents = structuredClone(state.ingredients);
+    const updatedContents = { ...state.ingredients };
     updatedContents[type] = state.ingredients[type] + 1;
 
     const updatedPrice = state.price + CONTENT_PRICES[type];
@@ -70,7 +107,7 @@ function BurgerBuilder() {
   };
 
   const removeContent = (type) => {
-    const updatedContents = structuredClone(state.ingredients);
+    const updatedContents = { ...state.ingredients };
     updatedContents[type] =
       state.ingredients[type] <= 0
         ? state.ingredients[type] - 0
@@ -84,13 +121,17 @@ function BurgerBuilder() {
   let disabledInfo = null;
 
   if (state.ingredients) {
-    disabledInfo = structuredClone(state.ingredients);
+    disabledInfo = { ...state.ingredients };
     Object.keys(disabledInfo).forEach((val) => {
       disabledInfo[val] = disabledInfo[val] <= 0;
     });
   }
 
-  let burger$controls = <Spinner />;
+  let burger$controls = state.error ? (
+    <p>{state.error.message}</p>
+  ) : (
+    <Spinner />
+  );
   if (state.ingredients) {
     burger$controls = (
       <>
@@ -131,4 +172,4 @@ function BurgerBuilder() {
   );
 }
 
-export default ErrorHandler(BurgerBuilder, axios);
+export default ErrorHandler(BurgerBuilder, axios$instance);

@@ -30,7 +30,10 @@ function BuildControls({
     <>
       <p className={currentPrice}>
         Current Price:&nbsp;
-        <strong>₦{price.toFixed(2)}</strong>
+        <strong>
+          ₦&nbsp;
+          {price.toFixed(2)}
+        </strong>
       </p>
       <div className={buildControls}>
         {controls.map((ctrl) => (

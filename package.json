@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "axios": "latest",
+    "cors": "^2.8.5",
     "prop-types": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "react-router-dom": "^6.16.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

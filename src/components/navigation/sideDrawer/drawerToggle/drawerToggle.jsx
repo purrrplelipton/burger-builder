@@ -6,7 +6,7 @@ function DrawerToggle({ showSideDrawer, onClick }) {
   return (
     <button
       type="button"
-      className={showSideDrawer ? [drawerToggle, open].join(" ") : drawerToggle}
+      className={`${drawerToggle} ${showSideDrawer ? open : ""}`}
       onClick={onClick}
       title={showSideDrawer ? "Close side drawer" : "Open side drawer"}
     >

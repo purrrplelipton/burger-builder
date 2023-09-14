@@ -1,7 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=REM:wght@200;400;700&display=swap");
+
 :root {
   --header-color: #eef1ff;
   line-height: 1.5;
-  font-family: "Open Sans", sans-serif;
+  font-family: "REM", sans-serif;
   -webkit-font-smoothing: antialiased;
   color: #181818;
 }
