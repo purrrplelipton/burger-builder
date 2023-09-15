@@ -23,8 +23,4 @@
   .toolbar {
     background-color: #f57328;
   }
-
-  .logo > * {
-    background-color: var(--header-color);
-  }
 }

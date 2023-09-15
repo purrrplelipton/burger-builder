@@ -1,27 +1,37 @@
-.navigation-item:not(:first-child) {
-  margin-left: 2px;
+.navigation-item {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
 }
 
 .navigation-item a {
+  display: inline-block;
+  width: 100%;
   color: #181818;
+  text-align: center;
   text-decoration: none;
   padding: 10px 14px;
   border-bottom: 2px solid #00000000;
-  transition:
-    transform 0.25s ease-in-out,
-    background-color 0.125s ease-in-out;
-}
-
-.navigation-item a:not(.active):hover {
-  background-color: #00000022;
-}
-
-.navigation-item a:not(.active):active {
-  transform: scale(0.9);
 }
 
 .navigation-item a.active {
   color: dodgerblue;
   background-color: #00000011;
   border-color: currentColor;
+}
+
+@media only screen and (min-width: 768px) {
+  .navigation-item a {
+    transition:
+      background-color 0.125s ease-in-out,
+      transform 0.25s ease-in-out;
+  }
+
+  .navigation-item a:not(.navigation-item a.active):hover {
+    background-color: #00000011;
+  }
+
+  .navigation-item a:not(.navigation-item a.active):active {
+    transform: scale(0.95);
+  }
 }

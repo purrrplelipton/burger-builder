@@ -1,4 +1,4 @@
-import propTypes from "prop-types";
+import pt from "prop-types";
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import BuildControl from "./build-control";
@@ -59,12 +59,20 @@ function BuildControls({
 }
 
 BuildControls.propTypes = {
-  removeContent: propTypes.func.isRequired,
-  addContent: propTypes.func.isRequired,
-  disabled: propTypes.object.isRequired,
-  price: propTypes.number.isRequired,
-  purchasable: propTypes.bool.isRequired,
-  ordering: propTypes.func.isRequired,
+  removeContent: pt.func.isRequired,
+  addContent: pt.func.isRequired,
+  disabled: pt.shape({
+    bacon: pt.bool.isRequired,
+    cheese: pt.bool.isRequired,
+    lettuce: pt.bool.isRequired,
+    "onion-rings": pt.bool.isRequired,
+    patty: pt.bool.isRequired,
+    pickles: pt.bool.isRequired,
+    tomato: pt.bool.isRequired,
+  }).isRequired,
+  price: pt.number.isRequired,
+  purchasable: pt.bool.isRequired,
+  ordering: pt.func.isRequired,
 };
 
 export default BuildControls;

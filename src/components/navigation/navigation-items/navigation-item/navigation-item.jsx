@@ -7,7 +7,7 @@ function NavigationItem({ href, children }) {
   return (
     <li className={styles.navigationItem}>
       <NavLink
-        className={(isActive) => (isActive ? styles.active : "")}
+        className={({ isActive }) => (isActive ? styles.active : "")}
         to={href}
       >
         {children}

@@ -32,8 +32,9 @@
 .order-button:not(:disabled):hover {
   background-color: #a0db41;
 }
+
 .order-button:not(:disabled):active {
-  transform: scale(0.9375);
+  transform: scale(0.95);
 }
 
 .order-button:disabled {
@@ -44,8 +45,12 @@
   box-shadow: 0 0.375em 0.875em #00000022;
 }
 
-@media only screen and (max-width: 625px) {
+@media only screen and (max-width: 768px) {
   .build-controls {
     grid-template-columns: repeat(1, 1fr);
+  }
+
+  .order-button {
+    margin-block: 0.25em;
   }
 }

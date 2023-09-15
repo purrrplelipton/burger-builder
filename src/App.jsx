@@ -7,8 +7,8 @@ function App() {
   return (
     <Layout>
       <Routes>
-        <Route exact path="/" Component={BurgerBuilder} />
-        <Route path="/checkout/*" Component={Checkout} />
+        <Route path="/" element={<BurgerBuilder />} />
+        <Route path="/checkout/*" element={<Checkout />} />
       </Routes>
     </Layout>
   );

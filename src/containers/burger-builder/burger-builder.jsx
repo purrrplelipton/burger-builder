@@ -1,6 +1,6 @@
 import { BuildControls, Burger, OrderSummary } from "@components/burger";
 import { Modal, Spinner } from "@components/ui";
-import axios$instance from "@src/axios-instance";
+import axios from "@src/axios";
 import ErrorHandler from "@src/hoc/error-handler";
 import React, { useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
@@ -27,7 +27,7 @@ function BurgerBuilder() {
   });
 
   useEffect(() => {
-    axios$instance
+    axios
       .get("/ingredients.json")
       .then(({ data }) => {
         dispatch({ ingredients: data });
@@ -81,7 +81,7 @@ function BurgerBuilder() {
     //   },
     // };
 
-    // axios$instance
+    // instance
     //   .post("/orders.json", order)
     //   .finally(() => dispatch({ loading: false, purchasing: false }));
 
@@ -166,4 +166,4 @@ function BurgerBuilder() {
   );
 }
 
-export default ErrorHandler(BurgerBuilder, axios$instance);
+export default ErrorHandler(BurgerBuilder, axios);
