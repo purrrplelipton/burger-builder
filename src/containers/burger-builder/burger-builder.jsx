@@ -84,14 +84,11 @@ function BurgerBuilder() {
     // axios$instance
     //   .post("/orders.json", order)
     //   .finally(() => dispatch({ loading: false, purchasing: false }));
-    const query = [];
-    const cn = Object.keys(state.ingredients);
-    for (let i = 0; i < cn.length; i++) {
-      const val = state.ingredients[cn[i]];
-      query.push(`${encodeURIComponent(cn[i])}=${encodeURIComponent(val)}`);
-    }
-    /* // */
-    navigate(`/checkout?${query.join("&")}`, { replace: true });
+
+    navigate("/checkout", {
+      replace: true,
+      state: { ingredients: state.ingredients },
+    });
   };
 
   const addContent = (type) => {

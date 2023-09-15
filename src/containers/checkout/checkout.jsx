@@ -10,30 +10,30 @@ function Checkout() {
   const [ingredients, setIngredients] = useState(null);
 
   useEffect(() => {
-    const query = new URLSearchParams(location.search);
-    const cns = {};
-    query.forEach((val, key) => {
-      if (parseInt(val, 10)) cns[key] = +val;
-      else cns[key] = 0;
-    });
-    setIngredients(cns);
-  }, [location.search]);
+    if (location && location.state && location.state.ingredients) {
+      setIngredients(location.state.ingredients);
+    } else {
+      setIngredients(null);
+    }
+  }, [location]);
 
   return (
     ingredients && (
       <Routes>
         <Route
-          path="/checkout/details"
-          element={<DetailsForm checkout={() => {}} />}
-        />
-        <Route
-          path="/checkout"
+          path="/checkout/*"
           element={
+            // eslint-disable-next-line react/jsx-wrap-multilines
             <CheckoutSummary
               ingredients={ingredients}
-              proceed={() => navigate("/checkout/details", { replace: true })}
+              proceed={() => navigate("details", { replace: true })}
               cancel={() => navigate(-1)}
-            />
+            >
+              <Route
+                path="details"
+                element={<DetailsForm checkout={() => {}} />}
+              />
+            </CheckoutSummary>
           }
         />
       </Routes>
