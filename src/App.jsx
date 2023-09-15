@@ -8,7 +8,7 @@ function App() {
     <Layout>
       <Routes>
         <Route exact path="/" Component={BurgerBuilder} />
-        <Route path="/checkout" Component={Checkout} />
+        <Route path="/checkout/*" Component={Checkout} />
       </Routes>
     </Layout>
   );

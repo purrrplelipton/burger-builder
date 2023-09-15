@@ -3,13 +3,13 @@ import { NavigationItems } from "@components/navigation";
 import { Backdrop } from "@components/ui";
 import propTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import DrawerToggle from "./drawerToggle";
+import DrawerToggle from "./drawer-toggle";
 import {
   logo,
   sideDrawer,
   slideOut,
   topSection,
-} from "./sideDrawer.module.css";
+} from "./side-drawer.module.css";
 
 function SideDrawer({ showSideDrawer, exitSideDrawer }) {
   const [visible, setVisibility] = useState(false);
@@ -20,12 +20,12 @@ function SideDrawer({ showSideDrawer, exitSideDrawer }) {
       setVisibility(true);
       const reveal$delay = setTimeout(
         () => setClassList((prv) => [...prv, slideOut]),
-        100
+        10
       );
       return () => clearTimeout(reveal$delay);
     }
     setClassList((prv) => prv.filter((cn) => cn !== slideOut));
-    const removal$delay = setTimeout(() => setVisibility(false), 400);
+    const removal$delay = setTimeout(() => setVisibility(false), 310);
     return () => clearTimeout(removal$delay);
   }, [showSideDrawer]);
 

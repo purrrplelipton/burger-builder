@@ -1,25 +1,43 @@
 import CheckoutSummary from "@components/order/checkout-summary";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import DetailsForm from "./details-form";
 
 function Checkout() {
   const navigate = useNavigate();
-  const [ingredients, setIngredients] = useState({
-    lettuce: 1,
-    bacon: 1,
-    cheese: 1,
-    tomato: 1,
-    patty: 1,
-    pickles: 1,
-    "onion-rings": 1,
-  });
+  const location = useLocation();
+
+  const [ingredients, setIngredients] = useState(null);
+
+  useEffect(() => {
+    const query = new URLSearchParams(location.search);
+    const cns = {};
+    query.forEach((val, key) => {
+      if (parseInt(val, 10)) cns[key] = +val;
+      else cns[key] = 0;
+    });
+    setIngredients(cns);
+  }, [location.search]);
 
   return (
-    <CheckoutSummary
-      ingredients={ingredients}
-      proceed={() => navigate("/checkout/details", { replace: true })}
-      cancel={() => navigate(-1)}
-    />
+    ingredients && (
+      <Routes>
+        <Route
+          path="/checkout/details"
+          element={<DetailsForm checkout={() => {}} />}
+        />
+        <Route
+          path="/checkout"
+          element={
+            <CheckoutSummary
+              ingredients={ingredients}
+              proceed={() => navigate("/checkout/details", { replace: true })}
+              cancel={() => navigate(-1)}
+            />
+          }
+        />
+      </Routes>
+    )
   );
 }
 

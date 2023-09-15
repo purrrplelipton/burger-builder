@@ -1,6 +1,6 @@
 import propTypes from "prop-types";
 import React from "react";
-import { bar, drawerToggle, open } from "./drawerToggle.module.css";
+import { bar, drawerToggle, open } from "./drawer-toggle.module.css";
 
 function DrawerToggle({ showSideDrawer, onClick }) {
   return (

@@ -1,7 +1,6 @@
 import propTypes from "prop-types";
 import React from "react";
-
-import styles from "./buildControl.module.css";
+import styles from "./build-control.module.css";
 
 function BuildControl({ add, remove, label, disabled }) {
   return (

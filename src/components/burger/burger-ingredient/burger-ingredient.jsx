@@ -14,7 +14,7 @@ import {
   seeds3,
   seeds4,
   tomato,
-} from "./burgerIngredients.module.css";
+} from "./burger-ingredient.module.css";
 
 function BurgerIngredient({ type }) {
   let ingredient = null;

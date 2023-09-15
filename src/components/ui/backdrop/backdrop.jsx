@@ -11,12 +11,12 @@ function Backdrop({ show, onClick, children }) {
       setVisibility(true);
       const reveal$delay = setTimeout(
         () => setClassList((prv) => [...prv, fadeIn]),
-        100
+        10
       );
       return () => clearTimeout(reveal$delay);
     }
     setClassList((prv) => prv.filter((cn) => cn !== fadeIn));
-    const removal$delay = setTimeout(() => setVisibility(false), 400);
+    const removal$delay = setTimeout(() => setVisibility(false), 310);
     return () => clearTimeout(removal$delay);
   }, [show]);
 

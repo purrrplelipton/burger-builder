@@ -90,11 +90,8 @@ function BurgerBuilder() {
       const val = state.ingredients[cn[i]];
       query.push(`${encodeURIComponent(cn[i])}=${encodeURIComponent(val)}`);
     }
-    navigate({
-      replace: true,
-      pathname: "/checkout",
-      search: `?${query.join("&")}`,
-    });
+    /* // */
+    navigate(`/checkout?${query.join("&")}`, { replace: true });
   };
 
   const addContent = (type) => {

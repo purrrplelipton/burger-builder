@@ -18,7 +18,8 @@ function OrderSummary({ contents, cancelPurchase, totalPrice, checkout }) {
       <p>A burger with the following contents:</p>
       <ul style={{ paddingInlineStart: "1.25em" }}>{contentSummary}</ul>
       <p>
-        Total: ₦<strong>{totalPrice.toFixed(2)}</strong>
+        Total:&nbsp;₦
+        <strong>{totalPrice.toFixed(2)}</strong>
       </p>
       <p>Checkout?</p>
       <Button btnType="danger" onClick={cancelPurchase}>

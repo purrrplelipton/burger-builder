@@ -1,6 +1,6 @@
-import BuildControls from "./buildControls/buildControls";
+import BuildControls from "./build-controls/build-controls";
 import Burger from "./burger";
-import BurgerIngredients from "./burgerIngredients/burgerIngredients";
-import OrderSummary from "./orderSummary/orderSummary";
+import BurgerIngredients from "./burger-ingredient/burger-ingredient";
+import OrderSummary from "./order-summary/order-summary";
 
-export { BuildControls, BurgerIngredients, OrderSummary, Burger };
+export { BuildControls, Burger, BurgerIngredients, OrderSummary };

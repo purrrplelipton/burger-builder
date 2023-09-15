@@ -1,12 +1,12 @@
 import propTypes from "prop-types";
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
-import BuildControl from "./buildControl/buildControl";
+import BuildControl from "./build-control";
 import {
   buildControls,
   currentPrice,
   orderButton,
-} from "./buildControls.module.css";
+} from "./build-controls.module.css";
 
 const controls = [
   { label: "Lettuce", type: "lettuce" },
