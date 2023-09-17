@@ -29,7 +29,7 @@ CheckoutSummary.propTypes = {
     tomato: PropTypes.number.isRequired,
     patty: PropTypes.number.isRequired,
     pickles: PropTypes.number.isRequired,
-    "onion-rings": PropTypes.number.isRequired,
+    "onion-ring": PropTypes.number.isRequired,
   }).isRequired,
   cancel: PropTypes.func.isRequired,
   proceed: PropTypes.func.isRequired,

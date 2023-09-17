@@ -7,7 +7,7 @@
 .navigation-item a {
   display: inline-block;
   width: 100%;
-  color: #181818;
+  color: inherit;
   text-align: center;
   text-decoration: none;
   padding: 10px 14px;
@@ -15,7 +15,7 @@
 }
 
 .navigation-item a.active {
-  color: dodgerblue;
+  color: #fff;
   background-color: #00000011;
   border-color: currentColor;
 }

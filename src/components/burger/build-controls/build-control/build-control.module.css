@@ -1,34 +1,65 @@
 .build-control {
+  font-size: 1.125em;
+  color: #fff;
+  line-height: 1;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  margin: 5px 0;
+  padding: 4px 6px;
+  margin-block-end: 6px;
+  box-shadow: 0 8px 14px -4px #00000011;
 }
 
-.build-control button {
-  padding: 5px;
-  margin: 0 5px;
-  width: 96px;
+.build-control:last-child {
+  margin-block-end: unset;
+}
+
+.btns-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.btns-wrapper [type="button"] {
+  font-weight: 600;
   border: 1px solid #c15711;
-  outline: 1px solid transparent;
-  color: #fff;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  color: inherit;
+  padding: calc(0.5em + 1px);
+  padding-inline-end: calc(0.625em + 1px);
+  border-radius: 50% 0 0 50%;
+  display: grid;
+  place-items: center;
   cursor: pointer;
 }
 
-.build-control button:disabled {
+.btns-wrapper [type="button"]:last-child {
+  padding-inline-start: calc(0.625em + 1px);
+  padding-inline-end: calc(0.5em + 1px);
+  border-radius: 0 50% 50% 0;
+}
+
+.btns-wrapper [type="button"] .btn-sign {
+  width: 1em;
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+}
+
+.build-control [type="button"]:disabled {
   background-color: #ac9980;
   border: 1px solid #7e7365;
   color: #ccc;
   cursor: default;
 }
 
-.build-control button:disabled:hover {
+.build-control [type="button"]:disabled:hover {
   cursor: not-allowed;
 }
 
 .label {
-  padding: 10px;
-  font-weight: 700;
-  width: 112px;
+  font-weight: 200;
+  font-size: 1.25em;
 }
 
 .build-control .remove {
@@ -39,20 +70,15 @@
   background-color: #8f5e1e;
 }
 
-.build-control .remove:hover {
+.build-control .remove:not(:disabled):hover {
   background-color: #daa972;
 }
 
-.build-control .add:hover {
+.build-control .add:not(:disabled):hover {
   background-color: #99703f;
 }
 
 .build-control .remove:active,
 .build-control .add:active {
-  transform: scale(0.9375);
-}
-
-.build-control .add:hover,
-.build-control .add:active {
-  color: #fff;
+  transform: scale(0.95);
 }

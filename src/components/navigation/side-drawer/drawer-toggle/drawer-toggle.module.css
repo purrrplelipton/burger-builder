@@ -9,7 +9,7 @@
 
 .bar {
   width: 100%;
-  background-color: #121212;
+  background-color: #fff;
   height: 3px;
   border-radius: 1em;
   position: relative;
@@ -34,7 +34,6 @@
 
 .drawer-toggle.open .bar {
   transform: rotate(0.125turn);
-  background-color: #f57328;
 }
 
 .drawer-toggle.open .bar::before {

@@ -4,8 +4,13 @@
   margin: auto;
 }
 
+.checkout-summary h1 {
+  font-size: 2em;
+  margin-block-end: 1.125em;
+}
+
 @media only screen and (min-width: 768px) {
   .checkout-summary {
-    max-width: 425px;
+    max-width: 625px;
   }
 }

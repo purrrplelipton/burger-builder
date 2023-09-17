@@ -2,10 +2,105 @@
   width: calc(100% - (1.25em * 2));
   margin: auto;
   text-align: center;
+  padding: 1.375em 1.125em;
+  border-radius: 0.625em;
+  box-shadow: 0 16px 24px -10px #00000022;
+}
+
+.wrapper h1 {
+  font-weight: 200;
+  font-size: 1.3em;
+  margin-block-end: 2em;
+  text-decoration: underline solid currentColor 1px;
+}
+
+.input-wrapper {
+  font-size: 1.125em;
+  line-height: 0.875;
+  margin-block-end: 0.75em;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  isolation: isolate;
+}
+
+.input-wrapper label {
+  white-space: nowrap;
+  position: absolute;
+  z-index: -1;
+  transform: translateX(0.375em);
+  color: #00000066;
+  transition: all 0.1s ease-in-out;
+}
+
+.indicator {
+  all: unset;
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-bottom: 2px solid #00000022;
+  outline: 2px solid #00000000;
+  outline-offset: 2px;
+}
+
+.indicator::before {
+  content: "";
+  position: absolute;
+  inset: 100% 0 -2px;
+  background-color: #f57328;
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: all 0.3s ease-in-out;
+}
+
+.base:focus ~ .indicator::before {
+  transform: scaleX(1);
+}
+
+.base:focus ~ label,
+.base:not(:focus):not([value=""]) ~ label {
+  font-size: 0.75em;
+  transform: translate(0, -200%);
+}
+
+.base {
+  display: inline-block;
+  width: 100%;
+  background-color: unset;
+  border: unset;
+  outline: unset;
+  padding: 0.5em 0.375em;
+}
+
+.contact-details-wrapper {
+  border: unset;
+  display: flex;
+  align-items: center;
+}
+
+.contact-details-wrapper .input-wrapper {
+  margin-block-end: unset;
+  width: 50%;
+}
+
+.contact-details-wrapper + .input-wrapper {
+  margin-block-start: 0.75em;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
 }
 
 @media only screen and (min-width: 768px) {
   .wrapper {
     max-width: 425px;
   }
+}
+
+*::before,
+*,
+*::after {
+  /* outline: 1px solid red; */
 }

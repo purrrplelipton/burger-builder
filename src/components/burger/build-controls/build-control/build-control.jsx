@@ -6,17 +6,25 @@ function BuildControl({ add, remove, label, disabled }) {
   return (
     <div className={styles.buildControl}>
       <p className={styles.label}>{label}</p>
-      <button
-        type="button"
-        className={styles.remove}
-        onClick={remove}
-        disabled={disabled}
-      >
-        Remove
-      </button>
-      <button type="button" className={styles.add} onClick={add}>
-        Add
-      </button>
+      <div className={styles.btnsWrapper}>
+        <button
+          type="button"
+          className={styles.remove}
+          onClick={remove}
+          aria-label={`Remove one ${label}`}
+          disabled={disabled}
+        >
+          <span className={styles.btnSign}>-</span>
+        </button>
+        <button
+          type="button"
+          onClick={add}
+          className={styles.add}
+          aria-label={`Add one ${label}`}
+        >
+          <span className={styles.btnSign}>+</span>
+        </button>
+      </div>
     </div>
   );
 }

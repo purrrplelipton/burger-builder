@@ -3,7 +3,7 @@ import React from "react";
 import { Router } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import BurgerIngredient from "./burger-ingredient";
-import { burger } from "./burger.module.css";
+import { burgerWrapper } from "./burger.module.css";
 
 function Burger({ ingredients }) {
   let transformedIngredients = Object.keys(ingredients)
@@ -19,7 +19,7 @@ function Burger({ ingredients }) {
   }
 
   return (
-    <div className={burger}>
+    <div className={burgerWrapper}>
       <BurgerIngredient type="bread-top" />
       {transformedIngredients}
       <BurgerIngredient type="bread-bottom" />
@@ -33,7 +33,7 @@ Burger.propTypes = {
     bacon: PropTypes.number.isRequired,
     cheese: PropTypes.number.isRequired,
     tomato: PropTypes.number.isRequired,
-    "onion-rings": PropTypes.number.isRequired,
+    "onion-ring": PropTypes.number.isRequired,
     patty: PropTypes.number.isRequired,
     pickles: PropTypes.number.isRequired,
   }).isRequired,

@@ -1,36 +1,40 @@
 .build-controls {
-  background-image: linear-gradient(to right, #bc581e 7.5%, #e27b36);
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  box-shadow: 0 2px 2px #cf8f2e;
-  margin-inline: auto;
-  padding: 1.25em;
+  line-height: 0.875;
+  width: 100%;
+  background-color: #f57328;
+  padding: calc(1.375 * var(--spacing)) var(--spacing);
+}
+
+.top-section {
+  margin-inline: var(--spacing);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .current-price {
-  display: inline-block;
-  background-color: var(--header-color);
-  padding: 12px 16px;
+  line-height: 1;
+  padding: 0.625em 0.875em;
+  margin-block: calc(0.5 * var(--spacing)) calc(0.75 * var(--spacing));
+  box-shadow: 0 8px 14px -6px #00000044;
 }
 
 .order-button {
-  display: block;
-  outline: 1px solid transparent;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
   cursor: pointer;
+  border: unset;
+  background-color: unset;
+  font-weight: 600;
+  text-decoration: underline solid currentColor 2px;
   color: #966909;
-  background-color: #dad735;
-  border: 1px solid;
-  font-size: 1.2em;
-  padding: 15px 30px;
-  margin-block: 1em;
-  margin-inline-start: auto;
-  transition:
-    transform 0.25s ease-in-out,
-    background-color 0.125s ease-in-out;
+  font-size: 1.125em;
+  margin: 6px 8px;
+  transition: all 0.2s ease-in-out;
 }
 
 .order-button:not(:disabled):hover {
-  background-color: #a0db41;
+  color: #a0db41;
 }
 
 .order-button:not(:disabled):active {
@@ -39,18 +43,9 @@
 
 .order-button:disabled {
   color: #888888;
-  background-color: #c7c6c6;
   cursor: not-allowed;
   border-color: #ccc;
-  box-shadow: 0 0.375em 0.875em #00000022;
+  box-shadow: 0 0.375em 0.875em -10px #00000022;
 }
 
-@media only screen and (max-width: 768px) {
-  .build-controls {
-    grid-template-columns: repeat(1, 1fr);
-  }
-
-  .order-button {
-    margin-block: 0.25em;
-  }
-}
+/* @media only screen and (max-width: 768px) {} */

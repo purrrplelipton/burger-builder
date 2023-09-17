@@ -7,7 +7,7 @@ function OrderSummary({ contents, cancelPurchase, totalPrice, checkout }) {
   const contentSummary = Object.keys(contents).map((contentKey) => (
     <li key={uuidv4()}>
       <span style={{ textTransform: "capitalize" }}>{contentKey}</span>
-      :&nbsp;
+      &nbsp;:&nbsp;
       {contents[contentKey]}
     </li>
   ));
@@ -18,7 +18,7 @@ function OrderSummary({ contents, cancelPurchase, totalPrice, checkout }) {
       <p>A burger with the following contents:</p>
       <ul style={{ paddingInlineStart: "1.25em" }}>{contentSummary}</ul>
       <p>
-        Total:&nbsp;₦
+        Total&nbsp;~&nbsp;₦
         <strong>{totalPrice.toFixed(2)}</strong>
       </p>
       <p>Checkout?</p>
@@ -38,7 +38,7 @@ OrderSummary.propTypes = {
     bacon: PropTypes.number.isRequired,
     cheese: PropTypes.number.isRequired,
     tomato: PropTypes.number.isRequired,
-    "onion-rings": PropTypes.number.isRequired,
+    "onion-ring": PropTypes.number.isRequired,
     patty: PropTypes.number.isRequired,
     pickles: PropTypes.number.isRequired,
   }).isRequired,

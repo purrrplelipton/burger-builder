@@ -6,6 +6,7 @@ import {
   buildControls,
   currentPrice,
   orderButton,
+  topSection,
 } from "./build-controls.module.css";
 
 const controls = [
@@ -14,7 +15,7 @@ const controls = [
   { label: "Bacon", type: "bacon" },
   { label: "Pickles", type: "pickles" },
   { label: "Cheese", type: "cheese" },
-  { label: "Onion Rings", type: "onion-rings" },
+  { label: "Onion ring", type: "onion-ring" },
   { label: "Tomato", type: "tomato" },
 ];
 
@@ -28,13 +29,23 @@ function BuildControls({
 }) {
   return (
     <>
-      <p className={currentPrice}>
-        Current Price:&nbsp;
-        <strong>
-          ₦&nbsp;
-          {price.toFixed(2)}
-        </strong>
-      </p>
+      <div className={topSection}>
+        <p className={currentPrice}>
+          Total&nbsp;~&nbsp;
+          <strong>
+            ₦&nbsp;
+            {price.toFixed(2)}
+          </strong>
+        </p>
+        <button
+          type="button"
+          className={orderButton}
+          disabled={!purchasable}
+          onClick={ordering}
+        >
+          PLACE ORDER
+        </button>
+      </div>
       <div className={buildControls}>
         {controls.map((ctrl) => (
           <BuildControl
@@ -46,14 +57,6 @@ function BuildControls({
           />
         ))}
       </div>
-      <button
-        type="button"
-        className={orderButton}
-        disabled={!purchasable}
-        onClick={ordering}
-      >
-        PLACE ORDER
-      </button>
     </>
   );
 }
@@ -65,7 +68,7 @@ BuildControls.propTypes = {
     bacon: pt.bool.isRequired,
     cheese: pt.bool.isRequired,
     lettuce: pt.bool.isRequired,
-    "onion-rings": pt.bool.isRequired,
+    "onion-ring": pt.bool.isRequired,
     patty: pt.bool.isRequired,
     pickles: pt.bool.isRequired,
     tomato: pt.bool.isRequired,

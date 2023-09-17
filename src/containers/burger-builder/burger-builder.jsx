@@ -1,5 +1,5 @@
 import { BuildControls, Burger, OrderSummary } from "@components/burger";
-import { Modal, Spinner } from "@components/ui";
+import { Loader, Modal } from "@components/ui";
 import axios from "@src/axios";
 import ErrorHandler from "@src/hoc/error-handler";
 import React, { useEffect, useReducer } from "react";
@@ -9,7 +9,7 @@ const CONTENT_PRICES = {
   lettuce: 50,
   bacon: 200,
   cheese: 100,
-  "onion-rings": 100,
+  "onion-ring": 100,
   pickles: 50,
   patty: 300,
   tomato: 50,
@@ -124,7 +124,7 @@ function BurgerBuilder() {
   let burger$controls = state.error ? (
     <p>{state.error.message}</p>
   ) : (
-    <Spinner />
+    <Loader>Hold on a second...</Loader>
   );
   if (state.ingredients) {
     burger$controls = (
@@ -159,7 +159,7 @@ function BurgerBuilder() {
   return (
     <>
       <Modal showModal={state.purchasing} exitModal={exitSummary}>
-        {state.loading ? <Spinner /> : summary}
+        {state.loading ? <Loader /> : summary}
       </Modal>
       {burger$controls}
     </>

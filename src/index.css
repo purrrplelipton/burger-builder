@@ -6,15 +6,13 @@
   font-family: "REM", sans-serif;
   -webkit-font-smoothing: antialiased;
   color: #181818;
+  box-sizing: border-box;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  /* outline: 1px solid red; */
+* {
+  box-sizing: inherit;
+  margin: unset;
+  padding: unset;
 }
 
 img,
@@ -50,4 +48,5 @@ h6 {
   margin-inline: auto;
   height: 100vh;
   min-height: 768px;
+  --spacing: 1.25em;
 }

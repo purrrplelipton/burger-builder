@@ -1,7 +1,14 @@
 import { SideDrawer, Toolbar } from "@components/navigation";
 import propTypes from "prop-types";
 import React, { useState } from "react";
-import { content } from "./layout.module.css";
+
+const mainContentStyles = {
+  width: "100%",
+  minHeight: "100%",
+  display: "flex",
+  flexFlow: "column nowrap",
+  paddingBlockStart: 80,
+};
 
 function Layout({ children }) {
   const [showSideDrawer, setShowSideDrawer] = useState(false);
@@ -16,7 +23,7 @@ function Layout({ children }) {
         showSideDrawer={showSideDrawer}
         exitSideDrawer={() => setShowSideDrawer(false)}
       />
-      <main className={content}>{children}</main>
+      <main style={mainContentStyles}>{children}</main>
     </>
   );
 }

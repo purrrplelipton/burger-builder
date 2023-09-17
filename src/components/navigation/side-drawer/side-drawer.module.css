@@ -3,7 +3,8 @@
   max-width: 320px;
   inset: 0;
   z-index: 99;
-  background-color: var(--header-color);
+  color: #c45c1f;
+  background-color: #f57328;
   padding: 1rem;
   opacity: 0;
   transform: translateX(-100%);

@@ -6,7 +6,7 @@ import {
   breadTop,
   cheese,
   lettuce,
-  onionRings,
+  onionRing,
   patty,
   pickles,
   seeds1,
@@ -48,8 +48,8 @@ function BurgerIngredient({ type }) {
     case "lettuce":
       ingredient = <div className={lettuce} />;
       break;
-    case "onion-rings":
-      ingredient = <div className={onionRings} />;
+    case "onion-ring":
+      ingredient = <div className={onionRing} />;
       break;
     case "cheese":
       ingredient = <div className={cheese} />;
