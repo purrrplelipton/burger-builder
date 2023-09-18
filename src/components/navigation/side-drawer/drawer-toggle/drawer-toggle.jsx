@@ -1,4 +1,4 @@
-import propTypes from "prop-types";
+import pt from "prop-types";
 import React from "react";
 import { bar, drawerToggle, open } from "./drawer-toggle.module.css";
 
@@ -16,8 +16,8 @@ function DrawerToggle({ showSideDrawer, onClick }) {
 }
 
 DrawerToggle.propTypes = {
-  onClick: propTypes.func.isRequired,
-  showSideDrawer: propTypes.bool.isRequired,
+  onClick: pt.func.isRequired,
+  showSideDrawer: pt.bool.isRequired,
 };
 
 export default DrawerToggle;

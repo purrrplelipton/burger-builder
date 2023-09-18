@@ -1,7 +1,7 @@
 import Logo from "@components/logo";
 import { NavigationItems } from "@components/navigation";
 import DrawerToggle from "@components/navigation/side-drawer/drawer-toggle";
-import propTypes from "prop-types";
+import pt from "prop-types";
 import React from "react";
 import { desktopOnly, logo, toolbar } from "./toolbar.module.css";
 
@@ -23,8 +23,8 @@ function Toolbar({ showSideDrawer, toggleSideDrawer }) {
 }
 
 Toolbar.propTypes = {
-  toggleSideDrawer: propTypes.func.isRequired,
-  showSideDrawer: propTypes.bool.isRequired,
+  toggleSideDrawer: pt.func.isRequired,
+  showSideDrawer: pt.bool.isRequired,
 };
 
 export default Toolbar;

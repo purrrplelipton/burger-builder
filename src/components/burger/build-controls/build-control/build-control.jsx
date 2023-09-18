@@ -1,4 +1,4 @@
-import propTypes from "prop-types";
+import pt from "prop-types";
 import React from "react";
 import styles from "./build-control.module.css";
 
@@ -30,10 +30,10 @@ function BuildControl({ add, remove, label, disabled }) {
 }
 
 BuildControl.propTypes = {
-  label: propTypes.string.isRequired,
-  remove: propTypes.func.isRequired,
-  add: propTypes.func.isRequired,
-  disabled: propTypes.bool.isRequired,
+  label: pt.string.isRequired,
+  remove: pt.func.isRequired,
+  add: pt.func.isRequired,
+  disabled: pt.bool.isRequired,
 };
 
 export default BuildControl;

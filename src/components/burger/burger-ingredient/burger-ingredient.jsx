@@ -1,4 +1,4 @@
-import propTypes from "prop-types";
+import pt from "prop-types";
 import React from "react";
 import {
   bacon,
@@ -62,6 +62,6 @@ function BurgerIngredient({ type }) {
   return ingredient;
 }
 
-BurgerIngredient.propTypes = { type: propTypes.string.isRequired };
+BurgerIngredient.propTypes = { type: pt.string.isRequired };
 
 export default BurgerIngredient;

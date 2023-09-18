@@ -1,4 +1,4 @@
-import propTypes from "prop-types";
+import pt from "prop-types";
 import React from "react";
 import styles from "./button.module.css";
 
@@ -15,9 +15,9 @@ function Button({ btnType, onClick, children }) {
 }
 
 Button.propTypes = {
-  children: propTypes.oneOfType([propTypes.node, propTypes.string]).isRequired,
-  onClick: propTypes.func.isRequired,
-  btnType: propTypes.oneOf(["danger", "success"]).isRequired,
+  children: pt.oneOfType([pt.node, pt.string]).isRequired,
+  onClick: pt.func.isRequired,
+  btnType: pt.oneOf(["danger", "success"]).isRequired,
 };
 
 export default Button;

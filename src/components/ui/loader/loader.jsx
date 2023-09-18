@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+import pt from "prop-types";
 import React from "react";
 import styles from "./loader.module.css";
 
@@ -17,8 +17,8 @@ function Loader({ width, children }) {
 Loader.defaultProps = { children: null, width: 48 };
 
 Loader.propTypes = {
-  width: PropTypes.number,
-  children: PropTypes.string,
+  width: pt.number,
+  children: pt.string,
 };
 
 export default Loader;

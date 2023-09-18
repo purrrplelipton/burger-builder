@@ -1,4 +1,4 @@
-import propTypes from "prop-types";
+import pt from "prop-types";
 import React, { useEffect, useState } from "react";
 import { backDrop, fadeIn } from "./backdrop.module.css";
 
@@ -35,9 +35,9 @@ function Backdrop({ show, onClick, children }) {
 Backdrop.defaultProps = { children: null };
 
 Backdrop.propTypes = {
-  children: propTypes.node,
-  show: propTypes.bool.isRequired,
-  onClick: propTypes.func.isRequired,
+  children: pt.node,
+  show: pt.bool.isRequired,
+  onClick: pt.func.isRequired,
 };
 
 export default Backdrop;

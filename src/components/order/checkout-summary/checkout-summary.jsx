@@ -1,6 +1,6 @@
 import { Burger } from "@components/burger";
 import { Button } from "@components/ui";
-import PropTypes from "prop-types";
+import pt from "prop-types";
 import React from "react";
 import { checkoutSummary } from "./checkout-summary.module.css";
 
@@ -22,17 +22,17 @@ function CheckoutSummary({ ingredients, cancel, proceed }) {
 }
 
 CheckoutSummary.propTypes = {
-  ingredients: PropTypes.shape({
-    lettuce: PropTypes.number.isRequired,
-    bacon: PropTypes.number.isRequired,
-    cheese: PropTypes.number.isRequired,
-    tomato: PropTypes.number.isRequired,
-    patty: PropTypes.number.isRequired,
-    pickles: PropTypes.number.isRequired,
-    "onion-ring": PropTypes.number.isRequired,
+  ingredients: pt.shape({
+    lettuce: pt.number.isRequired,
+    bacon: pt.number.isRequired,
+    cheese: pt.number.isRequired,
+    tomato: pt.number.isRequired,
+    patty: pt.number.isRequired,
+    pickles: pt.number.isRequired,
+    "onion-ring": pt.number.isRequired,
   }).isRequired,
-  cancel: PropTypes.func.isRequired,
-  proceed: PropTypes.func.isRequired,
+  cancel: pt.func.isRequired,
+  proceed: pt.func.isRequired,
 };
 
 export default CheckoutSummary;

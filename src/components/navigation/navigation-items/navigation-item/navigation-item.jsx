@@ -1,4 +1,4 @@
-import propTypes from "prop-types";
+import pt from "prop-types";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./navigation-item.module.css";
@@ -17,8 +17,8 @@ function NavigationItem({ href, children }) {
 }
 
 NavigationItem.propTypes = {
-  href: propTypes.string.isRequired,
-  children: propTypes.string.isRequired,
+  href: pt.string.isRequired,
+  children: pt.string.isRequired,
 };
 
 export default NavigationItem;

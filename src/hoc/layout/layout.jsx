@@ -1,5 +1,5 @@
 import { SideDrawer, Toolbar } from "@components/navigation";
-import propTypes from "prop-types";
+import pt from "prop-types";
 import React, { useState } from "react";
 
 const mainContentStyles = {
@@ -28,6 +28,6 @@ function Layout({ children }) {
   );
 }
 
-Layout.propTypes = { children: propTypes.node.isRequired };
+Layout.propTypes = { children: pt.node.isRequired };
 
 export default Layout;

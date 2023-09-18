@@ -1,5 +1,5 @@
 import logo from "@src/assets/images/hamburger-512.png";
-import propTypes from "prop-types";
+import pt from "prop-types";
 import React from "react";
 import styles from "./logo.module.css";
 
@@ -13,6 +13,6 @@ function Logo({ height }) {
 
 Logo.defaultProps = { height: "auto" };
 
-Logo.propTypes = { height: propTypes.string };
+Logo.propTypes = { height: pt.string };
 
 export default Logo;
