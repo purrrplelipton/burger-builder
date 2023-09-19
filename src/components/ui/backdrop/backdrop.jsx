@@ -1,5 +1,5 @@
 import pt from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { backDrop, fadeIn } from "./backdrop.module.css";
 
 function Backdrop({ show, onClick, children }) {
@@ -11,12 +11,12 @@ function Backdrop({ show, onClick, children }) {
       setVisibility(true);
       const reveal$delay = setTimeout(
         () => setClassList((prv) => [...prv, fadeIn]),
-        10
+        50
       );
       return () => clearTimeout(reveal$delay);
     }
     setClassList((prv) => prv.filter((cn) => cn !== fadeIn));
-    const removal$delay = setTimeout(() => setVisibility(false), 310);
+    const removal$delay = setTimeout(() => setVisibility(false), 350);
     return () => clearTimeout(removal$delay);
   }, [show]);
 
@@ -40,4 +40,4 @@ Backdrop.propTypes = {
   onClick: pt.func.isRequired,
 };
 
-export default Backdrop;
+export default memo(Backdrop);

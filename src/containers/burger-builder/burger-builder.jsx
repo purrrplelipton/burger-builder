@@ -1,5 +1,3 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable import/no-unresolved */
 import { BuildControls, Burger, OrderSummary } from "@components/burger";
 import { Loader, Modal } from "@components/ui";
 import axios from "@src/axios";
@@ -7,124 +5,107 @@ import ErrorHandler from "@src/hoc/error-handler";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const CONTENT_PRICES = {
-  lettuce: 50,
-  bacon: 200,
-  cheese: 100,
-  "onion-ring": 100,
-  pickles: 50,
-  patty: 300,
-  tomato: 50,
-};
-
 function BurgerBuilder() {
   const navigate = useNavigate();
   const [pageStates, setPageStates] = useState({
     ingredients: null,
-    price: 100,
-    "can-purchase": false,
+    total: 100,
+    prices: {
+      lettuce: 50,
+      bacon: 200,
+      cheese: 100,
+      "onion-ring": 100,
+      pickles: 50,
+      patty: 300,
+      tomato: 50,
+    },
+    purchasable: false,
     purchasing: false,
     loading: false,
     error: null,
   });
 
-  useEffect(() => {
-    axios
-      .get("/ingredients.json")
-      .then(({ data }) => {
-        setPageStates((prv) => ({ ...prv, ingredients: data }));
-        /* // */
-        let base$price = pageStates.price;
-        const contents = { ...data };
-        Object.keys(contents).forEach((cn) => {
-          if (contents[cn] > 0) {
-            for (let i = 0; i < contents[cn]; i++) {
-              base$price += CONTENT_PRICES[cn];
-            }
-            /* // */
-            setPageStates((prv) => ({ ...prv, price: base$price }));
-          }
-        });
-        const contentValues = Object.values(contents);
-        let current$items = 0;
-        for (let i = 0; i < contentValues.length; i++) {
-          current$items += contentValues[i];
+  function updatePurchasability(ingredients) {
+    const ingredientsValues = Object.values(ingredients);
+    const purchasable = ingredientsValues.some((val) => val > 0);
+    return setPageStates((prv) => ({ ...prv, purchasable }));
+  }
+
+  function updateTotal(ingredients) {
+    let new$total = pageStates.total;
+    Object.keys(ingredients).forEach((key) => {
+      if (ingredients[key] > 0) {
+        for (let i = 0; i < ingredients[key]; i += 1) {
+          new$total += pageStates.prices[key];
         }
-        /* // */
-        setPageStates((prv) => ({ ...prv, "can-purchase": current$items > 0 }));
-      })
-      .catch((error) => setPageStates((prv) => ({ ...prv, error })));
-    return () => {};
+      }
+    });
+    return setPageStates((prv) => ({ ...prv, total: new$total }));
+  }
+
+  useEffect(() => {
+    async function getIngredients() {
+      try {
+        const { data } = await axios.get("/ingredients.json");
+        setPageStates((prv) => {
+          const newState = { ...prv, ingredients: data };
+          return newState;
+        });
+        updateTotal(data);
+        updatePurchasability(data);
+      } catch (error) {
+        setPageStates((prv) => ({ ...prv, error }));
+      }
+    }
+    return () => getIngredients();
   }, []);
 
-  const updatePurchaseState = (contents) => {
-    const reducer = (prev, curr) => prev + curr;
-    const totalContents = Object.values(contents).reduce(reducer, 0);
-    setPageStates((prv) => ({ ...prv, "can-purchase": totalContents > 0 }));
-  };
-
-  const checkout = () => {
-    // setPageStates((prv) => ({ ...prv, loading: true });
-
-    // const order = {
-    //   contents: pageStates.ingredients,
-    //   price: pageStates.price.toFixed(2),
-    //   customer: {
-    //     name: "Maximus Elrond",
-    //     address: {
-    //       street: "TestStreet 1",
-    //       "zip-code": "41351",
-    //       country: "Germany",
-    //     },
-    //     email: "test@test.com",
-    //     "delivery-method": "fastest",
-    //   },
-    // };
-
-    // instance
-    //   .post("/orders.json", order)
-    //   .finally(() => setPageStates((prv) => ({ ...prv, loading: false, purchasing: false }));
-
+  const proceedToCheckout = () => {
     navigate("/checkout", {
-      replace: true,
-      state: { ingredients: pageStates.ingredients },
+      state: { ingredients: pageStates.ingredients, total: pageStates.total },
     });
   };
 
   const addContent = (type) => {
-    const updatedContents = { ...pageStates.ingredients };
-    updatedContents[type] = pageStates.ingredients[type] + 1;
-
-    const updatedPrice = pageStates.price + CONTENT_PRICES[type];
-    setPageStates((prv) => ({
-      ...prv,
-      ingredients: updatedContents,
-      price: updatedPrice,
-    }));
-    updatePurchaseState(updatedContents);
+    setPageStates((prv) => {
+      const updated$ingredients = { ...prv.ingredients };
+      let updated$total = prv.total;
+      updated$ingredients[type] += 1;
+      updated$total += prv.prices[type];
+      const newState = {
+        ...prv,
+        ingredients: updated$ingredients,
+        total: updated$total,
+      };
+      updatePurchasability(newState.ingredients);
+      return newState;
+    });
   };
 
   const removeContent = (type) => {
-    const updatedContents = { ...pageStates.ingredients };
-    if (pageStates.ingredients[type] < 1) {
-      updatedContents[type] = pageStates.ingredients[type] - 0;
-    } else updatedContents[type] = pageStates.ingredients[type] - 1;
-
-    const updatedPrice = pageStates.price - CONTENT_PRICES[type];
-    setPageStates((prv) => ({
-      ...prv,
-      ingredients: updatedContents,
-      price: updatedPrice,
-    }));
-    updatePurchaseState(updatedContents);
+    setPageStates((prv) => {
+      const updated$ingredients = { ...prv.ingredients };
+      let updated$total = prv.total;
+      if (updated$ingredients[type] > 0) {
+        updated$ingredients[type] -= 1;
+        updated$total -= prv.prices[type];
+      }
+      const newState = {
+        ...prv,
+        ingredients: updated$ingredients,
+        total: updated$total,
+      };
+      updatePurchasability(newState.ingredients);
+      return newState;
+    });
   };
 
-  let disabledInfo = null;
+  let dsbld = null;
 
   if (pageStates.ingredients) {
-    disabledInfo = { ...pageStates.ingredients };
-    Object.keys(disabledInfo).forEach((val) => {
-      disabledInfo[val] = disabledInfo[val] <= 0;
+    dsbld = { ...pageStates.ingredients };
+    Object.keys(dsbld).forEach((k) => {
+      dsbld[k] = dsbld[k] <= 0;
     });
   }
 
@@ -133,6 +114,7 @@ function BurgerBuilder() {
   ) : (
     <Loader>Hold on a second...</Loader>
   );
+
   if (pageStates.ingredients) {
     burger$controls = (
       <>
@@ -140,9 +122,9 @@ function BurgerBuilder() {
         <BuildControls
           removeContent={removeContent}
           addContent={addContent}
-          disabled={disabledInfo}
-          purchasable={pageStates["can-purchase"]}
-          price={pageStates.price}
+          disabled={dsbld}
+          purchasable={pageStates.purchasable}
+          price={pageStates.total}
           ordering={() => {
             setPageStates((prv) => ({ ...prv, purchasing: true }));
           }}
@@ -151,30 +133,25 @@ function BurgerBuilder() {
     );
   }
 
-  const exitSummary = () => {
+  const hideOrderSummary = () => {
     setPageStates((prv) => ({ ...prv, purchasing: false }));
   };
 
-  let summary = null;
-  if (pageStates.ingredients) {
-    summary = (
-      <OrderSummary
-        contents={pageStates.ingredients}
-        cancelPurchase={exitSummary}
-        checkout={checkout}
-        totalPrice={pageStates.price}
-      />
-    );
-  }
-
   return (
     <>
-      <Modal showModal={pageStates.purchasing} exitModal={exitSummary}>
-        {pageStates.loading ? <Loader /> : summary}
+      <Modal showModal={pageStates.purchasing} exitModal={hideOrderSummary}>
+        {pageStates.ingredients ? (
+          <OrderSummary
+            contents={pageStates.ingredients}
+            cancelPurchase={hideOrderSummary}
+            checkout={proceedToCheckout}
+            totalPrice={pageStates.total}
+          />
+        ) : null}
       </Modal>
       {burger$controls}
     </>
   );
 }
 
-export default ErrorHandler(BurgerBuilder, axios);
+export default ErrorHandler(BurgerBuilder);

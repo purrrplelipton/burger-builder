@@ -1,49 +1,53 @@
-import CheckoutSummary from "@components/order/checkout-summary";
+import CheckoutSummary from "@components/order/checkout-summary/checkout-summary";
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import DetailsForm from "./details-form/details-form";
 
 function Checkout() {
+  const [totalPrice, setTotalPrice] = useState(null);
+  const [contents, setContents] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [ingredients, setIngredients] = useState(null);
-
   useEffect(() => {
-    if (location && location.state && location.state.ingredients) {
-      setIngredients(location.state.ingredients);
-      return () => {};
+    if (location) {
+      const { state } = location;
+      if (state) {
+        const { ingredients, total } = state;
+        setContents(ingredients);
+        setTotalPrice(total);
+      }
     }
-    setIngredients(null);
-    return () => {};
   }, [location]);
 
-  let UI = (
-    <section style={{ margin: "auto", textAlign: "center" }}>
-      <h1 style={{ marginBlockEnd: "1em" }}>
-        You can&rsquo;t checkout right now!
-      </h1>
-      <p>You have no content in your burger buns.</p>
-      <button
-        style={{ marginBlockStart: "1em" }}
-        type="button"
-        onClick={() => navigate(-1)}
-      >
-        Go back
-      </button>
-    </section>
-  );
-
-  if (ingredients) {
-    UI = (
-      <CheckoutSummary
-        ingredients={ingredients}
-        proceed={() => navigate("/checkout/details", { replace: true })}
-        cancel={() => navigate(-1)}
-      />
-    );
+  const goBack = () => navigate(-1);
+  function provideDetails() {
+    navigate("details", {
+      state: { ingredients: contents, total: totalPrice },
+    });
   }
 
-  return UI;
+  return (
+    contents &&
+    totalPrice && (
+      <Routes>
+        <Route
+          path="details"
+          element={<DetailsForm total={totalPrice} contents={contents} />}
+        />
+        <Route
+          index
+          element={
+            <CheckoutSummary
+              ingredients={contents}
+              cancel={goBack}
+              proceed={provideDetails}
+            />
+          }
+        />
+      </Routes>
+    )
+  );
 }
 
 export default Checkout;

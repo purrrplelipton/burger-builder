@@ -41,3 +41,7 @@
 .inner:last-child {
   animation-delay: -0.9s;
 }
+
+.loader-text {
+  white-space: nowrap;
+}

@@ -20,12 +20,12 @@ function SideDrawer({ showSideDrawer, exitSideDrawer }) {
       setVisibility(true);
       const reveal$delay = setTimeout(
         () => setClassList((prv) => [...prv, slideOut]),
-        10
+        50
       );
       return () => clearTimeout(reveal$delay);
     }
     setClassList((prv) => prv.filter((cn) => cn !== slideOut));
-    const removal$delay = setTimeout(() => setVisibility(false), 310);
+    const removal$delay = setTimeout(() => setVisibility(false), 350);
     return () => clearTimeout(removal$delay);
   }, [showSideDrawer]);
 

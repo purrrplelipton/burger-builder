@@ -78,7 +78,7 @@
   background-color: #99703f;
 }
 
-.build-control .remove:active,
-.build-control .add:active {
+.build-control .remove:not(:disabled):active,
+.build-control .add:not(:disabled):active {
   transform: scale(0.95);
 }

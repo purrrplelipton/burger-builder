@@ -15,7 +15,7 @@ const controls = [
   { label: "Bacon", type: "bacon" },
   { label: "Pickles", type: "pickles" },
   { label: "Cheese", type: "cheese" },
-  { label: "Onion ring", type: "onion-ring" },
+  { label: "Onion Ring", type: "onion-ring" },
   { label: "Tomato", type: "tomato" },
 ];
 

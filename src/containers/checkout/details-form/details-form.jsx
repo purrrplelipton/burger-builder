@@ -1,38 +1,43 @@
-import { Button } from "@components/ui";
-import React, {
-  // useEffect,
-  useState,
-} from "react";
-import {
-  // useLocation,
-  useNavigate,
-} from "react-router-dom";
-import {
+import { Button, Loader } from "@components/ui";
+import axios from "@src/axios";
+import pt from "prop-types";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styles, {
   base,
   contactDetailsWrapper,
   indicator,
   inputWrapper,
+  placeholder,
   wrapper,
 } from "./details-form.module.css";
 
-function DetailsForm() {
-  const navigate = useNavigate();
-  // const location = useLocation();
+function DetailsForm({ total, contents }) {
+  const [formStates, setFormStates] = useState({ loading: false, error: null });
   const [details, setDetails] = useState({
     name: "",
     email: "",
     address: { street: "", zip$code: "" },
   });
+  const navigate = useNavigate();
 
-  // useEffect(() => {}, [location]);
+  const placeOrder = (evt) => {
+    evt.preventDefault();
 
-  const placeOrder = () => {};
+    setFormStates((prv) => ({ ...prv, loading: true }));
+
+    axios
+      .post("/orders.json", { contents, total, customer: details })
+      .then(() => console.log("done"))
+      .catch((error) => setFormStates((prv) => ({ ...prv, error })))
+      .finally(() => setFormStates((prv) => ({ ...prv, loading: false })));
+  };
 
   return (
     <section className={wrapper}>
       <h1>Provide your details to proceed</h1>
       <form>
-        <div className={inputWrapper}>
+        <label htmlFor="name" className={inputWrapper}>
           <input
             className={`${base}`}
             id="name"
@@ -42,10 +47,10 @@ function DetailsForm() {
               setDetails((prv) => ({ ...prv, name: value }));
             }}
           />
-          <label htmlFor="name">Name</label>
+          <span className={placeholder}>Full Name</span>
           <i className={indicator} />
-        </div>
-        <div className={inputWrapper}>
+        </label>
+        <label htmlFor="email" className={inputWrapper}>
           <input
             className={`${base}`}
             id="email"
@@ -55,11 +60,11 @@ function DetailsForm() {
               setDetails((prv) => ({ ...prv, email: value }));
             }}
           />
-          <label htmlFor="email">Email</label>
+          <span className={placeholder}>Email</span>
           <i className={indicator} />
-        </div>
+        </label>
         <fieldset className={contactDetailsWrapper}>
-          <div className={inputWrapper}>
+          <label htmlFor="street" className={inputWrapper}>
             <input
               className={`${base}`}
               id="street"
@@ -72,10 +77,10 @@ function DetailsForm() {
                 }));
               }}
             />
-            <label htmlFor="street">Street</label>
+            <span className={placeholder}>Street</span>
             <i className={indicator} />
-          </div>
-          <div className={inputWrapper}>
+          </label>
+          <label htmlFor="zipcode" className={inputWrapper}>
             <input
               className={`${base}`}
               id="zipcode"
@@ -88,11 +93,11 @@ function DetailsForm() {
                 }));
               }}
             />
-            <label htmlFor="zipcode">Zip Code</label>
+            <span className={placeholder}>Zip Code</span>
             <i className={indicator} />
-          </div>
+          </label>
         </fieldset>
-        <div className={inputWrapper}>
+        <div className={styles.ctaWrapper}>
           <Button btnType="danger" onClick={() => navigate(-1)}>
             CANCEL
           </Button>
@@ -101,8 +106,26 @@ function DetailsForm() {
           </Button>
         </div>
       </form>
+      {formStates.loading && (
+        <i className={styles.loaderWrapper}>
+          <Loader>Hold tight while we process your order.</Loader>
+        </i>
+      )}
     </section>
   );
 }
+
+DetailsForm.propTypes = {
+  total: pt.number.isRequired,
+  contents: pt.shape({
+    lettuce: pt.number.isRequired,
+    bacon: pt.number.isRequired,
+    cheese: pt.number.isRequired,
+    tomato: pt.number.isRequired,
+    "onion-ring": pt.number.isRequired,
+    patty: pt.number.isRequired,
+    pickles: pt.number.isRequired,
+  }).isRequired,
+};
 
 export default DetailsForm;

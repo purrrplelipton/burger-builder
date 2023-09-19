@@ -1,7 +1,9 @@
 .button {
   background-color: unset;
-  border: 0;
-  outline: 1px solid transparent;
+  border: unset;
+  border-radius: 10px;
+  outline: 2px solid #00000000;
+  outline-offset: 2px;
   cursor: pointer;
   padding: 8px 12px;
   margin: 12px;

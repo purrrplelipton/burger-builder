@@ -1,32 +1,33 @@
 import { Modal } from "@components/ui";
+import axios from "@src/axios";
 import React, { useEffect, useState } from "react";
 
-function ErrorHandler(Wrapper, instance) {
+function ErrorHandler(Wrapper) {
   return function (props) {
     const [error, setError] = useState(null);
 
-    const requestInterceptor = instance.interceptors.request.use((request) => {
+    const dismissError = () => {
       setError(null);
-      return request;
-    });
+    };
 
-    const responseInterceptor = instance.interceptors.response.use(
-      (res) => res,
-      (err) => setError(err)
-    );
+    useEffect(() => {
+      const errorInterceptor = axios.interceptors.response.use(
+        (response) => response,
+        (err) => {
+          setError(err);
+          return Promise.reject(err);
+        }
+      );
 
-    useEffect(
-      () => () => {
-        instance.interceptors.request.eject(requestInterceptor);
-        instance.interceptors.response.eject(responseInterceptor);
-      },
-      [requestInterceptor, responseInterceptor]
-    );
+      return () => {
+        axios.interceptors.response.eject(errorInterceptor);
+      };
+    }, []);
 
     return (
       <>
         {error && (
-          <Modal showModal={Boolean(error)} exitModal={() => setError(null)}>
+          <Modal showModal={Boolean(error)} exitModal={dismissError}>
             {error.message}
           </Modal>
         )}

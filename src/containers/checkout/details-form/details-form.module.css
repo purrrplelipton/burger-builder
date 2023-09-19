@@ -5,6 +5,8 @@
   padding: 1.375em 1.125em;
   border-radius: 0.625em;
   box-shadow: 0 16px 24px -10px #00000022;
+  position: relative;
+  overflow: hidden;
 }
 
 .wrapper h1 {
@@ -26,13 +28,13 @@
   isolation: isolate;
 }
 
-.input-wrapper label {
+.input-wrapper .placeholder {
   white-space: nowrap;
   position: absolute;
   z-index: -1;
-  transform: translateX(0.375em);
+  transform: translate(0.375em, 0) scale(1);
   color: #00000066;
-  transition: all 0.1s ease-in-out;
+  transition: all 0.125s linear;
 }
 
 .indicator {
@@ -59,10 +61,10 @@
   transform: scaleX(1);
 }
 
-.base:focus ~ label,
-.base:not(:focus):not([value=""]) ~ label {
-  font-size: 0.75em;
-  transform: translate(0, -200%);
+.base:focus ~ .placeholder,
+.base:not(:focus):not([value=""]) ~ .placeholder {
+  color: #00000099;
+  transform: translate(-12.5%, -130%) scale(0.75);
 }
 
 .base {
@@ -85,22 +87,27 @@
   width: 50%;
 }
 
-.contact-details-wrapper + .input-wrapper {
+.cta-wrapper {
   margin-block-start: 0.75em;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
+}
+
+.cta-wrapper button {
+  margin: unset;
+}
+
+.loader-wrapper {
+  all: unset;
+  position: absolute;
+  inset: 0;
+  background-color: #ffffffbb;
 }
 
 @media only screen and (min-width: 768px) {
   .wrapper {
     max-width: 425px;
   }
-}
-
-*::before,
-*,
-*::after {
-  /* outline: 1px solid red; */
 }
