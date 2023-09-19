@@ -5,7 +5,12 @@ import styles from "./loader.module.css";
 function Loader({ width, children }) {
   return (
     <div className={styles.loaderWrapper}>
-      <span style={{ width }} className={styles.outer} role="progressbar">
+      <span
+        style={{ width }}
+        className={styles.outer}
+        role="progressbar"
+        aria-label="Fetching some content."
+      >
         <i className={styles.inner} />
         <i className={styles.inner} />
       </span>

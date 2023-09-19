@@ -1,6 +1,6 @@
 import { BuildControls, Burger, OrderSummary } from "@components/burger";
 import { Loader, Modal } from "@components/ui";
-import axios from "@src/axios";
+import xs from "@src/xs";
 import ErrorHandler from "@src/hoc/error-handler";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -46,7 +46,7 @@ function BurgerBuilder() {
   useEffect(() => {
     async function getIngredients() {
       try {
-        const { data } = await axios.get("/ingredients.json");
+        const { data } = await xs.get("/ingredients.json");
         setPageStates((prv) => {
           const newState = { ...prv, ingredients: data };
           return newState;

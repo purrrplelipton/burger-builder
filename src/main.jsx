@@ -1,6 +1,6 @@
 import React, { lazy, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Loader } from "./components/ui";
 import { BurgerBuilder } from "./containers";
 import Layout from "./hoc/layout";
@@ -16,6 +16,7 @@ createRoot(document.getElementById("root")).render(
           <Routes>
             <Route path="checkout/*" element={<Checkout />} />
             <Route path="/" element={<BurgerBuilder />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Suspense>
       </Layout>

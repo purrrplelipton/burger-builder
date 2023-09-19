@@ -1,5 +1,5 @@
 import { Modal } from "@components/ui";
-import axios from "@src/axios";
+import xs from "@src/xs";
 import React, { useEffect, useState } from "react";
 
 function ErrorHandler(Wrapper) {
@@ -11,7 +11,7 @@ function ErrorHandler(Wrapper) {
     };
 
     useEffect(() => {
-      const errorInterceptor = axios.interceptors.response.use(
+      const errorInterceptor = xs.interceptors.response.use(
         (response) => response,
         (err) => {
           setError(err);
@@ -20,7 +20,7 @@ function ErrorHandler(Wrapper) {
       );
 
       return () => {
-        axios.interceptors.response.eject(errorInterceptor);
+        xs.interceptors.response.eject(errorInterceptor);
       };
     }, []);
 

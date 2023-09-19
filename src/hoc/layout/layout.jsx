@@ -1,6 +1,11 @@
-import { SideDrawer, Toolbar } from "@components/navigation";
+import { Toolbar } from "@components/navigation";
+import { Loader } from "@components/ui";
 import pt from "prop-types";
-import React, { useState } from "react";
+import React, { Suspense, lazy, useState } from "react";
+
+const SideDrawer = lazy(() =>
+  import("@components/navigation/side-drawer/side-drawer")
+);
 
 const mainContentStyles = {
   width: "100%",
@@ -19,15 +24,17 @@ function Layout({ children }) {
         showSideDrawer={showSideDrawer}
         toggleSideDrawer={() => setShowSideDrawer(true)}
       />
-      <SideDrawer
-        showSideDrawer={showSideDrawer}
-        exitSideDrawer={() => setShowSideDrawer(false)}
-      />
+      <Suspense fallback={<Loader />}>
+        <SideDrawer
+          showSideDrawer={showSideDrawer}
+          exitSideDrawer={() => setShowSideDrawer(false)}
+        />
+      </Suspense>
       <main style={mainContentStyles}>{children}</main>
     </>
   );
 }
 
-Layout.propTypes = { children: pt.node.isRequired };
+Layout.propTypes = { children: pt.element.isRequired };
 
 export default Layout;

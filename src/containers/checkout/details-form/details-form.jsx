@@ -1,5 +1,5 @@
 import { Button, Loader } from "@components/ui";
-import axios from "@src/axios";
+import xs from "@src/xs";
 import pt from "prop-types";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,13 +12,15 @@ import styles, {
   wrapper,
 } from "./details-form.module.css";
 
+const initial = {
+  name: "",
+  email: "",
+  address: { street: "", "zip-code": "" },
+};
+
 function DetailsForm({ total, contents }) {
   const [formStates, setFormStates] = useState({ loading: false, error: null });
-  const [details, setDetails] = useState({
-    name: "",
-    email: "",
-    address: { street: "", zip$code: "" },
-  });
+  const [details, setDetails] = useState(initial);
   const navigate = useNavigate();
 
   const placeOrder = (evt) => {
@@ -26,9 +28,11 @@ function DetailsForm({ total, contents }) {
 
     setFormStates((prv) => ({ ...prv, loading: true }));
 
-    axios
-      .post("/orders.json", { contents, total, customer: details })
-      .then(() => console.log("done"))
+    xs.post("/orders.json", { customer: details, contents, total })
+      .then(() => {
+        setDetails(initial);
+        navigate("/", { replace: true });
+      })
       .catch((error) => setFormStates((prv) => ({ ...prv, error })))
       .finally(() => setFormStates((prv) => ({ ...prv, loading: false })));
   };
@@ -80,16 +84,16 @@ function DetailsForm({ total, contents }) {
             <span className={placeholder}>Street</span>
             <i className={indicator} />
           </label>
-          <label htmlFor="zipcode" className={inputWrapper}>
+          <label htmlFor="zip-code" className={inputWrapper}>
             <input
               className={`${base}`}
-              id="zipcode"
+              id="zip-code"
               type="text"
-              value={details.address.zip$code}
+              value={details.address["zip-code"]}
               onChange={({ target: { value } }) => {
                 setDetails((prv) => ({
                   ...prv,
-                  address: { ...prv.address, zip$code: value },
+                  address: { ...prv.address, "zip-code": value },
                 }));
               }}
             />
