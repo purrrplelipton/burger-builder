@@ -8,7 +8,7 @@ function NavigationItems() {
       <NavigationItem href="/" active>
         Burger&nbsp;Builder
       </NavigationItem>
-      <NavigationItem href="/checkout">Checkout</NavigationItem>
+      <NavigationItem href="orders">Orders</NavigationItem>
     </ul>
   );
 }

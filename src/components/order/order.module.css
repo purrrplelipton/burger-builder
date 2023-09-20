@@ -1,0 +1,12 @@
+.order {
+  line-height: 1;
+  width: calc(100% - (var(--spacing) * 2));
+  margin-inline: auto;
+  padding: 12px;
+  border-radius: 10px;
+  box-shadow: 0 4px 18px -12px #0003;
+}
+
+.order:not(:last-child) {
+  margin-block-end: calc(var(--spacing) / 2);
+}

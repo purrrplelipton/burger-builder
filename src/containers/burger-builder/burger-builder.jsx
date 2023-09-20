@@ -1,7 +1,7 @@
 import { BuildControls, Burger, OrderSummary } from "@components/burger";
 import { Loader, Modal } from "@components/ui";
-import xs from "@src/xs";
 import ErrorHandler from "@src/hoc/error-handler";
+import xs from "@src/xs";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -22,7 +22,6 @@ function BurgerBuilder() {
     purchasable: false,
     purchasing: false,
     loading: false,
-    error: null,
   });
 
   function updatePurchasability(ingredients) {
@@ -44,20 +43,18 @@ function BurgerBuilder() {
   }
 
   useEffect(() => {
-    async function getIngredients() {
-      try {
-        const { data } = await xs.get("/ingredients.json");
+    setPageStates((prv) => ({ ...prv, loading: true }));
+    xs.get("/ingredients.json")
+      .then(({ data }) => {
         setPageStates((prv) => {
           const newState = { ...prv, ingredients: data };
           return newState;
         });
         updateTotal(data);
         updatePurchasability(data);
-      } catch (error) {
-        setPageStates((prv) => ({ ...prv, error }));
-      }
-    }
-    return () => getIngredients();
+      })
+      .catch((error) => error)
+      .finally(() => setPageStates((prv) => ({ ...prv, loading: false })));
   }, []);
 
   const proceedToCheckout = () => {
@@ -109,14 +106,10 @@ function BurgerBuilder() {
     });
   }
 
-  let burger$controls = pageStates.error ? (
-    <p>{pageStates.error.message}</p>
-  ) : (
-    <Loader>Hold on a second...</Loader>
-  );
+  let PageUI;
 
   if (pageStates.ingredients) {
-    burger$controls = (
+    PageUI = (
       <>
         <Burger ingredients={pageStates.ingredients} />
         <BuildControls
@@ -149,9 +142,9 @@ function BurgerBuilder() {
           />
         ) : null}
       </Modal>
-      {burger$controls}
+      {pageStates.loading ? <Loader>Setting up UI</Loader> : PageUI}
     </>
   );
 }
 
-export default ErrorHandler(BurgerBuilder);
+export default ErrorHandler(BurgerBuilder, xs);

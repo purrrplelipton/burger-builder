@@ -1,0 +1,17 @@
+.orders-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+.no-order {
+  font-weight: 600;
+  font-size: 1.75em;
+  margin: auto;
+  opacity: 0.2;
+}
+
+@media only screen and (min-width: 768px) {
+  .no-order {
+    font-size: 2.5em;
+  }
+}

@@ -1,34 +1,38 @@
 import { Modal } from "@components/ui";
-import xs from "@src/xs";
 import React, { useEffect, useState } from "react";
 
-function ErrorHandler(Wrapper) {
+function ErrorHandler(Wrapper, xs) {
   return function (props) {
-    const [error, setError] = useState(null);
+    const [exception, setException] = useState(null);
 
-    const dismissError = () => {
-      setError(null);
-    };
+    const dismissError = () => setException(null);
 
-    useEffect(() => {
-      const errorInterceptor = xs.interceptors.response.use(
-        (response) => response,
-        (err) => {
-          setError(err);
-          return Promise.reject(err);
-        }
-      );
+    const requestInterceptor = xs.interceptors.request.use((request) => {
+      setException(null);
+      return request;
+    });
 
-      return () => {
-        xs.interceptors.response.eject(errorInterceptor);
-      };
-    }, []);
+    const responseInterceptor = xs.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        setException(error);
+        return error;
+      }
+    );
+
+    useEffect(
+      () => () => {
+        xs.interceptors.request.eject(requestInterceptor);
+        xs.interceptors.response.eject(responseInterceptor);
+      },
+      [requestInterceptor, responseInterceptor]
+    );
 
     return (
       <>
-        {error && (
-          <Modal showModal={Boolean(error)} exitModal={dismissError}>
-            {error.message}
+        {exception && (
+          <Modal showModal={Boolean(exception)} exitModal={dismissError}>
+            {exception.message}
           </Modal>
         )}
         <Wrapper {...props} />
