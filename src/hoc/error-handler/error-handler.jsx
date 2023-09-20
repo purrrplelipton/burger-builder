@@ -1,29 +1,29 @@
 import { Modal } from "@components/ui";
 import React, { useEffect, useState } from "react";
 
-function ErrorHandler(Wrapper, xs) {
+function ErrorHandler(Wrapper, axios) {
   return function (props) {
     const [exception, setException] = useState(null);
 
     const dismissError = () => setException(null);
 
-    const requestInterceptor = xs.interceptors.request.use((request) => {
+    const requestInterceptor = axios.interceptors.request.use((request) => {
       setException(null);
       return request;
     });
 
-    const responseInterceptor = xs.interceptors.response.use(
+    const responseInterceptor = axios.interceptors.response.use(
       (response) => response,
       (error) => {
         setException(error);
-        return error;
+        return Promise.reject(error);
       }
     );
 
     useEffect(
       () => () => {
-        xs.interceptors.request.eject(requestInterceptor);
-        xs.interceptors.response.eject(responseInterceptor);
+        axios.interceptors.request.eject(requestInterceptor);
+        axios.interceptors.response.eject(responseInterceptor);
       },
       [requestInterceptor, responseInterceptor]
     );

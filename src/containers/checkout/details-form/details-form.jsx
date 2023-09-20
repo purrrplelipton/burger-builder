@@ -1,14 +1,12 @@
-import { Button, Loader } from "@components/ui";
+import { Button, Input, Loader } from "@components/ui";
 import xs from "@src/xs";
 import pt from "prop-types";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles, {
-  base,
+import {
   contactDetailsWrapper,
-  indicator,
-  inputWrapper,
-  placeholder,
+  ctaWrapper,
+  loaderWrapper,
   wrapper,
 } from "./details-form.module.css";
 
@@ -41,67 +39,51 @@ function DetailsForm({ total, contents }) {
     <section className={wrapper}>
       <h1>Provide your details to proceed</h1>
       <form>
-        <label htmlFor="name" className={inputWrapper}>
-          <input
-            className={`${base}`}
-            id="name"
-            type="text"
-            value={details.name}
-            onChange={({ target: { value } }) => {
-              setDetails((prv) => ({ ...prv, name: value }));
-            }}
-          />
-          <span className={placeholder}>Full Name</span>
-          <i className={indicator} />
-        </label>
-        <label htmlFor="email" className={inputWrapper}>
-          <input
-            className={`${base}`}
-            id="email"
-            type="email"
-            value={details.email}
-            onChange={({ target: { value } }) => {
-              setDetails((prv) => ({ ...prv, email: value }));
-            }}
-          />
-          <span className={placeholder}>Email</span>
-          <i className={indicator} />
-        </label>
+        <Input
+          id="name"
+          type="text"
+          placeholder="Full Name"
+          value={details.name}
+          onChange={(e) => {
+            setDetails((prv) => ({ ...prv, name: e.target.value }));
+          }}
+        />
+        <Input
+          id="email"
+          type="email"
+          placeholder="Email"
+          value={details.email}
+          onChange={(e) => {
+            setDetails((prv) => ({ ...prv, email: e.target.value }));
+          }}
+        />
         <fieldset className={contactDetailsWrapper}>
-          <label htmlFor="street" className={inputWrapper}>
-            <input
-              className={`${base}`}
-              id="street"
-              type="text"
-              value={details.address.street}
-              onChange={({ target: { value } }) => {
-                setDetails((prv) => ({
-                  ...prv,
-                  address: { ...prv.address, street: value },
-                }));
-              }}
-            />
-            <span className={placeholder}>Street</span>
-            <i className={indicator} />
-          </label>
-          <label htmlFor="zip-code" className={inputWrapper}>
-            <input
-              className={`${base}`}
-              id="zip-code"
-              type="text"
-              value={details.address["zip-code"]}
-              onChange={({ target: { value } }) => {
-                setDetails((prv) => ({
-                  ...prv,
-                  address: { ...prv.address, "zip-code": value },
-                }));
-              }}
-            />
-            <span className={placeholder}>Zip Code</span>
-            <i className={indicator} />
-          </label>
+          <Input
+            id="street"
+            type="text"
+            placeholder="Street"
+            value={details.address.street}
+            onChange={(e) => {
+              setDetails((prv) => ({
+                ...prv,
+                address: { ...prv.address, street: e.target.value },
+              }));
+            }}
+          />
+          <Input
+            id="zip-code"
+            type="text"
+            placeholder="Zip Code"
+            value={details.address["zip-code"]}
+            onChange={(e) => {
+              setDetails((prv) => ({
+                ...prv,
+                address: { ...prv.address, "zip-code": e.target.value },
+              }));
+            }}
+          />
         </fieldset>
-        <div className={styles.ctaWrapper}>
+        <div className={ctaWrapper}>
           <Button btnType="danger" onClick={() => navigate(-1)}>
             CANCEL
           </Button>
@@ -111,7 +93,7 @@ function DetailsForm({ total, contents }) {
         </div>
       </form>
       {formStates.loading && (
-        <i className={styles.loaderWrapper}>
+        <i className={loaderWrapper}>
           <Loader>Hold tight while we process your order.</Loader>
         </i>
       )}

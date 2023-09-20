@@ -28,13 +28,14 @@ function Orders() {
   }, []);
 
   let PageUI = (
-    <p className={styles.noOrder}>You haven&rsquo;t made any order</p>
+    <p className={styles.noOrder}>You have made no orders recently</p>
   );
 
   if (pageStates.orders.length) {
     PageUI = (
       <section className={styles.ordersWrapper}>
-        <ul>
+        <h1>Your Orders</h1>
+        <ul className={styles.orderList}>
           {pageStates.orders.map((order) => (
             <li key={order.id}>
               <Order details={order} />

@@ -1,17 +1,34 @@
 .orders-wrapper {
-  width: 100%;
+  width: calc(100% - (var(--spacing) * 2));
+  min-height: 100%;
+  margin-inline: auto;
   position: relative;
+}
+
+.orders-wrapper h1 {
+  text-align: center;
+  font-size: 1.875em;
+  font-weight: 400;
+}
+
+.order-list {
+  list-style-type: none;
+  margin-block-start: 0.9375em;
+}
+
+.order-list li:not(:last-child) {
+  margin-block-end: calc(var(--spacing) / 2);
 }
 
 .no-order {
   font-weight: 600;
-  font-size: 1.75em;
+  font-size: 1.25em;
   margin: auto;
   opacity: 0.2;
 }
 
 @media only screen and (min-width: 768px) {
   .no-order {
-    font-size: 2.5em;
+    font-size: 2em;
   }
 }

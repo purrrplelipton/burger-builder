@@ -9,7 +9,9 @@ import "./index.css";
 const Checkout = lazy(() => import("./containers/checkout/checkout"));
 const Orders = lazy(() => import("./containers/orders/orders"));
 
-createRoot(document.getElementById("root"))?.render(
+const root = createRoot(document.getElementById("root"));
+
+root.render(
   <StrictMode>
     <BrowserRouter>
       <Layout>

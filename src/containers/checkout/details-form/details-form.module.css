@@ -16,75 +16,10 @@
   text-decoration: underline solid currentColor 1px;
 }
 
-.input-wrapper {
-  font-size: 1.125em;
-  line-height: 0.875;
-  margin-block-end: 0.75em;
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  justify-content: flex-start;
-  position: relative;
-  isolation: isolate;
-}
-
-.input-wrapper .placeholder {
-  white-space: nowrap;
-  position: absolute;
-  z-index: -1;
-  transform: translate(0.375em, 0) scale(1);
-  color: #00000066;
-  transition: all 0.125s linear;
-}
-
-.indicator {
-  all: unset;
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  border-bottom: 2px solid #00000022;
-  outline: 2px solid #00000000;
-  outline-offset: 2px;
-}
-
-.indicator::before {
-  content: "";
-  position: absolute;
-  inset: 100% 0 -2px;
-  background-color: #f57328;
-  transform-origin: left;
-  transform: scaleX(0);
-  transition: all 0.3s ease-in-out;
-}
-
-.base:focus ~ .indicator::before {
-  transform: scaleX(1);
-}
-
-.base:focus ~ .placeholder,
-.base:not(:focus):not([value=""]) ~ .placeholder {
-  color: #00000099;
-  transform: translate(-12.5%, -130%) scale(0.75);
-}
-
-.base {
-  display: inline-block;
-  width: 100%;
-  background-color: unset;
-  border: unset;
-  outline: unset;
-  padding: 0.5em 0.375em;
-}
-
 .contact-details-wrapper {
   border: unset;
   display: flex;
   align-items: center;
-}
-
-.contact-details-wrapper .input-wrapper {
-  margin-block-end: unset;
-  width: 50%;
 }
 
 .cta-wrapper {
