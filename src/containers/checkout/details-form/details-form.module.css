@@ -19,7 +19,10 @@
 .contact-details-wrapper {
   border: unset;
   display: flex;
-  align-items: center;
+}
+
+.contact-details-wrapper label {
+  width: 50%;
 }
 
 .cta-wrapper {

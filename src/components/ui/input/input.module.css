@@ -20,6 +20,10 @@
   padding: 0.6em 0.4em;
 }
 
+.input::placeholder {
+  color: #0000;
+}
+
 .placeholder {
   color: #0006;
   white-space: nowrap;

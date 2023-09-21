@@ -10,15 +10,44 @@ import {
   wrapper,
 } from "./details-form.module.css";
 
-const initial = {
-  name: "",
-  email: "",
-  address: { street: "", "zip-code": "" },
+const attributes = {
+  name: {
+    type: "text",
+    placeholder: "Full Name",
+  },
+  email: {
+    type: "email",
+    placeholder: "Email",
+  },
+  street: {
+    type: "text",
+    placeholder: "Street",
+  },
+  "zip-code": {
+    type: "text",
+    placeholder: "ZIP Code",
+  },
+  region: {
+    options: [
+      { value: "af", label: "Africa" },
+      { value: "an", label: "Antartica" },
+      { value: "as", label: "Asia" },
+      { value: "au", label: "Australia" },
+      { value: "eu", label: "Europe" },
+      { value: "na", label: "North America" },
+      { value: "sa", label: "South America" },
+    ],
+  },
+  "delivery-method": { type: "radio", value: "std" },
 };
 
 function DetailsForm({ total, contents }) {
   const [formStates, setFormStates] = useState({ loading: false, error: null });
-  const [details, setDetails] = useState(initial);
+  const [details, setDetails] = useState({
+    name: "",
+    email: "",
+    address: { region: "", street: "", "zip-code": "" },
+  });
   const navigate = useNavigate();
 
   const placeOrder = (evt) => {
@@ -28,7 +57,11 @@ function DetailsForm({ total, contents }) {
 
     xs.post("/orders.json", { customer: details, contents, total })
       .then(() => {
-        setDetails(initial);
+        setDetails({
+          name: "",
+          email: "",
+          address: { region: "na", street: "", "zip-code": "" },
+        });
         navigate("/", { replace: true });
       })
       .catch((error) => setFormStates((prv) => ({ ...prv, error })))
@@ -40,18 +73,21 @@ function DetailsForm({ total, contents }) {
       <h1>Provide your details to proceed</h1>
       <form>
         <Input
-          id="name"
-          type="text"
-          placeholder="Full Name"
+          id="full-name"
+          variant="input"
+          attributes={attributes.name}
           value={details.name}
           onChange={(e) => {
-            setDetails((prv) => ({ ...prv, name: e.target.value }));
+            setDetails((prv) => ({
+              ...prv,
+              name: e.target.value,
+            }));
           }}
         />
         <Input
-          id="email"
-          type="email"
-          placeholder="Email"
+          id="email-address"
+          variant="input"
+          attributes={attributes.email}
           value={details.email}
           onChange={(e) => {
             setDetails((prv) => ({ ...prv, email: e.target.value }));
@@ -59,21 +95,21 @@ function DetailsForm({ total, contents }) {
         />
         <fieldset className={contactDetailsWrapper}>
           <Input
-            id="street"
-            type="text"
-            placeholder="Street"
-            value={details.address.street}
+            id="region"
+            variant="dropdown"
+            attributes={attributes.region}
+            value={details.address.region}
             onChange={(e) => {
               setDetails((prv) => ({
                 ...prv,
-                address: { ...prv.address, street: e.target.value },
+                address: { ...prv.address, region: e.target.value },
               }));
             }}
           />
           <Input
             id="zip-code"
-            type="text"
-            placeholder="Zip Code"
+            variant="input"
+            attributes={attributes["zip-code"]}
             value={details.address["zip-code"]}
             onChange={(e) => {
               setDetails((prv) => ({
@@ -83,6 +119,18 @@ function DetailsForm({ total, contents }) {
             }}
           />
         </fieldset>
+        <Input
+          id="street-name"
+          variant="input"
+          attributes={attributes.street}
+          value={details.address.street}
+          onChange={(e) => {
+            setDetails((prv) => ({
+              ...prv,
+              address: { ...prv.address, street: e.target.value },
+            }));
+          }}
+        />
         <div className={ctaWrapper}>
           <Button btnType="danger" onClick={() => navigate(-1)}>
             CANCEL
