@@ -21,7 +21,7 @@
   display: flex;
 }
 
-.contact-details-wrapper label {
+.fieldset-child {
   width: 50%;
 }
 

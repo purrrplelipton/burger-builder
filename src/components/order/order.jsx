@@ -44,7 +44,7 @@ Order.propTypes = {
     customer: pt.shape({
       name: pt.string.isRequired,
       email: pt.string.isRequired,
-      address: pt.shape({ street: pt.string, "zip-code": pt.string.isRequired })
+      address: pt.shape({ street: pt.string, "zip-code": pt.number.isRequired })
         .isRequired,
     }).isRequired,
     total: pt.number.isRequired,

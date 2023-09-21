@@ -18,7 +18,7 @@ root.render(
         <Suspense fallback={<Loader />}>
           <Routes>
             <Route path="checkout/*" element={<Checkout />} />
-            <Route path="orders" element={<Orders />} />
+            <Route path="orders/*" element={<Orders />} />
             <Route path="/" element={<BurgerBuilder />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

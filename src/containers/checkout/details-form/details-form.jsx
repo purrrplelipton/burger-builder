@@ -3,7 +3,7 @@ import xs from "@src/xs";
 import pt from "prop-types";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
+import styles, {
   contactDetailsWrapper,
   ctaWrapper,
   loaderWrapper,
@@ -12,42 +12,51 @@ import {
 
 const attributes = {
   name: {
+    value: "",
     type: "text",
     placeholder: "Full Name",
   },
   email: {
+    value: "",
     type: "email",
     placeholder: "Email",
   },
-  street: {
-    type: "text",
-    placeholder: "Street",
+  address: {
+    street: {
+      value: "",
+      type: "text",
+      placeholder: "Street",
+    },
+    "zip-code": {
+      value: "",
+      type: "text",
+      placeholder: "ZIP Code",
+    },
+    region: {
+      value: "EU",
+      options: [
+        { value: "AF", label: "Africa" },
+        { value: "AN", label: "Antartica" },
+        { value: "AS", label: "Asia" },
+        { value: "AU", label: "Australia" },
+        { value: "EU", label: "Europe" },
+        { value: "NA", label: "North America" },
+        { value: "SA", label: "South America" },
+      ],
+    },
   },
-  "zip-code": {
-    type: "text",
-    placeholder: "ZIP Code",
-  },
-  region: {
+  "delivery-method": {
+    value: "STD",
     options: [
-      { value: "af", label: "Africa" },
-      { value: "an", label: "Antartica" },
-      { value: "as", label: "Asia" },
-      { value: "au", label: "Australia" },
-      { value: "eu", label: "Europe" },
-      { value: "na", label: "North America" },
-      { value: "sa", label: "South America" },
+      { value: "STD", label: "Standard" },
+      { value: "EXP", label: "Express" },
     ],
   },
-  "delivery-method": { type: "radio", value: "std" },
 };
 
 function DetailsForm({ total, contents }) {
   const [formStates, setFormStates] = useState({ loading: false, error: null });
-  const [details, setDetails] = useState({
-    name: "",
-    email: "",
-    address: { region: "", street: "", "zip-code": "" },
-  });
+  const [details, setDetails] = useState(attributes);
   const navigate = useNavigate();
 
   const placeOrder = (evt) => {
@@ -55,87 +64,99 @@ function DetailsForm({ total, contents }) {
 
     setFormStates((prv) => ({ ...prv, loading: true }));
 
-    xs.post("/orders.json", { customer: details, contents, total })
+    const customer = {
+      name: details.name.value,
+      email: details.email.value,
+      address: {
+        region: details.address.region.value,
+        "zip-code": details.address["zip-code"].value,
+        street: details.address.street.value,
+      },
+      "delivery-method": details["delivery-method"].value,
+    };
+
+    xs.post("/orders.json", { customer, contents, total })
       .then(() => {
-        setDetails({
-          name: "",
-          email: "",
-          address: { region: "na", street: "", "zip-code": "" },
-        });
+        setDetails(attributes);
         navigate("/", { replace: true });
       })
       .catch((error) => setFormStates((prv) => ({ ...prv, error })))
       .finally(() => setFormStates((prv) => ({ ...prv, loading: false })));
   };
 
+  function change(path, value) {
+    if (path.length === 1) {
+      setDetails((prv) => ({ ...prv, [path[0]]: { ...prv[path[0]], value } }));
+      return;
+    }
+    const [context, ...subContext] = path;
+    setDetails((prv) => ({
+      ...prv,
+      [context]: {
+        ...prv[context],
+        [subContext[0]]:
+          subContext[0] === subContext[subContext.length - 1]
+            ? { ...prv[context][subContext[0]], value }
+            : change(subContext, value),
+      },
+    }));
+  }
+
   return (
     <section className={wrapper}>
       <h1>Provide your details to proceed</h1>
-      <form>
+      <form onSubmit={placeOrder}>
         <Input
           id="full-name"
-          variant="input"
-          attributes={attributes.name}
-          value={details.name}
-          onChange={(e) => {
-            setDetails((prv) => ({
-              ...prv,
-              name: e.target.value,
-            }));
-          }}
+          variant="field"
+          attributes={details.name}
+          onChange={(event) => change(["name"], event.target.value)}
         />
         <Input
           id="email-address"
-          variant="input"
-          attributes={attributes.email}
-          value={details.email}
-          onChange={(e) => {
-            setDetails((prv) => ({ ...prv, email: e.target.value }));
-          }}
+          variant="field"
+          attributes={details.email}
+          onChange={(event) => change(["email"], event.target.value)}
         />
         <fieldset className={contactDetailsWrapper}>
           <Input
             id="region"
             variant="dropdown"
-            attributes={attributes.region}
-            value={details.address.region}
-            onChange={(e) => {
-              setDetails((prv) => ({
-                ...prv,
-                address: { ...prv.address, region: e.target.value },
-              }));
+            attributes={details.address.region}
+            onChange={(event) => {
+              change(["address", "region"], event.target.value);
             }}
+            className={styles.fieldsetChild}
           />
           <Input
             id="zip-code"
-            variant="input"
-            attributes={attributes["zip-code"]}
-            value={details.address["zip-code"]}
-            onChange={(e) => {
-              setDetails((prv) => ({
-                ...prv,
-                address: { ...prv.address, "zip-code": e.target.value },
-              }));
+            variant="field"
+            attributes={details.address["zip-code"]}
+            onChange={(event) => {
+              change(["address", "zip-code"], event.target.value);
             }}
+            className={styles.fieldsetChild}
           />
         </fieldset>
         <Input
           id="street-name"
-          variant="input"
-          attributes={attributes.street}
-          value={details.address.street}
-          onChange={(e) => {
-            setDetails((prv) => ({
-              ...prv,
-              address: { ...prv.address, street: e.target.value },
-            }));
+          variant="field"
+          attributes={details.address.street}
+          onChange={(event) => {
+            change(["address", "street"], event.target.value);
           }}
         />
+        <Input
+          id="delivery-method"
+          variant="radios"
+          attributes={details["delivery-method"]}
+          onChange={(event) => change(["delivery-method"], event.target.value)}
+        />
         <div className={ctaWrapper}>
-          <Button btnType="danger" onClick={() => navigate(-1)}>
+          <Button variant="blue-grey" onClick={() => navigate(-1)}>
             CANCEL
           </Button>
-          <Button btnType="success" onClick={placeOrder}>
+          <Button variant="light-green" type="submit">
             PLACE ORDER
           </Button>
         </div>

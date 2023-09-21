@@ -10,7 +10,53 @@
   isolation: isolate;
 }
 
-.input {
+fieldset.radio-fieldset {
+  border: unset;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 0.625em;
+  font-size: 0.875em;
+}
+
+fieldset.radio-fieldset .radio {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 8px;
+  border: 1px solid #0003;
+  overflow: hidden;
+  padding: 0.375em 0.4em 0.3375em;
+}
+
+fieldset.radio-fieldset .radio input[type="radio"] {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+}
+
+fieldset.radio-fieldset .radio .radio-option-label {
+  display: inline-block;
+  line-height: 0.875;
+}
+
+fieldset.radio-fieldset .radio i.radio-option-indicator {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+fieldset.radio-fieldset
+  .radio
+  input[type="radio"]:checked
+  ~ .radio-option-indicator {
+  background-color: #0001;
+}
+
+input.element[type="text"],
+input.element[type="email"],
+input.element[type="password"],
+select.element {
   display: inline-block;
   color: inherit;
   width: 100%;
@@ -20,11 +66,15 @@
   padding: 0.6em 0.4em;
 }
 
-.input::placeholder {
+input.element[type="text"]::placeholder,
+input.element[type="email"]::placeholder,
+input.element[type="password"]::placeholder {
   color: #0000;
 }
 
-.placeholder {
+input.element[type="text"] ~ .placeholder,
+input.element[type="email"] ~ .placeholder,
+input.element[type="password"] ~ .placeholder {
   color: #0006;
   white-space: nowrap;
   position: absolute;
@@ -33,12 +83,17 @@
   transition: all 0.15s ease-in-out;
 }
 
-.input.focused ~ .placeholder {
+input.element.focused[type="text"] ~ .placeholder,
+input.element.focused[type="email"] ~ .placeholder,
+input.element.focused[type="password"] ~ .placeholder {
   color: #000b;
   transform: translate(-12%, -130%) scale(0.75);
 }
 
-.indicator {
+input.element[type="text"] ~ .indicator,
+input.element[type="email"] ~ .indicator,
+input.element[type="password"] ~ .indicator,
+select.element ~ .indicator {
   all: unset;
   position: absolute;
   z-index: -1;
@@ -48,7 +103,10 @@
   outline-offset: 2px;
 }
 
-.indicator::before {
+input.element[type="text"] ~ .indicator::before,
+input.element[type="email"] ~ .indicator::before,
+input.element[type="password"] ~ .indicator::before,
+select.element ~ .indicator::before {
   content: "";
   position: absolute;
   inset: 100% 0 -2px;
@@ -58,6 +116,9 @@
   transition: transform 0.25s ease-in-out;
 }
 
-.input.focused ~ .indicator::before {
+input.element.focused[type="text"] ~ .indicator::before,
+input.element.focused[type="email"] ~ .indicator::before,
+input.element.focused[type="password"] ~ .indicator::before,
+select.element.focused ~ .indicator::before {
   transform: scaleX(1);
 }

@@ -3,14 +3,16 @@ import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./input.module.css";
 
-function Input({ variant, id, value, onChange, ...rest }) {
-  const [focused, setFocus] = useState(false);
+function Input({ variant, id, onChange, ...rest }) {
+  const { value } = rest.attributes;
+  const [fieldFocused, setFieldFocus] = useState(false);
+  const [dropdownFocused, setDropdownFocus] = useState(false);
 
-  const input$cn = [
-    styles.input,
-    rest.className,
-    focused || value ? styles.focused : "",
-  ];
+  const classNames = {
+    wrapper: [styles.wrapper, rest.className],
+    field: [styles.element, fieldFocused || value ? styles.focused : ""],
+    dropdown: [styles.element, dropdownFocused ? styles.focused : ""],
+  };
 
   let element = null;
 
@@ -18,15 +20,18 @@ function Input({ variant, id, value, onChange, ...rest }) {
     id,
     value,
     onChange,
-    onFocus: () => setFocus(true),
-    onBlur: () => setFocus(false),
-    className: input$cn.join(" "),
+    onFocus: () => setFieldFocus(true),
+    onBlur: () => setFieldFocus(false),
+    className: classNames.field.join(" "),
     autoComplete: "off",
   };
 
   switch (variant) {
-    case "input":
-      element = <input {...defaults} />;
+    case "field":
+      {
+        const { type } = rest.attributes;
+        element = <input {...defaults} type={type} />;
+      }
       break;
 
     case "textarea":
@@ -39,11 +44,18 @@ function Input({ variant, id, value, onChange, ...rest }) {
         const selected$option = options.find(
           (option) => option.value === value
         );
-        const title$message = selected$option
-          ? `"${selected$option.label}" region selected`
+        const label = selected$option
+          ? `Region selected: ${selected$option.label}`
           : "Select a region";
+        const dropdownDefaults = {
+          ...defaults,
+          className: classNames.dropdown.join(" "),
+          onFocus: () => setDropdownFocus(true),
+          onBlur: () => setDropdownFocus(false),
+        };
+
         element = (
-          <select title={title$message} {...defaults}>
+          <select aria-label={label} {...dropdownDefaults}>
             {options.map((option) => (
               <option key={uuidv4()} value={option.value}>
                 {option.label}
@@ -54,20 +66,54 @@ function Input({ variant, id, value, onChange, ...rest }) {
       }
       break;
 
+    case "radios":
+      {
+        const { options } = rest.attributes;
+
+        element = (
+          <fieldset className={styles.radioFieldset}>
+            {options.map((option) => (
+              <label
+                key={uuidv4()}
+                htmlFor={option.value}
+                className={styles.radio}
+              >
+                <input
+                  name={id}
+                  type="radio"
+                  id={option.value}
+                  value={option.value}
+                  checked={option.value === value}
+                  onChange={onChange}
+                />
+                <span className={styles.radioOptionLabel}>{option.label}</span>
+                <i className={styles.radioOptionIndicator} />
+              </label>
+            ))}
+          </fieldset>
+        );
+      }
+      break;
+
     default:
-      element = (
-        <input
-          id={id}
-          value={value}
-          onChange={onChange}
-          className={input$cn.join(" ")}
-        />
-      );
+      {
+        const { type } = rest.attributes;
+
+        element = (
+          <input
+            type={type || "text"}
+            id={id || null}
+            value={value || ""}
+            onChange={onChange || (() => {})}
+            className={classNames.field.join(" ")}
+          />
+        );
+      }
       break;
   }
 
   return (
-    <label htmlFor={id} className={styles.wrapper}>
+    <label htmlFor={id} className={classNames.wrapper.join(" ")}>
       {element}
       {rest.attributes.placeholder && (
         <span className={styles.placeholder}>
@@ -80,19 +126,12 @@ function Input({ variant, id, value, onChange, ...rest }) {
 }
 
 Input.propTypes = {
-  variant: pt.oneOf(["input", "textarea", "dropdown"]).isRequired,
+  variant: pt.oneOf(["field", "textarea", "dropdown", "radios"]).isRequired,
   attributes: pt.shape({
-    type(props, propName, componentName) {
-      if (props.variant === "input" && !props[propName]) {
-        return new Error(
-          `The 'type' prop is required when the 'variant' is 'input' in ${componentName}.`
-        );
-      }
-      return null; // Validation passed
-    },
+    type: pt.oneOf(["text", "email", "password"]).isRequired,
+    value: pt.oneOfType([pt.string, pt.number]).isRequired,
   }).isRequired,
   id: pt.string.isRequired,
-  value: pt.oneOfType([pt.string, pt.number]).isRequired,
   onChange: pt.func.isRequired,
 };
 
