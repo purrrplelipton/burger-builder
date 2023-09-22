@@ -22,7 +22,6 @@
 .order-button {
   outline: 2px solid transparent;
   outline-offset: 2px;
-  cursor: pointer;
   border: unset;
   background-color: unset;
   font-weight: 600;
@@ -33,17 +32,16 @@
   transition: all 0.2s ease-in-out;
 }
 
-.order-button:not(:disabled):hover {
+.order-button:not([aira-disabled="true"]):hover {
   color: #a0db41;
 }
 
-.order-button:not(:disabled):active {
+.order-button:not([aira-disabled="true"]):active {
   transform: scale(0.95);
 }
 
-.order-button:disabled {
+.order-button[aira-disabled="true"] {
   color: #888888;
-  cursor: not-allowed;
   border-color: #ccc;
   box-shadow: 0 0.375em 0.875em -10px #00000022;
 }

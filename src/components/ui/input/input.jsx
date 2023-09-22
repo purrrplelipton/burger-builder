@@ -1,17 +1,23 @@
+import { AlertSquareRounded } from "@src/assets/vectors";
 import pt from "prop-types";
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./input.module.css";
 
 function Input({ variant, id, onChange, ...rest }) {
-  const { value } = rest.attributes;
+  const { value, valid, rules } = rest.attributes;
   const [fieldFocused, setFieldFocus] = useState(false);
   const [dropdownFocused, setDropdownFocus] = useState(false);
 
   const classNames = {
     wrapper: [styles.wrapper, rest.className],
-    field: [styles.element, fieldFocused || value ? styles.focused : ""],
+    field: [
+      styles.element,
+      fieldFocused || value ? styles.focused : "",
+      valid && value ? "" : styles.invalid,
+    ],
     dropdown: [styles.element, dropdownFocused ? styles.focused : ""],
+    indicator: [styles.alertsIndicator],
   };
 
   let element = null;
@@ -24,6 +30,8 @@ function Input({ variant, id, onChange, ...rest }) {
     onBlur: () => setFieldFocus(false),
     className: classNames.field.join(" "),
     autoComplete: "off",
+    "aria-invalid": !valid,
+    "aria-required": rules.required,
   };
 
   switch (variant) {
@@ -121,6 +129,9 @@ function Input({ variant, id, onChange, ...rest }) {
         </span>
       )}
       <i className={styles.indicator} />
+      <i className={classNames.indicator.join(" ")}>
+        {!valid && <AlertSquareRounded />}
+      </i>
     </label>
   );
 }
@@ -135,4 +146,4 @@ Input.propTypes = {
   onChange: pt.func.isRequired,
 };
 
-export default Input;
+export default memo(Input);

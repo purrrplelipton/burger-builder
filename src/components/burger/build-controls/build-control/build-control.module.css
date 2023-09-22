@@ -30,7 +30,6 @@
   border-radius: 50% 0 0 50%;
   display: grid;
   place-items: center;
-  cursor: pointer;
 }
 
 .btns-wrapper [type="button"]:last-child {
@@ -46,15 +45,10 @@
   place-items: center;
 }
 
-.build-control [type="button"]:disabled {
+.build-control [type="button"][aria-disabled="true"] {
   background-color: #ac9980;
   border: 1px solid #7e7365;
   color: #ccc;
-  cursor: default;
-}
-
-.build-control [type="button"]:disabled:hover {
-  cursor: not-allowed;
 }
 
 .label {
@@ -70,15 +64,15 @@
   background-color: #8f5e1e;
 }
 
-.build-control .remove:not(:disabled):hover {
+.build-control .remove:not([aria-disabled="true"]):hover {
   background-color: #daa972;
 }
 
-.build-control .add:not(:disabled):hover {
+.build-control .add:not([aria-disabled="true"]):hover {
   background-color: #99703f;
 }
 
-.build-control .remove:not(:disabled):active,
-.build-control .add:not(:disabled):active {
+.build-control .remove:not([aria-disabled="true"]):active,
+.build-control .add:not([aria-disabled="true"]):active {
   transform: scale(0.95);
 }

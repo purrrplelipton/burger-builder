@@ -9,10 +9,10 @@ const SideDrawer = lazy(() =>
 
 const mainContentStyles = {
   width: "100%",
-  "min-height": "100%",
+  minHeight: "100%",
   display: "flex",
-  "flex-flow": "column nowrap",
-  "padding-block-start": 80,
+  flexFlow: "column nowrap",
+  padding: "5em 0 0",
 };
 
 function Layout({ children }) {

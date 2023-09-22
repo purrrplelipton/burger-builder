@@ -10,7 +10,7 @@
   isolation: isolate;
 }
 
-fieldset.radio-fieldset {
+.radio-fieldset {
   border: unset;
   display: flex;
   flex-flow: row wrap;
@@ -18,39 +18,47 @@ fieldset.radio-fieldset {
   font-size: 0.875em;
 }
 
-fieldset.radio-fieldset .radio {
+.radio-fieldset .radio {
   position: relative;
   overflow: hidden;
   isolation: isolate;
   border-radius: 8px;
-  border: 1px solid #0003;
   overflow: hidden;
   padding: 0.375em 0.4em 0.3375em;
 }
 
-fieldset.radio-fieldset .radio input[type="radio"] {
+.radio-fieldset .radio input[type="radio"] {
   position: absolute;
   inset: 0;
   z-index: -1;
   opacity: 0;
 }
 
-fieldset.radio-fieldset .radio .radio-option-label {
+.radio-fieldset .radio .radio-option-label {
   display: inline-block;
   line-height: 0.875;
 }
 
-fieldset.radio-fieldset .radio i.radio-option-indicator {
+.radio-fieldset .radio .radio-option-indicator {
   position: absolute;
   inset: 0;
   z-index: -1;
+  transition: all 0.125s ease-in-out;
+  border: 1px solid;
+  border-radius: inherit;
 }
 
-fieldset.radio-fieldset
+.radio-fieldset
   .radio
-  input[type="radio"]:checked
+  input[type="radio"]:not(:checked)
   ~ .radio-option-indicator {
-  background-color: #0001;
+  background-color: rgba(0, 0, 0, 0.025);
+  border-color: #0000;
+}
+
+.radio-fieldset .radio input[type="radio"]:checked ~ .radio-option-indicator {
+  background-color: #fff;
+  border-color: #607d8b;
 }
 
 input.element[type="text"],
@@ -75,7 +83,7 @@ input.element[type="password"]::placeholder {
 input.element[type="text"] ~ .placeholder,
 input.element[type="email"] ~ .placeholder,
 input.element[type="password"] ~ .placeholder {
-  color: #0006;
+  color: var(--grey-400);
   white-space: nowrap;
   position: absolute;
   z-index: -1;
@@ -83,11 +91,61 @@ input.element[type="password"] ~ .placeholder {
   transition: all 0.15s ease-in-out;
 }
 
+input.element[type="text"] ~ .placeholder::before,
+input.element[type="email"] ~ .placeholder::before,
+input.element[type="password"] ~ .placeholder::before {
+  content: "";
+  position: absolute;
+  inset: 100% 0 -1px;
+  z-index: -1;
+  transform: scaleX(0);
+  background-color: currentColor;
+  transform-origin: left;
+  transition: transform 0.2s ease-in-out;
+}
+
+input.element.invalid[type="text"]:not([value=""]) ~ .placeholder,
+input.element.invalid[type="email"]:not([value=""]) ~ .placeholder,
+input.element.invalid[type="password"]:not([value=""]) ~ .placeholder {
+  color: var(--red-200);
+}
+
 input.element.focused[type="text"] ~ .placeholder,
 input.element.focused[type="email"] ~ .placeholder,
 input.element.focused[type="password"] ~ .placeholder {
-  color: #000b;
+  color: var(--blue-grey-700);
   transform: translate(-12%, -130%) scale(0.75);
+}
+
+input.element.focused[type="text"] ~ .placeholder::before,
+input.element.focused[type="email"] ~ .placeholder::before,
+input.element.focused[type="password"] ~ .placeholder::before {
+  transform: scaleX(1);
+}
+
+input.element.focused.invalid[type="text"]:not([value=""]) ~ .placeholder,
+input.element.focused.invalid[type="email"]:not([value=""]) ~ .placeholder,
+input.element.focused.invalid[type="password"]:not([value=""]) ~ .placeholder {
+  color: var(--red-500);
+}
+
+input.element[type="text"] ~ .alerts-indicator,
+input.element[type="email"] ~ .alerts-indicator,
+input.element[type="password"] ~ .alerts-indicator {
+  all: unset;
+  position: absolute;
+  z-index: -1;
+  right: 0.4em;
+  bottom: 50%;
+  transform: translate(0, 50%);
+  color: #0000;
+  transition: color 0.2s ease-in-out;
+}
+
+input.element.invalid[type="text"]:not([value=""]) ~ .alerts-indicator,
+input.element.invalid[type="email"]:not([value=""]) ~ .alerts-indicator,
+input.element.invalid[type="password"]:not([value=""]) ~ .alerts-indicator {
+  color: var(--red-400);
 }
 
 input.element[type="text"] ~ .indicator,
@@ -98,7 +156,7 @@ select.element ~ .indicator {
   position: absolute;
   z-index: -1;
   inset: 0;
-  border-bottom: 2px solid #0002;
+  border-bottom: 2px solid var(--grey-300);
   outline: 2px solid #0000;
   outline-offset: 2px;
 }
@@ -110,10 +168,18 @@ select.element ~ .indicator::before {
   content: "";
   position: absolute;
   inset: 100% 0 -2px;
-  background-color: currentColor;
+  background-color: var(--indigo-200);
   transform-origin: left;
   transform: scaleX(0);
   transition: transform 0.25s ease-in-out;
+}
+
+input.element.invalid[type="text"]:not([value=""]) ~ .indicator::before,
+input.element.invalid[type="email"]:not([value=""]) ~ .indicator::before,
+input.element.invalid[type="password"]:not([value=""]) ~ .indicator::before,
+select.element.invalid ~ .indicator::before {
+  transform: scale(1);
+  background-color: var(--red-500);
 }
 
 input.element.focused[type="text"] ~ .indicator::before,

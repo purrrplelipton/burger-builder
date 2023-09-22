@@ -16,7 +16,7 @@ function OrderSummary({ contents, cancelPurchase, totalPrice, checkout }) {
     <>
       <h3>Your Order</h3>
       <p>A burger with the following contents:</p>
-      <ul style={{ paddingInlineStart: "1.25em" }}>{contentSummary}</ul>
+      <ul style={{ paddingLeft: "1.25em" }}>{contentSummary}</ul>
       <p>
         Total&nbsp;~&nbsp;₦
         <strong>{totalPrice.toFixed(2)}</strong>
@@ -27,8 +27,8 @@ function OrderSummary({ contents, cancelPurchase, totalPrice, checkout }) {
           border: "unset",
           margin: "0.875em 0 0.375em",
           display: "flex",
-          "flex-flow": "row nowrap",
-          "align-items": "center",
+          flexFlow: "row nowrap",
+          alignItems: "center",
           gap: "0.875em",
         }}
       >

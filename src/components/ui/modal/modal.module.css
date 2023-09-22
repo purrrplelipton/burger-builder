@@ -1,5 +1,5 @@
 .modal {
-  background-color: var(--header-color);
+  background-color: hsla(0, 0%, 98%);
   color: #181818;
   width: calc(100% - (1.25em * 2));
   border: 1px solid #eee;

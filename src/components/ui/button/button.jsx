@@ -2,26 +2,25 @@ import pt from "prop-types";
 import React from "react";
 import styles from "./button.module.css";
 
-function Button({ variant, type, onClick, children }) {
+function Button({ type, onClick, ...rest }) {
   return (
     <button
       type={type}
-      className={[styles.button, styles[variant]].join(" ")}
+      className={[styles.button, styles[rest.variant]].join(" ")}
       onClick={onClick}
+      aria-disabled={rest.disabled}
     >
-      {children}
+      {rest.children}
       <i className={styles.indicator} />
     </button>
   );
 }
 
-Button.defaultProps = { type: "button" };
+Button.defaultProps = { type: "button", onClick: () => {} };
 
 Button.propTypes = {
-  children: pt.oneOfType([pt.node, pt.string]).isRequired,
-  onClick: pt.func.isRequired,
-  type: pt.oneOf(["submit", "reset"]),
-  variant: pt.oneOf(["danger", "success"]).isRequired,
+  onClick: pt.func,
+  type: pt.oneOf(["submit", "reset", "button"]),
 };
 
 export default Button;

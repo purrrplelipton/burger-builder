@@ -12,7 +12,7 @@ function BuildControl({ add, remove, label, disabled }) {
           className={styles.remove}
           onClick={remove}
           aria-label={`Remove one ${label}`}
-          disabled={disabled}
+          aria-disabled={disabled}
         >
           <span className={styles.btnSign}>-</span>
         </button>
