@@ -6,7 +6,16 @@
 
 .checkout-summary h1 {
   font-size: 2em;
-  margin-block-end: 1.125em;
+}
+
+.cta-wrapper {
+  border: unset;
+  margin: 0.875em 0 0.375em;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75em;
 }
 
 @media only screen and (min-width: 768px) {

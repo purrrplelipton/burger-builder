@@ -10,30 +10,49 @@ import styles, {
   wrapper,
 } from "./details-form.module.css";
 
+function map(source) {
+  const output = {};
+  Object.keys(source).forEach((key) => {
+    if (Object.hasOwnProperty.call(source[key], "value")) {
+      output[key] = source[key].value;
+    } else {
+      output[key] = map(source[key]);
+    }
+  });
+  return output;
+}
+
 const attributes = {
   name: {
-    value: "",
     type: "text",
     placeholder: "Full Name",
+    value: "",
+    rules: { exp: /^[a-zA-Z]+[A-Za-z]+$/, required: true },
+    valid: false,
   },
   email: {
-    value: "",
     type: "email",
     placeholder: "Email",
+    value: "",
+    rules: { exp: /^\w@\w.\w/, required: true },
+    valid: false,
   },
   address: {
     street: {
-      value: "",
       type: "text",
       placeholder: "Street",
+      value: "",
+      rules: { exp: /^\d{1,3}[a-zA-Z]$/, required: true },
+      valid: false,
     },
     "zip-code": {
-      value: "",
       type: "text",
       placeholder: "ZIP Code",
+      value: "",
+      rules: { minLength: 6, maxLength: 6, required: true },
+      valid: false,
     },
     region: {
-      value: "EU",
       options: [
         { value: "AF", label: "Africa" },
         { value: "AN", label: "Antartica" },
@@ -43,14 +62,15 @@ const attributes = {
         { value: "NA", label: "North America" },
         { value: "SA", label: "South America" },
       ],
+      value: "EU",
     },
   },
   "delivery-method": {
-    value: "STD",
     options: [
       { value: "STD", label: "Standard" },
       { value: "EXP", label: "Express" },
     ],
+    value: "STD",
   },
 };
 
@@ -64,18 +84,19 @@ function DetailsForm({ total, contents }) {
 
     setFormStates((prv) => ({ ...prv, loading: true }));
 
-    const customer = {
-      name: details.name.value,
-      email: details.email.value,
-      address: {
-        region: details.address.region.value,
-        "zip-code": details.address["zip-code"].value,
-        street: details.address.street.value,
-      },
-      "delivery-method": details["delivery-method"].value,
-    };
+    const customer = map(details);
 
-    xs.post("/orders.json", { customer, contents, total })
+    xs.post("/orders.json", {
+      customer: {
+        ...customer,
+        address: {
+          ...customer.address,
+          "zip-code": parseInt(customer.address["zip-code"], 10),
+        },
+      },
+      contents,
+      total,
+    })
       .then(() => {
         setDetails(attributes);
         navigate("/", { replace: true });
@@ -84,22 +105,52 @@ function DetailsForm({ total, contents }) {
       .finally(() => setFormStates((prv) => ({ ...prv, loading: false })));
   };
 
+  function check(value, rules) {
+    let validity = false;
+    if (rules.required) validity = value.trim() !== "";
+    if (rules.exp) {
+      const { exp } = rules;
+      validity = new RegExp(exp).test(value);
+    }
+    return validity;
+  }
+
   function change(path, value) {
     if (path.length === 1) {
-      setDetails((prv) => ({ ...prv, [path[0]]: { ...prv[path[0]], value } }));
+      setDetails((prv) => ({
+        ...prv,
+        [path[0]]: {
+          ...prv[path[0]],
+          value,
+          valid: check(value, prv[path[0]].rules),
+        },
+      }));
       return;
     }
-    const [context, ...subContext] = path;
-    setDetails((prv) => ({
-      ...prv,
-      [context]: {
-        ...prv[context],
-        [subContext[0]]:
-          subContext[0] === subContext[subContext.length - 1]
-            ? { ...prv[context][subContext[0]], value }
-            : change(subContext, value),
-      },
-    }));
+    const [key, ...subKeys] = path;
+    if (subKeys[0] === subKeys[subKeys.length - 1]) {
+      setDetails((prv) => ({
+        ...prv,
+        [key]: {
+          ...prv[key],
+          [subKeys[0]]: {
+            ...prv[key][subKeys[0]],
+            value,
+            valid: check(value, prv[key][subKeys[0]].rules),
+          },
+        },
+      }));
+    } else {
+      setDetails((prv) => ({
+        ...prv,
+        [key]: {
+          ...prv[key],
+          [subKeys[0]]: change(subKeys, value),
+        },
+      }));
+    }
+
+    console.log(details);
   }
 
   return (

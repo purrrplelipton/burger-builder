@@ -2,7 +2,7 @@ import { Burger } from "@components/burger";
 import { Button } from "@components/ui";
 import pt from "prop-types";
 import React from "react";
-import { checkoutSummary } from "./checkout-summary.module.css";
+import styles, { checkoutSummary } from "./checkout-summary.module.css";
 
 function CheckoutSummary({ ingredients, cancel, proceed }) {
   return (
@@ -11,12 +11,14 @@ function CheckoutSummary({ ingredients, cancel, proceed }) {
       <div>
         <Burger ingredients={ingredients} />
       </div>
-      <Button btnType="danger" onClick={cancel}>
-        CANCEL
-      </Button>
-      <Button btnType="success" onClick={proceed}>
-        CONTINUE
-      </Button>
+      <fieldset className={styles["cta-wrapper"]}>
+        <Button variant="blue-grey" onClick={cancel}>
+          CANCEL
+        </Button>
+        <Button variant="light-green" onClick={proceed}>
+          CONTINUE
+        </Button>
+      </fieldset>
     </section>
   );
 }

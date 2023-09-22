@@ -22,12 +22,23 @@ function OrderSummary({ contents, cancelPurchase, totalPrice, checkout }) {
         <strong>{totalPrice.toFixed(2)}</strong>
       </p>
       <p>Checkout?</p>
-      <Button btnType="danger" onClick={cancelPurchase}>
-        CANCEL
-      </Button>
-      <Button btnType="success" onClick={checkout}>
-        CONTINUE
-      </Button>
+      <fieldset
+        style={{
+          border: "unset",
+          margin: "0.875em 0 0.375em",
+          display: "flex",
+          "flex-flow": "row nowrap",
+          "align-items": "center",
+          gap: "0.875em",
+        }}
+      >
+        <Button variant="blue-grey" onClick={cancelPurchase}>
+          CANCEL
+        </Button>
+        <Button variant="light-green" onClick={checkout}>
+          CONTINUE
+        </Button>
+      </fieldset>
     </>
   );
 }

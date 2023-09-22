@@ -1,8 +1,8 @@
 .button {
   --disabled: #0006;
-  /* --variant: #000d; */
   position: relative;
   isolation: isolate;
+  color: #0000;
   color: var(--variant);
   background-color: unset;
   border: unset;
@@ -10,124 +10,128 @@
   overflow: hidden;
   outline: unset;
   padding: 8px 12px;
-  font-weight: 200;
+  font-weight: 400;
   box-shadow: 0 10px 24px -4px #0001;
   transition:
     transform 0.125s ease-in-out,
-    color 0.1s linear;
+    color 0.125s ease-in-out;
 }
 
-.button .indicator {
+.indicator {
   all: unset;
   position: absolute;
   inset: 0;
   z-index: -1;
-  opacity: 0.3;
+  opacity: 0.5;
   background-color: #fff;
-  border: 1px solid var(--variant);
+  border: 2px solid #0000;
   border-radius: inherit;
-  transition: background-color 0.125s ease-in-out;
+  transition:
+    border-color 0.125s ease-in-out,
+    background-color 0.125s ease-in-out,
+    opacity 0.125s ease-in-out;
 }
 
 .button[aria-disabled="true"] {
-  color: var(--disabled-text);
+  color: var(--disabled);
+}
+
+.button:focus {
+  border-color: var(--variant);
+}
+
+.button:focus .indicator {
+  background-color: var(--variant);
+  opacity: 0.2;
+}
+
+@media only screen and (min-width: 768px) {
+  .button:not([aria-disabled="true"]):hover {
+    transform: translateY(-1px);
+  }
+
+  .button:not([aria-disabled="true"]):hover .indicator {
+    border-color: var(--variant);
+  }
 }
 
 .button:not([aria-disabled="true"]):active {
   transform: translateY(1px);
 }
 
-.button:focus.red,
-.button:hover.red {
+.button.red {
   --variant: #f44336;
 }
 
-.button:focus.pink,
-.button:hover.pink {
+.button.pink {
   --variant: #e91e63;
 }
 
-.button:focus.purple,
-.button:hover.purple {
+.button.purple {
   --variant: #9c27b0;
 }
 
-.button:focus.deep-purple,
-.button:hover.deep-purple {
+.button.deep-purple {
   --variant: #673ab7;
 }
 
-.button:focus.indigo,
-.button:hover.indigo {
+.button.indigo {
   --variant: #3f51b5;
 }
 
-.button:focus.blue,
-.button:hover.blue {
+.button.blue {
   --variant: #2196f3;
 }
 
-.button:focus.light-blue,
-.button:hover.light-blue {
+.button.light-blue {
   --variant: #03a9f4;
 }
 
-.button:focus.cyan,
-.button:hover.cyan {
+.button.cyan {
   --variant: #00bcd4;
 }
 
-.button:focus.teal,
-.button:hover.teal {
+.button.teal {
   --variant: #009688;
 }
 
-.button:focus.green,
-.button:hover.green {
+.button.green {
   --variant: #4caf50;
 }
 
-.button:focus.light-green,
-.button:hover.light-green {
+.button.light-green {
   --variant: #8bc34a;
 }
 
-.button:focus.lime,
-.button:hover.lime {
+.button.lime {
   --variant: #cddc39;
 }
 
-.button:focus.orange,
-.button:hover.orange {
+.button.orange {
   --variant: #ffeb3b;
 }
 
-.button:focus.amber,
-.button:hover.amber {
+.button.amber {
   --variant: #ffc107;
 }
 
-.button:focus.yellow,
-.button:hover.yellow {
+.button.yellow {
   --variant: #ff9800;
 }
 
-.button:focus.deep-orange,
-.button:hover.deep-orange {
+.button.deep-orange {
   --variant: #ff5722;
 }
 
-.button:focus.brown,
-.button:hover.brown {
+.button.brown,
+.button.brown {
   --variant: #795548;
 }
 
-.button:focus.grey,
-.button:hover.grey {
+.button.grey {
   --variant: #9e9e9e;
 }
 
-.button:focus.blue-grey,
-.button:hover.blue-grey {
+.button.blue-grey {
   --variant: #607d8b;
 }
