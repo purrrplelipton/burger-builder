@@ -32,15 +32,15 @@
   transition: all 0.2s ease-in-out;
 }
 
-.order-button:not([aira-disabled="true"]):hover {
+.order-button:not([aria-disabled="true"]):hover {
   color: #a0db41;
 }
 
-.order-button:not([aira-disabled="true"]):active {
+.order-button:not([aria-disabled="true"]):active {
   transform: scale(0.95);
 }
 
-.order-button[aira-disabled="true"] {
+.order-button[aria-disabled="true"] {
   color: #888888;
   border-color: #ccc;
   box-shadow: 0 0.375em 0.875em -10px #00000022;

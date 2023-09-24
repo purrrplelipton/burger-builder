@@ -2,14 +2,16 @@ import { Burger } from "@components/burger";
 import { Button } from "@components/ui";
 import pt from "prop-types";
 import React from "react";
+import { connect } from "react-redux";
 import styles, { checkoutSummary } from "./checkout-summary.module.css";
 
-function CheckoutSummary({ ingredients, cancel, proceed }) {
+function CheckoutSummary(props) {
+  const { contents, cancel, proceed } = props;
   return (
     <section className={checkoutSummary}>
       <h1>Hope you enjoy!</h1>
       <div>
-        <Burger ingredients={ingredients} />
+        <Burger ingredients={contents} />
       </div>
       <fieldset className={styles["cta-wrapper"]}>
         <Button variant="blue-grey" onClick={cancel}>
@@ -24,7 +26,7 @@ function CheckoutSummary({ ingredients, cancel, proceed }) {
 }
 
 CheckoutSummary.propTypes = {
-  ingredients: pt.shape({
+  contents: pt.shape({
     lettuce: pt.number.isRequired,
     bacon: pt.number.isRequired,
     cheese: pt.number.isRequired,
@@ -37,4 +39,8 @@ CheckoutSummary.propTypes = {
   proceed: pt.func.isRequired,
 };
 
-export default CheckoutSummary;
+const mapStateToProps = (state) => ({
+  contents: state.contentsReducer.contents,
+});
+
+export default connect(mapStateToProps)(CheckoutSummary);

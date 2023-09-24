@@ -10,11 +10,11 @@ import {
 } from "./build-controls.module.css";
 
 const controls = [
-  { label: "Lettuce", type: "lettuce" },
   { label: "Patty", type: "patty" },
-  { label: "Bacon", type: "bacon" },
-  { label: "Pickles", type: "pickles" },
   { label: "Cheese", type: "cheese" },
+  { label: "Pickles", type: "pickles" },
+  { label: "Lettuce", type: "lettuce" },
+  { label: "Bacon", type: "bacon" },
   { label: "Onion Ring", type: "onion-ring" },
   { label: "Tomato", type: "tomato" },
 ];
@@ -40,8 +40,8 @@ function BuildControls({
         <button
           type="button"
           className={orderButton}
-          disabled={!purchasable}
-          onClick={ordering}
+          aria-disabled={!purchasable}
+          onClick={purchasable ? ordering : null}
         >
           PLACE ORDER
         </button>

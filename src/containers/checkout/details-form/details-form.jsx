@@ -3,13 +3,9 @@ import { changeHandler, objectMapper, valuesMapper } from "@components/utils";
 import xs from "@src/xs";
 import pt from "prop-types";
 import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import styles, {
-  contactDetailsWrapper,
-  ctaWrapper,
-  loaderWrapper,
-  wrapper,
-} from "./details-form.module.css";
+import styles from "./details-form.module.css";
 
 const attributes = {
   name: {
@@ -85,7 +81,7 @@ const attributes = {
   },
 };
 
-function DetailsForm({ total, contents }) {
+function DetailsForm({ contents, total }) {
   const [formStates, setFormStates] = useState({
     submittable: false,
     loading: false,
@@ -105,7 +101,7 @@ function DetailsForm({ total, contents }) {
     })
       .then(() => {
         setDetails(attributes);
-        navigate("/", { replace: true });
+        navigate("/orders", { replace: true });
       })
       .catch((error) => setFormStates((prv) => ({ ...prv, error })))
       .finally(() => setFormStates((prv) => ({ ...prv, loading: false })));
@@ -121,7 +117,7 @@ function DetailsForm({ total, contents }) {
   }, [details]);
 
   return (
-    <section className={wrapper}>
+    <section className={styles.wrapper}>
       <h1>Provide your details to proceed</h1>
       <form onSubmit={placeOrder}>
         <Input
@@ -140,7 +136,7 @@ function DetailsForm({ total, contents }) {
             changeHandler(["email"], setDetails, event.target.value);
           }}
         />
-        <fieldset className={contactDetailsWrapper}>
+        <fieldset className={styles.contactDetailsWrapper}>
           <Input
             id="region"
             variant="dropdown"
@@ -188,7 +184,7 @@ function DetailsForm({ total, contents }) {
             changeHandler(["delivery-method"], setDetails, event.target.value);
           }}
         />
-        <div className={ctaWrapper}>
+        <div className={styles.ctaWrapper}>
           <Button
             variant="blue-grey"
             type="reset"
@@ -209,7 +205,7 @@ function DetailsForm({ total, contents }) {
         </div>
       </form>
       {formStates.loading && (
-        <i className={loaderWrapper}>
+        <i className={styles.loaderWrapper}>
           <Loader>Hold tight while we process your order.</Loader>
         </i>
       )}
@@ -230,4 +226,9 @@ DetailsForm.propTypes = {
   }).isRequired,
 };
 
-export default DetailsForm;
+const mapStateToProps = (state) => {
+  const { contents, total } = state.contentsReducer;
+  return { contents, total };
+};
+
+export default connect(mapStateToProps)(DetailsForm);
