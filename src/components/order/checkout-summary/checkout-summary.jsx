@@ -1,6 +1,6 @@
 import { Burger } from "@components/burger";
 import { Button } from "@components/ui";
-import pt from "prop-types";
+import { func, number, shape } from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 import styles, { checkoutSummary } from "./checkout-summary.module.css";
@@ -26,17 +26,17 @@ function CheckoutSummary(props) {
 }
 
 CheckoutSummary.propTypes = {
-  contents: pt.shape({
-    lettuce: pt.number.isRequired,
-    bacon: pt.number.isRequired,
-    cheese: pt.number.isRequired,
-    tomato: pt.number.isRequired,
-    patty: pt.number.isRequired,
-    pickles: pt.number.isRequired,
-    "onion-ring": pt.number.isRequired,
+  contents: shape({
+    lettuce: number.isRequired,
+    bacon: number.isRequired,
+    cheese: number.isRequired,
+    tomato: number.isRequired,
+    patty: number.isRequired,
+    pickles: number.isRequired,
+    "onion-ring": number.isRequired,
   }).isRequired,
-  cancel: pt.func.isRequired,
-  proceed: pt.func.isRequired,
+  cancel: func.isRequired,
+  proceed: func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

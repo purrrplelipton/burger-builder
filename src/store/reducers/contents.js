@@ -1,16 +1,9 @@
-import { contentActions } from "@store/actions";
+import { contents as contentsActions } from "@store/actions";
 
 const initialState = {
-  contents: {
-    lettuce: 0,
-    bacon: 0,
-    cheese: 0,
-    "onion-ring": 0,
-    pickles: 0,
-    patty: 0,
-    tomato: 0,
-  },
-  total: 100,
+  contents: null,
+  error: null,
+  loading: false,
   prices: {
     lettuce: 50,
     bacon: 200,
@@ -20,12 +13,16 @@ const initialState = {
     patty: 300,
     tomato: 50,
   },
+  total: 100,
 };
 
-function contentsReducer(state = initialState, action = {}) {
+function contents(state = initialState, action = {}) {
   const { type, payload } = action;
   switch (type) {
-    case contentActions.UPDATE_CONTENTS: {
+    case contentsActions.SET_LOADING_STATE:
+      return { ...state, loading: payload };
+
+    case contentsActions.SET_CONTENTS: {
       const stateClone = { ...state, contents: payload };
       let newTotal = stateClone.total;
       Object.keys(stateClone.contents).forEach((key) => {
@@ -39,7 +36,10 @@ function contentsReducer(state = initialState, action = {}) {
       return { ...stateClone, total: newTotal };
     }
 
-    case contentActions.ADD_CONTENT: {
+    case contentsActions.SET_ERROR:
+      return { ...state, error: payload };
+
+    case contentsActions.ADD_CONTENT: {
       const stateClone = { ...state };
       const updatedContents = {
         ...stateClone.contents,
@@ -54,7 +54,7 @@ function contentsReducer(state = initialState, action = {}) {
       return { ...updatedState };
     }
 
-    case contentActions.REMOVE_CONTENT: {
+    case contentsActions.REMOVE_CONTENT: {
       const stateClone = { ...state };
       const updatedContents = {
         ...stateClone.contents,
@@ -74,4 +74,4 @@ function contentsReducer(state = initialState, action = {}) {
   }
 }
 
-export default contentsReducer;
+export default contents;

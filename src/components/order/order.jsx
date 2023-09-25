@@ -1,4 +1,4 @@
-import pt from "prop-types";
+import { number, oneOfType, shape, string } from "prop-types";
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./order.module.css";
@@ -31,26 +31,26 @@ function Order({ details }) {
 }
 
 Order.propTypes = {
-  details: pt.shape({
-    contents: pt.shape({
-      lettuce: pt.number.isRequired,
-      bacon: pt.number.isRequired,
-      cheese: pt.number.isRequired,
-      tomato: pt.number.isRequired,
-      "onion-ring": pt.number.isRequired,
-      patty: pt.number.isRequired,
-      pickles: pt.number.isRequired,
+  details: shape({
+    contents: shape({
+      lettuce: number.isRequired,
+      bacon: number.isRequired,
+      cheese: number.isRequired,
+      tomato: number.isRequired,
+      "onion-ring": number.isRequired,
+      patty: number.isRequired,
+      pickles: number.isRequired,
     }).isRequired,
-    customer: pt.shape({
-      name: pt.string.isRequired,
-      email: pt.string.isRequired,
-      address: pt.shape({
-        street: pt.string,
-        "zip-code": pt.oneOfType([pt.string, pt.number]).isRequired,
+    customer: shape({
+      name: string.isRequired,
+      email: string.isRequired,
+      address: shape({
+        street: string,
+        "zip-code": oneOfType([string, number]).isRequired,
       }).isRequired,
     }).isRequired,
-    total: pt.number.isRequired,
-    id: pt.string.isRequired,
+    total: number.isRequired,
+    id: string.isRequired,
   }).isRequired,
 };
 

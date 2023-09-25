@@ -1,5 +1,5 @@
 import { AlertSquareRounded } from "@src/assets/vectors";
-import pt from "prop-types";
+import { func, number, oneOf, oneOfType, shape, string } from "prop-types";
 import React, { memo, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./input.module.css";
@@ -137,13 +137,13 @@ function Input({ variant, id, onChange, ...rest }) {
 }
 
 Input.propTypes = {
-  variant: pt.oneOf(["field", "textarea", "dropdown", "radios"]).isRequired,
-  attributes: pt.shape({
-    type: pt.oneOf(["text", "email", "password"]).isRequired,
-    value: pt.oneOfType([pt.string, pt.number]).isRequired,
+  variant: oneOf(["field", "textarea", "dropdown", "radios"]).isRequired,
+  attributes: shape({
+    type: oneOf(["text", "email", "password"]).isRequired,
+    value: oneOfType([string, number]).isRequired,
   }).isRequired,
-  id: pt.string.isRequired,
-  onChange: pt.func.isRequired,
+  id: string.isRequired,
+  onChange: func.isRequired,
 };
 
 export default memo(Input);

@@ -1,5 +1,5 @@
 import { Backdrop } from "@components/ui";
-import pt from "prop-types";
+import { bool, func, oneOfType, node, string } from "prop-types";
 import React, { memo } from "react";
 import { modal as content } from "./modal.module.css";
 
@@ -18,9 +18,9 @@ function Modal({ exitModal, showModal, children }) {
 }
 Modal.defaultProps = { children: null };
 Modal.propTypes = {
-  children: pt.oneOfType([pt.string, pt.node]),
-  showModal: pt.bool.isRequired,
-  exitModal: pt.func.isRequired,
+  children: oneOfType([string, node]),
+  showModal: bool.isRequired,
+  exitModal: func.isRequired,
 };
 
 export default memo(Modal);

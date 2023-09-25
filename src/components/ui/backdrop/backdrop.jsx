@@ -1,4 +1,4 @@
-import pt from "prop-types";
+import { bool, element, func, node, oneOfType } from "prop-types";
 import React, { memo, useEffect, useState } from "react";
 import { backDrop, fadeIn } from "./backdrop.module.css";
 
@@ -35,9 +35,9 @@ function Backdrop({ show, onClick, children }) {
 Backdrop.defaultProps = { children: null };
 
 Backdrop.propTypes = {
-  children: pt.node,
-  show: pt.bool.isRequired,
-  onClick: pt.func.isRequired,
+  children: oneOfType([node, element]),
+  show: bool.isRequired,
+  onClick: func.isRequired,
 };
 
 export default memo(Backdrop);

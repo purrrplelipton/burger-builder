@@ -1,7 +1,7 @@
 import Logo from "@components/logo";
 import { NavigationItems } from "@components/navigation";
 import { Backdrop } from "@components/ui";
-import pt from "prop-types";
+import { bool, func } from "prop-types";
 import React, { useEffect, useState } from "react";
 import DrawerToggle from "./drawer-toggle";
 import {
@@ -53,8 +53,8 @@ function SideDrawer({ showSideDrawer, exitSideDrawer }) {
 }
 
 SideDrawer.propTypes = {
-  showSideDrawer: pt.bool.isRequired,
-  exitSideDrawer: pt.func.isRequired,
+  showSideDrawer: bool.isRequired,
+  exitSideDrawer: func.isRequired,
 };
 
 export default SideDrawer;

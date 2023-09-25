@@ -1,4 +1,4 @@
-import pt from "prop-types";
+import { func, oneOf } from "prop-types";
 import React from "react";
 import styles from "./button.module.css";
 
@@ -19,8 +19,8 @@ function Button({ type, onClick, ...rest }) {
 Button.defaultProps = { type: "button", onClick: () => {} };
 
 Button.propTypes = {
-  onClick: pt.func,
-  type: pt.oneOf(["submit", "reset", "button"]),
+  onClick: func,
+  type: oneOf(["submit", "reset", "button"]),
 };
 
 export default Button;

@@ -1,3 +1,3 @@
-import contentsReducer from "./contents";
+import contents from "./contents";
 
-export { contentsReducer };
+export { contents };

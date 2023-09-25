@@ -1,6 +1,6 @@
 import { Toolbar } from "@components/navigation";
 import { Loader } from "@components/ui";
-import pt from "prop-types";
+import { element, node, oneOfType } from "prop-types";
 import React, { Suspense, lazy, useState } from "react";
 
 const SideDrawer = lazy(() =>
@@ -35,6 +35,6 @@ function Layout({ children }) {
   );
 }
 
-Layout.propTypes = { children: pt.element.isRequired };
+Layout.propTypes = { children: oneOfType([node, element]).isRequired };
 
 export default Layout;

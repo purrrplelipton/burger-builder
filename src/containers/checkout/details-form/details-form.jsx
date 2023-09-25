@@ -1,7 +1,7 @@
 import { Button, Input, Loader } from "@components/ui";
 import { changeHandler, objectMapper, valuesMapper } from "@components/utils";
 import xs from "@src/xs";
-import pt from "prop-types";
+import { number, shape } from "prop-types";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -214,20 +214,20 @@ function DetailsForm({ contents, total }) {
 }
 
 DetailsForm.propTypes = {
-  total: pt.number.isRequired,
-  contents: pt.shape({
-    lettuce: pt.number.isRequired,
-    bacon: pt.number.isRequired,
-    cheese: pt.number.isRequired,
-    tomato: pt.number.isRequired,
-    "onion-ring": pt.number.isRequired,
-    patty: pt.number.isRequired,
-    pickles: pt.number.isRequired,
+  total: number.isRequired,
+  contents: shape({
+    lettuce: number.isRequired,
+    bacon: number.isRequired,
+    cheese: number.isRequired,
+    tomato: number.isRequired,
+    "onion-ring": number.isRequired,
+    patty: number.isRequired,
+    pickles: number.isRequired,
   }).isRequired,
 };
 
 const mapStateToProps = (state) => {
-  const { contents, total } = state.contentsReducer;
+  const { contents, total } = state.contents;
   return { contents, total };
 };
 

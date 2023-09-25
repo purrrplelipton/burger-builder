@@ -1,3 +1,3 @@
-import * as contentActions from "./contents";
+import * as contents from "./contents";
 
-export { contentActions };
+export { contents };

@@ -1,16 +1,32 @@
 import { Button } from "@components/ui";
-import pt from "prop-types";
+import { func, number, shape } from "prop-types";
 import React from "react";
+import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
-function OrderSummary({ contents, cancelPurchase, totalPrice, checkout }) {
-  const contentSummary = Object.keys(contents).map((contentKey) => (
-    <li key={uuidv4()}>
-      <span style={{ textTransform: "capitalize" }}>{contentKey}</span>
-      &nbsp;:&nbsp;
-      {contents[contentKey]}
-    </li>
-  ));
+function OrderSummary({ cancelPurchase, contents, total }) {
+  const navigate = useNavigate();
+
+  const contentSummary = Object.keys(contents).map((type) => {
+    if (contents[type] > 0) {
+      return (
+        <li
+          key={uuidv4()}
+          style={{
+            display: "flex",
+            flexFlow: "row nowrap",
+            alignItems: "center",
+            gap: 14,
+          }}
+        >
+          <p style={{ textTransform: "capitalize" }}>{type}</p>
+          :&ZeroWidthSpace;
+          <p>{contents[type]}</p>
+        </li>
+      );
+    }
+  });
 
   return (
     <>
@@ -19,7 +35,7 @@ function OrderSummary({ contents, cancelPurchase, totalPrice, checkout }) {
       <ul style={{ paddingLeft: "1.25em" }}>{contentSummary}</ul>
       <p>
         Total&nbsp;~&nbsp;₦
-        <strong>{totalPrice.toFixed(2)}</strong>
+        <strong>{total}</strong>
       </p>
       <p>Checkout?</p>
       <fieldset
@@ -35,7 +51,7 @@ function OrderSummary({ contents, cancelPurchase, totalPrice, checkout }) {
         <Button variant="blue-grey" onClick={cancelPurchase}>
           CANCEL
         </Button>
-        <Button variant="light-green" onClick={checkout}>
+        <Button variant="light-green" onClick={() => navigate("/checkout")}>
           CONTINUE
         </Button>
       </fieldset>
@@ -44,18 +60,22 @@ function OrderSummary({ contents, cancelPurchase, totalPrice, checkout }) {
 }
 
 OrderSummary.propTypes = {
-  contents: pt.shape({
-    lettuce: pt.number.isRequired,
-    bacon: pt.number.isRequired,
-    cheese: pt.number.isRequired,
-    tomato: pt.number.isRequired,
-    "onion-ring": pt.number.isRequired,
-    patty: pt.number.isRequired,
-    pickles: pt.number.isRequired,
+  cancelPurchase: func.isRequired,
+  contents: shape({
+    lettuce: number.isRequired,
+    bacon: number.isRequired,
+    cheese: number.isRequired,
+    tomato: number.isRequired,
+    "onion-ring": number.isRequired,
+    patty: number.isRequired,
+    pickles: number.isRequired,
   }).isRequired,
-  cancelPurchase: pt.func.isRequired,
-  checkout: pt.func.isRequired,
-  totalPrice: pt.number.isRequired,
+  total: number.isRequired,
 };
 
-export default OrderSummary;
+const mapStateToProps = (state) => {
+  const { contents, total } = state.contents;
+  return { contents, total };
+};
+
+export default connect(mapStateToProps)(OrderSummary);
