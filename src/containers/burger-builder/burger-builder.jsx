@@ -7,45 +7,44 @@ import { bool, func, shape } from "prop-types";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
-function BurgerBuilder({ error, loading, SET_CONTENTS }) {
+function BurgerBuilder({ error, SET_CONTENTS, loading, contents }) {
   const [showSummary, setShowSummary] = useState(false);
 
-  useEffect(() => SET_CONTENTS(), []);
+  useEffect(() => {
+    SET_CONTENTS();
+  }, []);
 
   const hideSummary = () => setShowSummary(false);
 
-  return (
+  return contents ? (
     <>
       <Modal showModal={showSummary} exitModal={hideSummary}>
         <OrderSummary cancelPurchase={hideSummary} />
       </Modal>
-      {loading ? (
-        <Loader>Setting up UI</Loader>
-      ) : (
-        <>
-          <Burger />
-          <BuildControls proceed={() => setShowSummary(true)} />
-        </>
-      )}
+      <Burger />
+      <BuildControls proceed={() => setShowSummary(true)} />
     </>
+  ) : (
+    <Loader />
   );
 }
 
-BurgerBuilder.defaultProps = { error: null };
+BurgerBuilder.defaultProps = { error: null, contents: null };
 
 BurgerBuilder.propTypes = {
   error: shape({}),
   loading: bool.isRequired,
   SET_CONTENTS: func.isRequired,
+  contents: shape({}),
 };
 
 const mapStateToProps = (state) => {
-  const { error, loading } = state.contents;
-  return { error, loading };
+  const { error, loading, contents } = state.contents;
+  return { error, loading, contents };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  SET_CONTENTS: () => dispatch(contentsActions.setContents()),
+  SET_CONTENTS: () => dispatch(contentsActions.fetchContents()),
 });
 
 export default connect(

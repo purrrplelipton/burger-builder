@@ -21,7 +21,7 @@ function OrderSummary({ cancelPurchase, contents, total }) {
           }}
         >
           <p style={{ textTransform: "capitalize" }}>{type}</p>
-          :&ZeroWidthSpace;
+          :&zwnj;
           <p>{contents[type]}</p>
         </li>
       );

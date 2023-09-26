@@ -1,12 +1,11 @@
-import { Loader } from "@components/ui";
-import { bool, number, shape } from "prop-types";
+import { number, shape } from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import BurgerIngredient from "./burger-ingredient";
 import { burgerWrapper } from "./burger.module.css";
 
-function Burger({ contents, loading }) {
+function Burger({ contents }) {
   let mappedContents = null;
   if (contents) {
     mappedContents = Object.keys(contents)
@@ -16,14 +15,12 @@ function Burger({ contents, loading }) {
         ))
       )
       .reduce((array, cn) => [...array, cn], []);
-    if (mappedContents.length === 0) {
+    if (mappedContents.every((cn) => cn.length === 0)) {
       mappedContents = <p>Add some contents to your burger!</p>;
     }
   }
 
-  return loading ? (
-    <Loader>Just a little longer...</Loader>
-  ) : (
+  return (
     <div className={burgerWrapper}>
       <BurgerIngredient type="bread-top" />
       {mappedContents}
@@ -42,12 +39,8 @@ Burger.propTypes = {
     patty: number.isRequired,
     pickles: number.isRequired,
   }).isRequired,
-  loading: bool.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  const { contents, loading } = state.contents;
-  return { contents, loading };
-};
+const mapStateToProps = (state) => ({ contents: state.contents.contents });
 
 export default connect(mapStateToProps)(Burger);

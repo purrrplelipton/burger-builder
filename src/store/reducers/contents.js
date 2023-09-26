@@ -1,18 +1,19 @@
 import { contents as contentsActions } from "@store/actions";
 
+const PRICES = {
+  lettuce: 50,
+  bacon: 200,
+  cheese: 100,
+  "onion-ring": 100,
+  pickles: 50,
+  patty: 300,
+  tomato: 50,
+};
+
 const initialState = {
   contents: null,
   error: null,
   loading: false,
-  prices: {
-    lettuce: 50,
-    bacon: 200,
-    cheese: 100,
-    "onion-ring": 100,
-    pickles: 50,
-    patty: 300,
-    tomato: 50,
-  },
   total: 100,
 };
 
@@ -23,50 +24,47 @@ function contents(state = initialState, action = {}) {
       return { ...state, loading: payload };
 
     case contentsActions.SET_CONTENTS: {
-      const stateClone = { ...state, contents: payload };
-      let newTotal = stateClone.total;
-      Object.keys(stateClone.contents).forEach((key) => {
-        if (stateClone.contents[key] > 0) {
-          for (let i = 0; i < stateClone.contents[key]; i += 1) {
-            newTotal += stateClone.prices[key];
+      const newState = { ...state, contents: payload };
+      let updatedTotal = state.total;
+      Object.keys(newState.contents).forEach((cn) => {
+        if (newState.contents[cn] > 0) {
+          for (let i = 0; i < newState.contents[cn]; i++) {
+            updatedTotal += PRICES[cn];
           }
         }
       });
 
-      return { ...stateClone, total: newTotal };
+      return { ...newState, total: updatedTotal };
     }
 
     case contentsActions.SET_ERROR:
       return { ...state, error: payload };
 
     case contentsActions.ADD_CONTENT: {
-      const stateClone = { ...state };
-      const updatedContents = {
-        ...stateClone.contents,
-        [payload]: (stateClone.contents[payload] += 1),
-      };
-      const updatedState = {
+      return {
         ...state,
-        contents: updatedContents,
-        total: (stateClone.total += state.prices[payload]),
+        contents: { ...state.contents, [payload]: state.contents[payload] + 1 },
+        total: state.total + PRICES[payload],
       };
-
-      return { ...updatedState };
     }
 
     case contentsActions.REMOVE_CONTENT: {
-      const stateClone = { ...state };
       const updatedContents = {
-        ...stateClone.contents,
-        [payload]: (stateClone.contents[payload] -= 1),
-      };
-      const updatedState = {
-        ...state,
-        contents: updatedContents,
-        total: (stateClone.total -= state.prices[payload]),
+        ...state.contents,
+        [payload]:
+          state.contents[payload] >= 1
+            ? state.contents[payload] - 1
+            : state.contents[payload],
       };
 
-      return { ...updatedState };
+      return {
+        ...state,
+        contents: { ...updatedContents },
+        total:
+          state.total - PRICES[payload] >= 100
+            ? state.total - PRICES[payload]
+            : state.total,
+      };
     }
 
     default:

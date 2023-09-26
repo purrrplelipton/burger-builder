@@ -1,6 +1,5 @@
-import { Loader } from "@components/ui";
 import { contents as contentsActions } from "@store/actions";
-import { bool, func, number, shape } from "prop-types";
+import { func, number, shape } from "prop-types";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
@@ -25,7 +24,6 @@ const controls = [
 function BuildControls({
   ADD_CONTENT,
   contents,
-  loading,
   proceed,
   REMOVE_CONTENT,
   total,
@@ -39,9 +37,7 @@ function BuildControls({
     }
     return () => {};
   }, [contents]);
-  return loading ? (
-    <Loader />
-  ) : (
+  return (
     <>
       <div className={topSection}>
         <p className={currentPrice}>
@@ -86,15 +82,14 @@ BuildControls.propTypes = {
     pickles: number.isRequired,
     tomato: number.isRequired,
   }).isRequired,
-  loading: bool.isRequired,
   proceed: func.isRequired,
   REMOVE_CONTENT: func.isRequired,
   total: number.isRequired,
 };
 
 const mapStateToProps = (state) => {
-  const { contents, loading, total } = state.contents;
-  return { contents, loading, total };
+  const { contents, total } = state.contents;
+  return { contents, total };
 };
 
 const mapDispatchToProps = (dispatch) => ({

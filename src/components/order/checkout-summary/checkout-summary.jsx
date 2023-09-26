@@ -40,7 +40,7 @@ CheckoutSummary.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  contents: state.contentsReducer.contents,
+  contents: state.contents.contents,
 });
 
 export default connect(mapStateToProps)(CheckoutSummary);

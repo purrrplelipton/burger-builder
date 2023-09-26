@@ -1,15 +1,12 @@
-import { Loader } from "@components/ui";
-import { bool, func, number, shape, string } from "prop-types";
+import { func, number, shape, string } from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 import styles from "./build-control.module.css";
 
 function BuildControl(props) {
-  const { adder, contents, label, loading, remover, type } = props;
+  const { adder, contents, label, remover, type } = props;
 
-  return loading ? (
-    <Loader />
-  ) : (
+  return (
     <div className={styles.buildControl}>
       <p className={styles.label}>{label}</p>
       <div className={styles.btnsWrapper}>
@@ -46,15 +43,11 @@ BuildControl.propTypes = {
     pickles: number.isRequired,
     tomato: number.isRequired,
   }).isRequired,
-  loading: bool.isRequired,
   label: string.isRequired,
   remover: func.isRequired,
   type: string.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  const { contents, loading } = state.contents;
-  return { contents, loading };
-};
+const mapStateToProps = (state) => ({ contents: state.contents.contents });
 
 export default connect(mapStateToProps)(BuildControl);
