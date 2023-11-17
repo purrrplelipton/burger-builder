@@ -1,8 +1,8 @@
-import Logo from "@components/logo";
-import { NavigationItems } from "@components/navigation";
-import DrawerToggle from "@components/navigation/side-drawer/drawer-toggle";
 import { bool, func } from "prop-types";
 import React from "react";
+import Logo from "src/components/logo";
+import { NavigationItems } from "src/components/navigation";
+import DrawerToggle from "src/components/navigation/side-drawer/drawer-toggle";
 import { desktopOnly, logo, toolbar } from "./toolbar.module.css";
 
 function Toolbar({ showSideDrawer, toggleSideDrawer }) {

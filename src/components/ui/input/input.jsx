@@ -1,6 +1,6 @@
-import { AlertSquareRounded } from "@src/assets/vectors";
 import { func, number, oneOf, oneOfType, shape, string } from "prop-types";
 import React, { memo, useState } from "react";
+import { AlertSquareRounded } from "src/assets/vectors";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./input.module.css";
 

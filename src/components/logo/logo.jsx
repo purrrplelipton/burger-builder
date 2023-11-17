@@ -1,6 +1,6 @@
-import logo from "@src/assets/images/hamburger-512.png";
 import { number, oneOfType, string } from "prop-types";
 import React from "react";
+import logo from "src/assets/images/hamburger-512.png";
 import styles from "./logo.module.css";
 
 function Logo({ height }) {

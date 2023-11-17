@@ -1,5 +1,5 @@
-import { Modal } from "@components/ui";
 import React, { useEffect, useState } from "react";
+import { Modal } from "src/components/ui";
 
 function ErrorHandler(Wrapper, axios) {
   return function (props) {

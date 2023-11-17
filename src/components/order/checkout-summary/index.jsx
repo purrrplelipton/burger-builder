@@ -1,8 +1,8 @@
-import { Burger } from "@components/burger";
-import { Button } from "@components/ui";
 import { func, number, shape } from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
+import { Burger } from "src/components/burger";
+import { Button } from "src/components/ui";
 import styles, { checkoutSummary } from "./checkout-summary.module.css";
 
 function CheckoutSummary(props) {

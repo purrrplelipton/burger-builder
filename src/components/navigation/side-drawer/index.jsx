@@ -1,8 +1,8 @@
-import Logo from "@components/logo";
-import { NavigationItems } from "@components/navigation";
-import { Backdrop } from "@components/ui";
 import { bool, func } from "prop-types";
 import React, { useEffect, useState } from "react";
+import Logo from "src/components/logo";
+import { NavigationItems } from "src/components/navigation";
+import { Backdrop } from "src/components/ui";
 import DrawerToggle from "./drawer-toggle";
 import {
   logo,

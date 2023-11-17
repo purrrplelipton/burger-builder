@@ -1,6 +1,6 @@
-import { Backdrop } from "@components/ui";
-import { bool, func, oneOfType, node, string } from "prop-types";
+import { bool, func, node, oneOfType, string } from "prop-types";
 import React, { memo } from "react";
+import { Backdrop } from "src/components/ui";
 import { modal as content } from "./modal.module.css";
 
 function Modal({ exitModal, showModal, children }) {
