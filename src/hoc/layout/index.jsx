@@ -1,9 +1,12 @@
 import { element, node, oneOfType } from 'prop-types'
-import React, { Suspense, lazy, useState } from 'react'
+import React from 'react'
 import { Toolbar } from 'src/components/navigation'
 import { Loader } from 'src/components/ui'
+import LayoutContext from './context'
 
-const SideDrawer = lazy(() => import('src/components/navigation/side-drawer'))
+const SideDrawer = React.lazy(
+	() => import('src/components/navigation/side-drawer'),
+)
 
 const mainContentStyles = {
 	width: '100%',
@@ -14,22 +17,16 @@ const mainContentStyles = {
 }
 
 function Layout({ children }) {
-	const [showSideDrawer, setShowSideDrawer] = useState(false)
+	const [drawerVisible, setDrawerVisibility] = React.useState(false)
 
 	return (
-		<>
-			<Toolbar
-				showSideDrawer={showSideDrawer}
-				toggleSideDrawer={() => setShowSideDrawer(true)}
-			/>
-			<Suspense fallback={<Loader />}>
-				<SideDrawer
-					showSideDrawer={showSideDrawer}
-					exitSideDrawer={() => setShowSideDrawer(false)}
-				/>
-			</Suspense>
+		<LayoutContext.Provider value={{ drawerVisible, setDrawerVisibility }}>
+			<Toolbar />
+			<React.Suspense fallback={<Loader />}>
+				<SideDrawer />
+			</React.Suspense>
 			<main style={mainContentStyles}>{children}</main>
-		</>
+		</LayoutContext.Provider>
 	)
 }
 

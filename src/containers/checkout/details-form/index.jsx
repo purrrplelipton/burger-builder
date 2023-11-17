@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { Button, Input, Loader } from 'src/components/ui'
 import { changeHandler, objectMapper, valuesMapper } from 'src/components/utils'
 import ErrorHandler from 'src/hoc/error-handler'
-import { commencePurchasing } from 'src/store/features/orders/ordersSlice'
+import { placeOrder } from 'src/store/features/orders/ordersSlice'
 import xs from 'src/xs'
 import styles from './details-form.module.css'
 
@@ -89,12 +89,12 @@ function DetailsForm({ contents, total, processing }) {
 	const [submittable, setSubmittable] = useState(false)
 	const [details, setDetails] = useState(attributes)
 
-	const placeOrder = async (e) => {
+	const onOrder = async (e) => {
 		e.preventDefault()
 		if (!submittable) return
 
 		await dispatch(
-			commencePurchasing({
+			placeOrder({
 				customer: objectMapper(details, 'value'),
 				contents,
 				total,
@@ -113,7 +113,7 @@ function DetailsForm({ contents, total, processing }) {
 	return (
 		<section className={styles.wrapper}>
 			<h1>Provide your details to proceed</h1>
-			<form onSubmit={placeOrder}>
+			<form onSubmit={onOrder}>
 				<Input
 					id="full-name"
 					variant="field"

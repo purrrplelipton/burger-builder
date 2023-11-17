@@ -1,52 +1,52 @@
-import React, { useEffect, useState } from 'react';
-import Order from 'src/components/order';
-import { Loader } from 'src/components/ui';
-import ErrorHandler from 'src/hoc/error-handler';
-import xs from 'src/xs';
-import styles from './orders.module.css';
+import { arrayOf, bool, shape } from 'prop-types'
+import React, { useEffect } from 'react'
+import { connect, useDispatch } from 'react-redux'
+import Order from 'src/components/order'
+import { Loader } from 'src/components/ui'
+import ErrorHandler from 'src/hoc/error-handler'
+import { initializeOrders } from 'src/store/features/orders/ordersSlice'
+import xs from 'src/xs'
+import styles from './orders.module.css'
 
-function Orders() {
-	const [pageStates, setPageStates] = useState({
-		orders: [],
-		loading: false,
-		error: null,
-	});
+function Orders({ orders, fetching }) {
+	const dispatch = useDispatch()
 
 	useEffect(() => {
-		setPageStates((prv) => ({ ...prv, loading: true }));
-		xs.get('/orders.json')
-			.then(({ data }) => {
-				if (data) {
-					const orderIds = Object.keys(data);
-					const orders = [];
-					orderIds.forEach((id) => orders.push({ ...data[id], id }));
-					setPageStates((prv) => ({ ...prv, orders }));
-				}
-			})
-			.catch((error) => error)
-			.finally(() => setPageStates((prv) => ({ ...prv, loading: false })));
-	}, []);
+		dispatch(initializeOrders())
+	}, [])
 
-	let PageUI = (
-		<p className={styles.noOrder}>You have made no orders recently</p>
-	);
-
-	if (pageStates.orders.length) {
-		PageUI = (
-			<section className={styles.ordersWrapper}>
-				<h1>Your Orders</h1>
-				<ul className={styles.orderList}>
-					{pageStates.orders.map((order) => (
-						<li key={order.id}>
-							<Order details={order} />
-						</li>
-					))}
-				</ul>
-			</section>
-		);
-	}
-
-	return pageStates.loading ? <Loader>Getting your orders</Loader> : PageUI;
+	return (
+		<>
+			{!fetching && !orders && (
+				<p className={styles.noOrder}>You have made no orders recently</p>
+			)}
+			{fetching && !orders && <Loader>Getting your orders</Loader>}
+			{!fetching && orders && (
+				<section className={styles.ordersWrapper}>
+					<h1>Your Orders</h1>
+					<ul className={styles.orderList}>
+						{orders.map((order) => (
+							<li key={order.id}>
+								<Order details={order} />
+							</li>
+						))}
+					</ul>
+				</section>
+			)}
+		</>
+	)
 }
 
-export default ErrorHandler(Orders, xs);
+Orders.defaultProps = { orders: null }
+
+Orders.propTypes = {
+	orders: arrayOf(shape({})),
+	fetching: bool.isRequired,
+}
+
+const mapStateToProps = (state) => {
+	const { orders, fetching } = state.orders
+	return { orders, fetching }
+}
+
+export default connect(mapStateToProps)(ErrorHandler(Orders, xs))

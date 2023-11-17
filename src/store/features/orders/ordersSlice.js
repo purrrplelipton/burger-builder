@@ -3,33 +3,51 @@ import xs from 'src/xs'
 
 const purchaseSlice = createSlice({
 	name: 'purchase',
-	initialState: { processing: false, orders: [] },
+	initialState: { fetching: false, processing: false, orders: null },
 	reducers: {
-		setProcessingState: (state, action) => {
+		setFetching: (state, action) => {
+			return { ...state, fetching: action.payload }
+		},
+		setProcessing: (state, action) => {
 			return { ...state, processing: action.payload }
 		},
-		onPurchaseSuccess: (state, action) => {
-			return { ...state, orders: [...state.orders, action.payload] }
+		setOrders: (state, action) => {
+			return { ...state, orders: action.payload }
 		},
 	},
 })
 
-export const { onPurchaseSuccess, onPurchaseFail, setProcessingState } =
-	purchaseSlice.actions
+export const { setFetching, setOrders, setProcessing } = purchaseSlice.actions
 
-export const commencePurchasing = (payload) => {
+export const placeOrder = (payload) => {
 	return async (dispatch) => {
 		try {
-			dispatch(setProcessingState(true))
-			const {
-				data: { name: orderID },
-			} = await xs.post('/orders.json', payload)
-			dispatch(onPurchaseSuccess(orderID))
-		} catch (_) {
-			console.log(_.message)
+			dispatch(setProcessing(true))
+			await xs.post('/orders.json', payload)
+		} catch (error) {
+			console.log(error.message)
 		} finally {
-			dispatch(setProcessingState(false))
+			dispatch(setProcessing(false))
 		}
+	}
+}
+
+export const initializeOrders = () => async (dispatch) => {
+	try {
+		dispatch(setFetching(true))
+		const { data } = await xs.get('/orders.json')
+		let orders = null
+		if (data) {
+			orders = []
+			for (const [id, value] of Object.entries(data)) {
+				orders.push({ ...value, id })
+			}
+		}
+		dispatch(setOrders(orders))
+	} catch (error) {
+		console.log(error.message)
+	} finally {
+		dispatch(setFetching(false))
 	}
 }
 

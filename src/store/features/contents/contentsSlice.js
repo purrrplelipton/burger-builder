@@ -16,7 +16,7 @@ const contentsSlice = createSlice({
 	initialState: {
 		contents: null,
 		loading: false,
-		total: 100,
+		total: 0,
 	},
 	reducers: {
 		setLoadingState: (state, action) => {
@@ -24,23 +24,15 @@ const contentsSlice = createSlice({
 		},
 		setContents: (state, action) => {
 			const newState = { ...state, contents: action.payload }
-			let updatedTotal = state.total
-
-			console.log('Before loop:', { updatedTotal })
+			let updatedTotal = 100
 
 			for (const [cn, quantity] of Object.entries(newState.contents)) {
 				if (quantity > 0) {
-					console.log({ cn, price: PRICES[cn], updatedTotal })
-
 					for (let i = 0; i < quantity; i++) {
 						updatedTotal += PRICES[cn]
 					}
-
-					console.log({ updatedTotal })
 				}
 			}
-
-			console.log('After loop:', { updatedTotal })
 
 			return { ...newState, total: updatedTotal }
 		},
