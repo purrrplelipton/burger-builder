@@ -15,6 +15,16 @@
 	text-decoration: underline solid currentColor 1px;
 }
 
+.message-wrapper {
+	position: absolute;
+	inset: 0 var(--spacing) auto;
+	transform: translate(0, 5.625em);
+	border-radius: 0.625em;
+	padding: 1.125em 1.375em;
+	color: #fff;
+	background-color: #4caf50;
+}
+
 .error-wrapper {
 	position: absolute;
 	top: 0;

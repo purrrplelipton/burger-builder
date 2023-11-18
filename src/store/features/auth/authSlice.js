@@ -3,7 +3,13 @@ import axios from 'axios'
 
 const authSlice = createSlice({
 	name: 'auth',
-	initialState: { verifying: false, token: null, userID: null, error: null },
+	initialState: {
+		verifying: false,
+		token: null,
+		userID: null,
+		message: null,
+		error: null,
+	},
 	reducers: {
 		setVerifyingState: (state, action) => {
 			return { ...state, verifying: action.payload }
@@ -14,6 +20,9 @@ const authSlice = createSlice({
 		setUserID: (state, action) => {
 			return { ...state, userID: action.payload }
 		},
+		setMessage: (state, action) => {
+			return { ...state, message: action.payload }
+		},
 		setError: (state, action) => {
 			return { ...state, error: action.payload }
 		},
@@ -23,16 +32,22 @@ const authSlice = createSlice({
 	},
 })
 
-export const { setVerifyingState, setToken, setUserID, setError, signOut } =
-	authSlice.actions
+export const {
+	setVerifyingState,
+	setToken,
+	setUserID,
+	setError,
+	setMessage,
+	signOut,
+} = authSlice.actions
 
-function expirationTimeout(timeout) {
+function autoSignOut(timeout) {
 	return (dispatch) => {
-		setTimeout(() => dispatch(signOut()), timeout * 1000)
+		setTimeout(() => dispatch(signOut()), parseInt(timeout) * 1000)
 	}
 }
 
-export function authenticate(credentals, mode) {
+export function authenticate(credentials, mode) {
 	return async (dispatch, getState) => {
 		try {
 			dispatch(setVerifyingState(true))
@@ -40,12 +55,19 @@ export function authenticate(credentals, mode) {
 				`https://identitytoolkit.googleapis.com/v1/accounts:${
 					mode === 'sign-up' ? 'signUp' : 'signInWithPassword'
 				}?key=${import.meta.env.VITE_SEKRET}`,
-				{ ...credentals, returnSecuretoken: true },
+				{ ...credentials, returnSecureToken: true },
 			)
+			if (mode === 'sign-up') {
+				dispatch(setMessage('Account creation successful.'))
+				setTimeout(() => dispatch(setMessage(null)), 5000)
+			} else if (mode === 'sign-in') {
+				dispatch(setMessage('You are now signed in.'))
+				setTimeout(() => dispatch(setMessage(null)), 5000)
+			}
 			const { idToken, localId, expiresIn } = data
 			dispatch(setToken(idToken))
 			dispatch(setUserID(localId))
-			dispatch(expirationTimeout(expiresIn))
+			dispatch(autoSignOut(expiresIn))
 		} catch (error) {
 			const {
 				message: errorInfo,
@@ -60,13 +82,9 @@ export function authenticate(credentals, mode) {
 			} else dispatch(setError(errorInfo))
 		} finally {
 			dispatch(setVerifyingState(false))
-			const {
-				auth: { error },
-			} = getState()
-			if (error) {
-				setTimeout(() => {
-					dispatch(setError(null))
-				}, 4000)
+			const { auth } = getState()
+			if (auth.error) {
+				setTimeout(() => dispatch(setError(null)), 5000)
 			}
 		}
 	}

@@ -37,7 +37,7 @@ const attr = {
 	},
 }
 
-function Auth({ verifying, error }) {
+function Auth({ verifying, message, error }) {
 	const dispatch = useDispatch()
 	const [credentials, setCredentials] = React.useState(attr)
 	const [submittable, setSubmittable] = React.useState(false)
@@ -60,63 +60,70 @@ function Auth({ verifying, error }) {
 	}, [credentials])
 
 	return (
-		<div className={styles.wrapper}>
-			{!verifying && error && (
-				<div className={styles.errorWrapper}>
-					<p>{error}</p>
+		<>
+			{!verifying && !error && message && (
+				<div className={styles.messageWrapper}>
+					<p>{message}</p>
 				</div>
 			)}
-			<h1>{mode === 'sign-in' ? 'Welcome back!' : 'Create an account.'}</h1>
-			<form onSubmit={doSubmit}>
-				<Input
-					id="email-address"
-					variant="field"
-					attributes={credentials.email}
-					onChange={(event) => {
-						changeHandler(['email'], setCredentials, event.target.value)
-					}}
-				/>
-				<Input
-					id="password"
-					variant="field"
-					attributes={credentials.password}
-					onChange={(event) => {
-						changeHandler(['password'], setCredentials, event.target.value)
-					}}
-				/>
-				<Button type="submit" variant="light-green" disabled={!submittable}>
-					<span>Sign {mode === 'sign-up' ? 'Up' : 'In'}</span>
-				</Button>
-			</form>
-			<p>
-				{mode === 'sign-in' ? "Dont'" : 'Already'} have an account?&nbsp;
-				<Button
-					onClick={() =>
-						setMode((prv) => (prv === 'sign-in' ? 'sign-up' : 'sign-in'))
-					}
-					type="button"
-					variant="deep-orange"
-					disabled={false}
-				>
-					<span>Sign {mode === 'sign-in' ? 'Up' : 'In'}</span>
-				</Button>
-			</p>
-			{verifying && !error && (
-				<i className={styles.loaderWrapper}>
-					<Loader>Hang tight while we verify you.</Loader>
-				</i>
-			)}
-		</div>
+			<div className={styles.wrapper}>
+				{!verifying && error && (
+					<div className={styles.errorWrapper}>
+						<p>{error}</p>
+					</div>
+				)}
+				<h1>{mode === 'sign-in' ? 'Welcome back!' : 'Create an account.'}</h1>
+				<form onSubmit={doSubmit}>
+					<Input
+						id="email-address"
+						variant="field"
+						attributes={credentials.email}
+						onChange={(event) => {
+							changeHandler(['email'], setCredentials, event.target.value)
+						}}
+					/>
+					<Input
+						id="password"
+						variant="field"
+						attributes={credentials.password}
+						onChange={(event) => {
+							changeHandler(['password'], setCredentials, event.target.value)
+						}}
+					/>
+					<Button type="submit" variant="light-green" disabled={!submittable}>
+						<span>Sign {mode === 'sign-up' ? 'Up' : 'In'}</span>
+					</Button>
+				</form>
+				<p>
+					{mode === 'sign-in' ? "Dont'" : 'Already'} have an account?&nbsp;
+					<Button
+						onClick={() =>
+							setMode((prv) => (prv === 'sign-in' ? 'sign-up' : 'sign-in'))
+						}
+						type="button"
+						variant="deep-orange"
+						disabled={false}
+					>
+						<span>Sign {mode === 'sign-in' ? 'Up' : 'In'}</span>
+					</Button>
+				</p>
+				{verifying && !error && (
+					<i className={styles.loaderWrapper}>
+						<Loader>Hang tight while we verify you.</Loader>
+					</i>
+				)}
+			</div>
+		</>
 	)
 }
 
-Auth.defaultProps = { error: null }
+Auth.defaultProps = { message: null, error: null }
 
-Auth.propTypes = { verifying: bool.isRequired, error: string }
+Auth.propTypes = { verifying: bool.isRequired, message: string, error: string }
 
 const mapStateToProps = (state) => {
-	const { verifying, error } = state.auth
-	return { verifying, error }
+	const { verifying, error, message } = state.auth
+	return { verifying, error, message }
 }
 
 export default connect(mapStateToProps)(ErrorHandler(Auth, xs))
