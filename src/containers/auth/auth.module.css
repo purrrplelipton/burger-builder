@@ -1,0 +1,41 @@
+.wrapper {
+	width: calc(100% - (1.25em * 2));
+	margin: auto;
+	text-align: center;
+	padding: 1.375em 1.125em;
+	border-radius: 0.625em;
+	box-shadow: 0 16px 24px -10px #00000022;
+	position: relative;
+}
+
+.wrapper h1 {
+	font-weight: 200;
+	font-size: 1.3em;
+	margin-block-end: 2em;
+	text-decoration: underline solid currentColor 1px;
+}
+
+.error-wrapper {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	transform: translate(0, calc((100% + 0.75em) * -1));
+	border-radius: 0.625em;
+	padding: 1.125em 1.375em;
+	color: #fff;
+	background-color: var(--red-500);
+}
+
+.loader-wrapper {
+	all: unset;
+	position: absolute;
+	inset: 0;
+	background-color: #ffffffbb;
+}
+
+@media only screen and (min-width: 768px) {
+	.wrapper {
+		max-width: 425px;
+	}
+}

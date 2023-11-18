@@ -1,7 +1,7 @@
 import { element, node, oneOfType } from 'prop-types'
 import React from 'react'
 import { Toolbar } from 'src/components/navigation'
-import { Loader } from 'src/components/ui'
+import Loader from 'src/components/ui/loader'
 import LayoutContext from './context'
 
 const SideDrawer = React.lazy(

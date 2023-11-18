@@ -1,7 +1,7 @@
 import React from 'react'
 import Logo from 'src/components/logo'
 import { NavigationItems } from 'src/components/navigation'
-import { Backdrop } from 'src/components/ui'
+import Backdrop from 'src/components/ui/backdrop'
 import LayoutContext from 'src/hoc/layout/context'
 import DrawerToggle from './drawer-toggle'
 import styles from './side-drawer.module.css'

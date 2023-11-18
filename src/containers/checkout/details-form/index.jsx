@@ -1,8 +1,10 @@
 import { bool, number, shape } from 'prop-types'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { connect, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { Button, Input, Loader } from 'src/components/ui'
+import Button from 'src/components/ui/button'
+import Input from 'src/components/ui/input'
+import Loader from 'src/components/ui/loader'
 import { changeHandler, objectMapper, valuesMapper } from 'src/components/utils'
 import ErrorHandler from 'src/hoc/error-handler'
 import { placeOrder } from 'src/store/features/orders/ordersSlice'
@@ -86,8 +88,8 @@ const attributes = {
 function DetailsForm({ contents, total, processing }) {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
-	const [submittable, setSubmittable] = useState(false)
-	const [details, setDetails] = useState(attributes)
+	const [submittable, setSubmittable] = React.useState(false)
+	const [details, setDetails] = React.useState(attributes)
 
 	const onOrder = async (e) => {
 		e.preventDefault()
@@ -104,14 +106,14 @@ function DetailsForm({ contents, total, processing }) {
 		navigate('/orders', { replace: true })
 	}
 
-	useEffect(() => {
+	React.useEffect(() => {
 		const validities = objectMapper(details, 'valid')
 		const validitiesArray = valuesMapper(validities)
 		setSubmittable(validitiesArray.every((validity) => validity === true))
 	}, [details])
 
 	return (
-		<section className={styles.wrapper}>
+		<div className={styles.wrapper}>
 			<h1>Provide your details to proceed</h1>
 			<form onSubmit={onOrder}>
 				<Input
@@ -195,7 +197,7 @@ function DetailsForm({ contents, total, processing }) {
 					<Loader>Hold tight while we process your order.</Loader>
 				</i>
 			)}
-		</section>
+		</div>
 	)
 }
 
