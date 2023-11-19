@@ -1,6 +1,7 @@
 import { bool, string } from 'prop-types'
 import React from 'react'
 import { connect, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import Button from 'src/components/ui/button'
 import Input from 'src/components/ui/input'
 import Loader from 'src/components/ui/loader'
@@ -37,8 +38,9 @@ const attr = {
 	},
 }
 
-function Auth({ verifying, message, error }) {
+function Auth({ verifying, message, error, signedIn }) {
 	const dispatch = useDispatch()
+	const navigate = useNavigate()
 	const [credentials, setCredentials] = React.useState(attr)
 	const [submittable, setSubmittable] = React.useState(false)
 	const [mode, setMode] = React.useState('sign-in')
@@ -48,8 +50,7 @@ function Auth({ verifying, message, error }) {
 		if (!submittable) return
 
 		const details = objectMapper(credentials, 'value')
-
-		await dispatch(authenticate(details, mode))
+		dispatch(authenticate(details, mode))
 		setCredentials(attr)
 	}
 
@@ -58,6 +59,12 @@ function Auth({ verifying, message, error }) {
 		const validitiesArray = valuesMapper(validities)
 		setSubmittable(validitiesArray.every((validity) => validity === true))
 	}, [credentials])
+
+	React.useEffect(() => {
+		if (signedIn) {
+			navigate('/', { replace: true })
+		}
+	})
 
 	return (
 		<>
@@ -119,11 +126,16 @@ function Auth({ verifying, message, error }) {
 
 Auth.defaultProps = { message: null, error: null }
 
-Auth.propTypes = { verifying: bool.isRequired, message: string, error: string }
-
-const mapStateToProps = (state) => {
-	const { verifying, error, message } = state.auth
-	return { verifying, error, message }
+Auth.propTypes = {
+	verifying: bool.isRequired,
+	message: string,
+	error: string,
+	signedIn: bool.isRequired,
 }
 
-export default connect(mapStateToProps)(ErrorHandler(Auth, xs))
+const mapStateToProps = (state) => {
+	const { verifying, error, message, token } = state.auth
+	return { verifying, error, message, signedIn: Boolean(token) }
+}
+
+export default connect(mapStateToProps)(ErrorHandler(React.memo(Auth), xs))

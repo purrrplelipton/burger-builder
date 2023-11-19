@@ -10,7 +10,7 @@ function NavigationItem({ href, children }) {
 	return (
 		<li className={styles.navigationItem}>
 			<NavLink
-				onClick={(e) => setDrawerVisibility(false)}
+				onClick={() => setDrawerVisibility(false)}
 				className={({ isActive }) => (isActive ? styles.active : '')}
 				to={href}
 			>

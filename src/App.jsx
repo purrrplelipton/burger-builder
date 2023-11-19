@@ -7,6 +7,7 @@ import Layout from './hoc/layout'
 const Checkout = React.lazy(() => import('./containers/checkout'))
 const Orders = React.lazy(() => import('./containers/orders'))
 const Auth = React.lazy(() => import('./containers/auth'))
+const SignOut = React.lazy(() => import('./containers/sign-out'))
 
 function App() {
 	return (
@@ -18,6 +19,7 @@ function App() {
 					<Route path="auth" element={<Auth />} />
 					<Route path="/" element={<BurgerBuilder />} />
 					<Route path="*" element={<Navigate to="/" replace />} />
+					<Route path="sign-out" element={<SignOut />} />
 				</Routes>
 			</React.Suspense>
 		</Layout>

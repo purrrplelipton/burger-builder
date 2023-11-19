@@ -1,5 +1,6 @@
-import { element, node, oneOfType } from 'prop-types'
+import { bool, element, node, oneOfType } from 'prop-types'
 import React from 'react'
+import { connect } from 'react-redux'
 import { Toolbar } from 'src/components/navigation'
 import Loader from 'src/components/ui/loader'
 import LayoutContext from './context'
@@ -16,11 +17,13 @@ const mainContentStyles = {
 	padding: '5em 0 0',
 }
 
-function Layout({ children }) {
+function Layout({ signedIn, children }) {
 	const [drawerVisible, setDrawerVisibility] = React.useState(false)
 
 	return (
-		<LayoutContext.Provider value={{ drawerVisible, setDrawerVisibility }}>
+		<LayoutContext.Provider
+			value={{ signedIn, drawerVisible, setDrawerVisibility }}
+		>
 			<Toolbar />
 			<React.Suspense fallback={<Loader />}>
 				<SideDrawer />
@@ -30,6 +33,14 @@ function Layout({ children }) {
 	)
 }
 
-Layout.propTypes = { children: oneOfType([node, element]).isRequired }
+Layout.propTypes = {
+	children: oneOfType([node, element]).isRequired,
+	signedIn: bool.isRequired,
+}
 
-export default Layout
+const mapStateToProps = (state) => {
+	const { token } = state.auth
+	return { signedIn: Boolean(token) }
+}
+
+export default connect(mapStateToProps)(Layout)

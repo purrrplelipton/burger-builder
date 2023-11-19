@@ -1,4 +1,4 @@
-import { bool, number, shape } from 'prop-types'
+import { bool, number, shape, string } from 'prop-types'
 import React from 'react'
 import { connect, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -85,7 +85,7 @@ const attributes = {
 	},
 }
 
-function DetailsForm({ contents, total, processing }) {
+function DetailsForm({ contents, total, processing, token }) {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const [submittable, setSubmittable] = React.useState(false)
@@ -96,11 +96,14 @@ function DetailsForm({ contents, total, processing }) {
 		if (!submittable) return
 
 		await dispatch(
-			placeOrder({
-				customer: objectMapper(details, 'value'),
-				contents,
-				total,
-			}),
+			placeOrder(
+				{
+					customer: objectMapper(details, 'value'),
+					contents,
+					total,
+				},
+				token,
+			),
 		)
 		setDetails(attributes)
 		navigate('/orders', { replace: true })
@@ -201,6 +204,8 @@ function DetailsForm({ contents, total, processing }) {
 	)
 }
 
+DetailsForm.defaultProps = { token: null }
+
 DetailsForm.propTypes = {
 	total: number.isRequired,
 	contents: shape({
@@ -213,11 +218,13 @@ DetailsForm.propTypes = {
 		pickles: number.isRequired,
 	}).isRequired,
 	processing: bool.isRequired,
+	token: string,
 }
 
 const mapStateToProps = (state) => {
 	const { contents, total } = state.contents
-	return { contents, total, processing: state.orders.processing }
+	const { token } = state.auth
+	return { contents, total, processing: state.orders.processing, token }
 }
 
 export default connect(mapStateToProps)(ErrorHandler(DetailsForm, xs))

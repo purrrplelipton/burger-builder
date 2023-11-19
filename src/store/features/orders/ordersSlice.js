@@ -19,11 +19,11 @@ const purchaseSlice = createSlice({
 
 export const { setFetching, setOrders, setProcessing } = purchaseSlice.actions
 
-export const placeOrder = (payload) => {
+export const placeOrder = (payload, token) => {
 	return async (dispatch) => {
 		try {
 			dispatch(setProcessing(true))
-			await xs.post('/orders.json', payload)
+			await xs.post(`/orders.json?auth=${token}`, payload)
 		} catch (error) {
 			console.log(error.message)
 		} finally {
@@ -32,22 +32,24 @@ export const placeOrder = (payload) => {
 	}
 }
 
-export const initializeOrders = () => async (dispatch) => {
-	try {
-		dispatch(setFetching(true))
-		const { data } = await xs.get('/orders.json')
-		let orders = null
-		if (data) {
-			orders = []
-			for (const [id, value] of Object.entries(data)) {
-				orders.push({ ...value, id })
+export function initializeOrders(token) {
+	return async (dispatch) => {
+		try {
+			dispatch(setFetching(true))
+			const { data } = await xs.get(`/orders.json?auth=${token}`)
+			let orders = null
+			if (data) {
+				orders = []
+				for (const [id, value] of Object.entries(data)) {
+					orders.push({ ...value, id })
+				}
 			}
+			dispatch(setOrders(orders))
+		} catch (error) {
+			console.log(error.message)
+		} finally {
+			dispatch(setFetching(false))
 		}
-		dispatch(setOrders(orders))
-	} catch (error) {
-		console.log(error.message)
-	} finally {
-		dispatch(setFetching(false))
 	}
 }
 

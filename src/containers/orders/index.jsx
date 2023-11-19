@@ -1,4 +1,4 @@
-import { arrayOf, bool, shape } from 'prop-types'
+import { arrayOf, bool, shape, string } from 'prop-types'
 import React, { useEffect } from 'react'
 import { connect, useDispatch } from 'react-redux'
 import Order from 'src/components/order'
@@ -8,11 +8,11 @@ import { initializeOrders } from 'src/store/features/orders/ordersSlice'
 import xs from 'src/xs'
 import styles from './orders.module.css'
 
-function Orders({ orders, fetching }) {
+function Orders({ orders, fetching, token }) {
 	const dispatch = useDispatch()
 
 	useEffect(() => {
-		dispatch(initializeOrders())
+		dispatch(initializeOrders(token))
 	}, [])
 
 	return (
@@ -37,16 +37,18 @@ function Orders({ orders, fetching }) {
 	)
 }
 
-Orders.defaultProps = { orders: null }
+Orders.defaultProps = { orders: null, token: null }
 
 Orders.propTypes = {
 	orders: arrayOf(shape({})),
 	fetching: bool.isRequired,
+	token: string,
 }
 
 const mapStateToProps = (state) => {
 	const { orders, fetching } = state.orders
-	return { orders, fetching }
+	const { token } = state.auth
+	return { orders, fetching, token }
 }
 
 export default connect(mapStateToProps)(ErrorHandler(Orders, xs))
