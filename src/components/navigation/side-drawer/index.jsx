@@ -8,42 +8,20 @@ import styles from './side-drawer.module.css'
 
 function SideDrawer() {
 	const { drawerVisible, setDrawerVisibility } = React.useContext(LayoutContext)
-	const [visible, setVisibility] = React.useState(false)
-	const [classList, setClassList] = React.useState([
-		styles.sideDrawer,
-		styles.slideOut,
-	])
-
-	const hideDrawer = () => {
-		setDrawerVisibility(false)
-	}
-
-	React.useEffect(() => {
-		if (drawerVisible) {
-			setVisibility(true)
-			const reveal$delay = setTimeout(
-				() => setClassList((prv) => [...prv, styles.slideOut]),
-				50,
-			)
-			return () => clearTimeout(reveal$delay)
-		}
-		setClassList((prv) => prv.filter((cn) => cn !== styles.slideOut))
-		const removal$delay = setTimeout(() => setVisibility(false), 350)
-		return () => clearTimeout(removal$delay)
-	}, [drawerVisible])
+	const hideDrawer = () => setDrawerVisibility(false)
 
 	return (
-		visible && (
+		drawerVisible && (
 			<>
 				<Backdrop show={drawerVisible} onClick={hideDrawer} />
-				<div className={classList.join(' ')}>
-					<header className={styles.topSection}>
+				<div className={styles.a}>
+					<header className={styles.b}>
 						<div className={styles.logo}>
 							<Logo />
 						</div>
 						<DrawerToggle drawerVisible={drawerVisible} onClick={hideDrawer} />
 					</header>
-					<nav>
+					<nav style={{ height: '100%' }}>
 						<NavigationItems />
 					</nav>
 				</div>

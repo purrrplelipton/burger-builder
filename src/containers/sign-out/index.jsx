@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { signOut } from 'src/store/features/auth/authSlice'
+import { signOut } from 'src/store/features/auth'
 
 function SignOut() {
 	const dispatch = useDispatch()
@@ -10,7 +10,7 @@ function SignOut() {
 	React.useEffect(() => {
 		dispatch(signOut())
 		navigate('/auth', { replace: true })
-	})
+	}, [])
 }
 
 export default React.memo(SignOut)

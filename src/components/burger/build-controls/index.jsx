@@ -1,18 +1,15 @@
-import { func, number, shape } from 'prop-types';
-import React, { useEffect, useState } from 'react';
-import { connect, useDispatch } from 'react-redux';
-import {
-	addContent,
-	removeContent,
-} from 'src/store/features/contents/contentsSlice';
-import { v4 as uuidv4 } from 'uuid';
-import BuildControl from './build-control';
+import { func, number, shape } from 'prop-types'
+import React, { useEffect, useState } from 'react'
+import { connect, useDispatch } from 'react-redux'
+import { addContent, removeContent } from 'src/store/features/contents'
+import { v4 as uuidv4 } from 'uuid'
+import BuildControl from './build-control'
 import {
 	buildControls,
 	currentPrice,
 	orderButton,
 	topSection,
-} from './build-controls.module.css';
+} from './build-controls.module.css'
 
 const controls = [
 	{ label: 'Patty', type: 'patty' },
@@ -22,19 +19,18 @@ const controls = [
 	{ label: 'Bacon', type: 'bacon' },
 	{ label: 'Onion Ring', type: 'onion-ring' },
 	{ label: 'Tomato', type: 'tomato' },
-];
+]
 
 function BuildControls({ contents, proceed, total }) {
-	const dispatch = useDispatch();
-	const [purchasable, setPurchasable] = useState(false);
+	const dispatch = useDispatch()
+	const [purchasable, setPurchasable] = useState(false)
 
 	useEffect(() => {
 		if (contents) {
-			const canPurchase = Object.values(contents).some((val) => val > 0);
-			setPurchasable(canPurchase);
+			const canPurchase = Object.values(contents).some((val) => val > 0)
+			setPurchasable(canPurchase)
 		}
-		return () => {};
-	}, [contents]);
+	}, [contents])
 	return (
 		<>
 			<div className={topSection}>
@@ -66,7 +62,7 @@ function BuildControls({ contents, proceed, total }) {
 				))}
 			</div>
 		</>
-	);
+	)
 }
 
 BuildControls.propTypes = {
@@ -81,11 +77,11 @@ BuildControls.propTypes = {
 	}).isRequired,
 	proceed: func.isRequired,
 	total: number.isRequired,
-};
+}
 
 const mapStateToProps = (state) => {
-	const { contents, total } = state.contents;
-	return { contents, total };
-};
+	const { contents, total } = state.contents
+	return { contents, total }
+}
 
-export default connect(mapStateToProps)(BuildControls);
+export default connect(mapStateToProps)(BuildControls)

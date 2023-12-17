@@ -18,7 +18,7 @@ function NavigationItems() {
 		},
 		{
 			href: signedIn ? '/sign-out' : '/auth',
-			label: signedIn ? 'Sign Out' : 'Auth',
+			label: signedIn ? 'Sign Out' : 'Sign In',
 		},
 	].filter(Boolean)
 

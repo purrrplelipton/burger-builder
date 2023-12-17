@@ -9,6 +9,7 @@ const authSlice = createSlice({
 		userID: null,
 		message: null,
 		error: null,
+		reroutePath: '/',
 	},
 	reducers: {
 		setVerifyingState: (state, action) => {
@@ -27,7 +28,11 @@ const authSlice = createSlice({
 			return { ...state, error: action.payload }
 		},
 		signOut: (state) => {
+			localStorage.removeItem('bb-data')
 			return { ...state, token: null, userID: null }
+		},
+		setReroutePath: (state, action) => {
+			return { ...state, reroutePath: action.payload }
 		},
 	},
 })
@@ -39,11 +44,12 @@ export const {
 	setError,
 	setMessage,
 	signOut,
+	setReroutePath,
 } = authSlice.actions
 
-function autoSignOut(timeout) {
+export function autoSignOut(timeout) {
 	return (dispatch) => {
-		setTimeout(() => dispatch(signOut()), parseInt(timeout) * 1000)
+		setTimeout(() => dispatch(signOut()), timeout)
 	}
 }
 
@@ -65,17 +71,21 @@ export function authenticate(credentials, mode) {
 				setTimeout(() => dispatch(setMessage(null)), 5000)
 			}
 			const { idToken, localId, expiresIn } = data
+			localStorage.setItem(
+				'bb-data',
+				JSON.stringify({
+					userID: localId,
+					token: idToken,
+					expiresOn: new Date(new Date().getTime() + expiresIn * 1000),
+				}),
+			)
 			dispatch(setToken(idToken))
 			dispatch(setUserID(localId))
-			dispatch(autoSignOut(expiresIn))
+			dispatch(autoSignOut(expiresIn * 1000))
 		} catch (error) {
 			const {
 				message: errorInfo,
-				response: {
-					data: {
-						error: { message },
-					},
-				},
+				response: { data: { error: { message } } = {} } = {},
 			} = error
 			if (message) {
 				dispatch(setError(message))
@@ -87,6 +97,28 @@ export function authenticate(credentials, mode) {
 				setTimeout(() => dispatch(setError(null)), 5000)
 			}
 		}
+	}
+}
+
+export function checkAuthState() {
+	return (dispatch) => {
+		const bbData = localStorage.getItem('bb-data')
+		if (!bbData) return dispatch(signOut())
+
+		const { userID, token, expiresOn } = JSON.parse(bbData)
+
+		if (new Date(expiresOn).getTime() > new Date().getTime()) {
+			dispatch(setUserID(userID))
+			dispatch(setToken(token))
+
+			const timeoutDuration =
+				new Date(expiresOn).getTime() - new Date().getTime()
+
+			return dispatch(autoSignOut(timeoutDuration))
+		}
+		dispatch(signOut())
+		dispatch(setMessage('Session expired. Sign in again.'))
+		setTimeout(() => dispatch(setMessage(null)), 5000)
 	}
 }
 

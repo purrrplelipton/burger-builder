@@ -1,4 +1,4 @@
-import { bool, number, shape, string } from 'prop-types'
+import { bool, number, shape } from 'prop-types'
 import React from 'react'
 import { connect, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -7,7 +7,7 @@ import Input from 'src/components/ui/input'
 import Loader from 'src/components/ui/loader'
 import { changeHandler, objectMapper, valuesMapper } from 'src/components/utils'
 import ErrorHandler from 'src/hoc/error-handler'
-import { placeOrder } from 'src/store/features/orders/ordersSlice'
+import { placeOrder } from 'src/store/features/orders'
 import xs from 'src/xs'
 import styles from './details-form.module.css'
 
@@ -85,7 +85,7 @@ const attributes = {
 	},
 }
 
-function DetailsForm({ contents, total, processing, token }) {
+function DetailsForm({ contents, total, processing }) {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const [submittable, setSubmittable] = React.useState(false)
@@ -96,14 +96,10 @@ function DetailsForm({ contents, total, processing, token }) {
 		if (!submittable) return
 
 		await dispatch(
-			placeOrder(
-				{
-					customer: objectMapper(details, 'value'),
-					contents,
-					total,
-				},
-				token,
-			),
+			placeOrder({
+				...objectMapper(details, 'value'),
+				content: { ...contents, total },
+			}),
 		)
 		setDetails(attributes)
 		navigate('/orders', { replace: true })
@@ -204,8 +200,6 @@ function DetailsForm({ contents, total, processing, token }) {
 	)
 }
 
-DetailsForm.defaultProps = { token: null }
-
 DetailsForm.propTypes = {
 	total: number.isRequired,
 	contents: shape({
@@ -218,13 +212,11 @@ DetailsForm.propTypes = {
 		pickles: number.isRequired,
 	}).isRequired,
 	processing: bool.isRequired,
-	token: string,
 }
 
 const mapStateToProps = (state) => {
 	const { contents, total } = state.contents
-	const { token } = state.auth
-	return { contents, total, processing: state.orders.processing, token }
+	return { contents, total, processing: state.orders.processing }
 }
 
 export default connect(mapStateToProps)(ErrorHandler(DetailsForm, xs))

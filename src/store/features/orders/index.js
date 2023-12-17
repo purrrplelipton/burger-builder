@@ -19,11 +19,17 @@ const purchaseSlice = createSlice({
 
 export const { setFetching, setOrders, setProcessing } = purchaseSlice.actions
 
-export const placeOrder = (payload, token) => {
-	return async (dispatch) => {
+export const placeOrder = (payload) => {
+	return async (dispatch, getState) => {
 		try {
 			dispatch(setProcessing(true))
-			await xs.post(`/orders.json?auth=${token}`, payload)
+			const {
+				auth: { token, userID },
+			} = getState()
+			await xs.post(`/orders.json?auth=${token}`, {
+				id: userID,
+				...payload,
+			})
 		} catch (error) {
 			console.log(error.message)
 		} finally {
@@ -32,11 +38,16 @@ export const placeOrder = (payload, token) => {
 	}
 }
 
-export function initializeOrders(token) {
-	return async (dispatch) => {
+export function initializeOrders() {
+	return async (dispatch, getState) => {
 		try {
 			dispatch(setFetching(true))
-			const { data } = await xs.get(`/orders.json?auth=${token}`)
+			const {
+				auth: { userID, token },
+			} = getState()
+			const { data } = await xs.get(
+				`/orders.json?auth=${token}&orderBy="id"&equalTo="${userID}"`,
+			)
 			let orders = null
 			if (data) {
 				orders = []

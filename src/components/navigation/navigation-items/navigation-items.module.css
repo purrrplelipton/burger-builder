@@ -1,15 +1,16 @@
 .navigation-items {
-  list-style-type: none;
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: stretch;
-  justify-content: flex-start;
-  gap: 0.5em;
+	list-style-type: none;
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: stretch;
+	justify-content: flex-start;
+	gap: 0.5em;
+	height: 100%;
 }
 
 @media only screen and (min-width: 768px) {
-  .navigation-items {
-    flex-flow: row nowrap;
-    gap: 0.125em;
-  }
+	.navigation-items {
+		flex-flow: row nowrap;
+		gap: 0.125em;
+	}
 }

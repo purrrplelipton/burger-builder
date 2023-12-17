@@ -14,9 +14,10 @@ const PRICES = {
 const contentsSlice = createSlice({
 	name: 'contents',
 	initialState: {
-		contents: null,
 		loading: false,
+		contents: null,
 		total: 0,
+		modified: false,
 	},
 	reducers: {
 		setLoadingState: (state, action) => {
@@ -34,7 +35,7 @@ const contentsSlice = createSlice({
 				}
 			}
 
-			return { ...newState, total: updatedTotal }
+			return { ...newState, total: updatedTotal, modified: false }
 		},
 		addContent: (state, action) => {
 			return {
@@ -44,6 +45,7 @@ const contentsSlice = createSlice({
 					[action.payload]: state.contents[action.payload] + 1,
 				},
 				total: state.total + PRICES[action.payload],
+				modified: true,
 			}
 		},
 		removeContent: (state, action) => {
@@ -62,6 +64,7 @@ const contentsSlice = createSlice({
 					state.total - PRICES[action.payload] >= 100
 						? state.total - PRICES[action.payload]
 						: state.total,
+				modified: true,
 			}
 		},
 	},

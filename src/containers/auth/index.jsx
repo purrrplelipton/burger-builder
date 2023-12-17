@@ -7,7 +7,7 @@ import Input from 'src/components/ui/input'
 import Loader from 'src/components/ui/loader'
 import { changeHandler, objectMapper, valuesMapper } from 'src/components/utils'
 import ErrorHandler from 'src/hoc/error-handler'
-import { authenticate } from 'src/store/features/auth/authSlice'
+import { authenticate, setReroutePath } from 'src/store/features/auth'
 import xs from 'src/xs'
 import styles from './auth.module.css'
 
@@ -38,7 +38,7 @@ const attr = {
 	},
 }
 
-function Auth({ verifying, message, error, signedIn }) {
+function Auth({ verifying, message, error, signedIn, reroutePath, modified }) {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 	const [credentials, setCredentials] = React.useState(attr)
@@ -62,9 +62,15 @@ function Auth({ verifying, message, error, signedIn }) {
 
 	React.useEffect(() => {
 		if (signedIn) {
-			navigate('/', { replace: true })
+			navigate(reroutePath, { replace: true })
 		}
-	})
+	}, [signedIn])
+
+	React.useEffect(() => {
+		if (!modified && reroutePath !== '/') {
+			dispatch(setReroutePath('/'))
+		}
+	}, [modified, reroutePath])
 
 	return (
 		<>
@@ -131,11 +137,21 @@ Auth.propTypes = {
 	message: string,
 	error: string,
 	signedIn: bool.isRequired,
+	reroutePath: string.isRequired,
+	modified: bool.isRequired,
 }
 
 const mapStateToProps = (state) => {
-	const { verifying, error, message, token } = state.auth
-	return { verifying, error, message, signedIn: Boolean(token) }
+	const { modified } = state.contents
+	const { verifying, error, message, token, reroutePath } = state.auth
+	return {
+		verifying,
+		error,
+		message,
+		signedIn: Boolean(token),
+		reroutePath,
+		modified,
+	}
 }
 
 export default connect(mapStateToProps)(ErrorHandler(React.memo(Auth), xs))

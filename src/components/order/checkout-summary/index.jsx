@@ -1,7 +1,7 @@
 import { func, number, shape } from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
-import { Burger } from 'src/components/burger'
+import Burger from 'src/components/burger'
 import Button from 'src/components/ui/button'
 import styles, { checkoutSummary } from './checkout-summary.module.css'
 

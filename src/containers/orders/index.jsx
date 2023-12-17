@@ -4,15 +4,15 @@ import { connect, useDispatch } from 'react-redux'
 import Order from 'src/components/order'
 import Loader from 'src/components/ui/loader'
 import ErrorHandler from 'src/hoc/error-handler'
-import { initializeOrders } from 'src/store/features/orders/ordersSlice'
+import { initializeOrders } from 'src/store/features/orders'
 import xs from 'src/xs'
 import styles from './orders.module.css'
 
-function Orders({ orders, fetching, token }) {
+function Orders({ orders, fetching }) {
 	const dispatch = useDispatch()
 
 	useEffect(() => {
-		dispatch(initializeOrders(token))
+		dispatch(initializeOrders())
 	}, [])
 
 	return (
@@ -47,8 +47,7 @@ Orders.propTypes = {
 
 const mapStateToProps = (state) => {
 	const { orders, fetching } = state.orders
-	const { token } = state.auth
-	return { orders, fetching, token }
+	return { orders, fetching }
 }
 
 export default connect(mapStateToProps)(ErrorHandler(Orders, xs))

@@ -1,16 +1,10 @@
-.back-drop {
-  background-color: #00000022;
-  position: fixed;
-  inset: 0;
-  z-index: 88;
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.2s ease-in-out;
-  opacity: 0;
-}
-
-.back-drop.fade-in {
-  opacity: 1;
+.a {
+	background-color: #0002;
+	position: fixed;
+	inset: 0;
+	z-index: 88;
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	justify-content: center;
 }

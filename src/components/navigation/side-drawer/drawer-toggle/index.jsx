@@ -1,22 +1,26 @@
 import React from 'react'
 import LayoutContext from 'src/hoc/layout/context'
-import { bar, drawerToggle, open } from './drawer-toggle.module.css'
+import styles from './drawer-toggle.module.css'
+import {
+	LayoutSidebarRightCollapseFilled,
+	LayoutSidebarRightExpandFilled,
+} from 'src/assets/vectors'
 
 function DrawerToggle() {
 	const { drawerVisible, setDrawerVisibility } = React.useContext(LayoutContext)
 
-	const toggleDrawerVisibility = () => {
-		setDrawerVisibility((prevState) => !prevState)
-	}
-
 	return (
 		<button
 			type="button"
-			className={`${drawerToggle} ${drawerVisible ? open : ''}`}
-			onClick={toggleDrawerVisibility}
-			title={drawerVisible ? 'Close side drawer' : 'Open side drawer'}
+			className={styles.a}
+			onClick={() => setDrawerVisibility((prvState) => !prvState)}
+			aria-label={`${drawerVisible ? 'hide' : 'show'} side drawer`}
 		>
-			<span className={bar} />
+			{drawerVisible ? (
+				<LayoutSidebarRightCollapseFilled />
+			) : (
+				<LayoutSidebarRightExpandFilled />
+			)}
 		</button>
 	)
 }
